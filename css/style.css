@@ -1,0 +1,512 @@
+:root {
+  --c-primary: #0d142d;
+  --c-primary-light: #2c3a6b;
+  --c-secondary: #51576a;
+  --c-accent: #a76f6f;
+  --c-accent-light: #d4a7a7;
+  --c-background: #f8f7f4;
+  --c-light: #eaebf0;
+  --c-white: #ffffff;
+  --c-black: #000000;
+  --c-accent-two: #f8e5e5;
+  --c-success: #22c55e;
+}
+
+html {
+  height: 100%;
+  background-color: black;
+}
+body {
+  min-height: 100%;
+  font-family: "Outfit", sans-serif;
+  color: var(--c-secondary);
+  background-color: black;
+  background-image: linear-gradient(180deg, #f8f7f4 150px, #000000 500px);
+  background-repeat: no-repeat;
+}
+header h1,
+header > p {
+  color: var(--c-white);
+}
+nav {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* --- NAVIGATION STYLING --- */
+.nav-button {
+  transition: all 0.2s ease-in-out;
+  border: 2px solid transparent;
+  color: var(--c-secondary);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.nav-button.active {
+  background-color: var(--c-black);
+  color: var(--c-white);
+  font-weight: 600;
+}
+.nav-button.active svg {
+  color: var(--c-white);
+}
+.nav-button:hover:not(.active) {
+  background-color: var(--c-accent-two);
+  color: var(--c-black);
+  transform: translateY(-2px);
+}
+.nav-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+#mobile-menu-button {
+  display: none;
+}
+#nav-container {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+.nav-button {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 0.75rem 0.5rem;
+  font-size: 0.75rem;
+}
+.nav-button svg {
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 1023px) {
+  #mobile-menu-button {
+    display: flex;
+  }
+  #nav-container {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background-color: var(--c-white);
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    padding: 0.5rem;
+    border: 1px solid var(--c-light);
+  }
+  #nav-container.open {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    animation: fadeInDown 0.3s ease-out;
+  }
+  .nav-button {
+    flex-direction: row;
+    text-align: left;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    gap: 0.75rem;
+  }
+  .nav-button svg {
+    margin-bottom: 0;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* --- END OF NAVIGATION STYLING --- */
+
+.idea-card,
+.stat-card {
+  background-color: #fdfdfc;
+  border: 1px solid var(--c-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* GARANTIT QUE LA CARTE PREND TOUTE LA HAUTEUR DISPONIBLE */
+}
+
+.chart-container {
+  position: relative;
+  height: 250px;
+  width: 100%;
+  flex-grow: 1;
+}
+.idea-card:hover,
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.accordion-header {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f9fafb;
+  color: var(--c-black);
+  border-radius: 0.5rem;
+}
+.accordion-header h3 {
+  color: var(--c-black);
+}
+.accordion-header:not(.open):hover {
+  background-color: var(--c-accent-two);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.accordion-header.open {
+  background-color: var(--c-black);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.accordion-header.open h3,
+.accordion-header.open .accordion-icon,
+.accordion-header.open svg,
+.accordion-header.open span {
+  color: var(--c-white);
+}
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, padding 0.5s ease;
+}
+.accordion-content.open {
+  max-height: 8000px;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+.accordion-icon {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.accordion-header.open .accordion-icon {
+  transform: rotate(180deg);
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(13, 20, 45, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-content {
+  background-color: var(--c-white);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  width: 90%;
+  max-width: 60rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+.modal-overlay.visible .modal-content {
+  transform: translateY(0) scale(1);
+}
+.prose h3,
+.prose h4 {
+  color: var(--c-primary);
+}
+.tool-button {
+  background-color: var(--c-white);
+  color: var(--c-black);
+  border: 1px solid var(--c-black);
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.tool-button:hover {
+  background-color: var(--c-black);
+  color: var(--c-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 20, 45, 0.2);
+}
+#guideSearchInput:focus {
+  border-color: var(--c-accent) !important;
+  box-shadow: 0 0 0 3px rgba(167, 111, 111, 0.2) !important;
+}
+#searchResultsContainer .search-result-card {
+  background-color: var(--c-white) !important;
+  border: 1px solid var(--c-light) !important;
+  border-top: 4px solid var(--c-primary) !important;
+  border-radius: 0.5rem !important;
+  padding: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+#searchResultsContainer .search-result-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--c-accent) !important;
+}
+#searchResultsContainer .search-result-card h4 {
+  color: var(--c-primary) !important;
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+  line-height: 1.4 !important;
+}
+#searchResultsContainer .search-result-card .snippet {
+  font-size: 0.9rem !important;
+  color: var(--c-secondary) !important;
+  margin-top: 0.5rem !important;
+}
+#searchResultsContainer .search-result-card .snippet mark {
+  background-color: #feebcb !important;
+  font-weight: 600 !important;
+  padding: 2px !important;
+  border-radius: 3px !important;
+}
+#searchResultsContainer .search-result-card .path {
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: var(--c-accent) !important;
+  margin-top: 1rem !important;
+}
+/* --- STYLES FOR TOOLBOX & LEXICON --- */
+.toolbox-section {
+  border-left: 4px solid var(--c-primary);
+}
+.toolbox-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+.toolbox-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07);
+  border-color: var(--c-accent);
+}
+.lexicon-term {
+  position: relative;
+  font-weight: 600;
+  color: var(--c-primary);
+  border-bottom: 2px dotted var(--c-accent-light);
+  cursor: help;
+}
+.lexicon-term .tooltip-text {
+  visibility: hidden;
+  width: 280px;
+  background-color: var(--c-primary);
+  color: var(--c-white);
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -140px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+.lexicon-term:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media print {
+  /* ... (print styles remain unchanged) ... */
+}
+
+/* --- NOUVEAUX STYLES : Onglets de sous-navigation --- */
+
+.sub-nav-container {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid var(--c-light);
+  margin-bottom: 1.5rem;
+}
+
+.sub-nav-button {
+  padding: 0.75rem 0.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--c-secondary);
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  transform: translateY(2px); /* Aligne avec la bordure du conteneur */
+}
+
+.sub-nav-button:hover {
+  color: var(--c-primary);
+}
+
+.sub-nav-button.active {
+  color: var(--c-primary);
+  border-bottom-color: var(--c-primary);
+}
+
+.sub-content-pane {
+  padding-top: 1.5rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- NOUVEAUX STYLES : Onglets de sous-navigation --- */
+
+.sub-nav-container {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid var(--c-light);
+  margin-bottom: 1.5rem;
+}
+
+.sub-nav-button {
+  padding: 0.75rem 0.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--c-secondary);
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  transform: translateY(2px); /* Aligne avec la bordure du conteneur */
+}
+
+.sub-nav-button:hover {
+  color: var(--c-primary);
+}
+
+.sub-nav-button.active {
+  color: var(--c-primary);
+  border-bottom-color: var(--c-primary);
+}
+
+.sub-content-pane {
+  padding-top: 1.5rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- NOUVEAUX STYLES : BoÃ®te Ã  Outils & Lexique --- */
+
+.lexicon-term {
+  position: relative;
+  font-weight: 600;
+  color: var(--c-primary);
+  border-bottom: 2px dotted var(--c-accent-light);
+  cursor: help;
+}
+
+.lexicon-term .tooltip-text {
+  visibility: hidden;
+  width: 280px;
+  background-color: var(--c-primary);
+  color: var(--c-white);
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -140px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+.lexicon-term:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.lexicon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.lexicon-grid-item {
+  background-color: var(--c-white);
+  border: 1px solid var(--c-light);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--c-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.lexicon-grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  border-color: var(--c-accent);
+}
+
+.lexicon-references {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.lexicon-ref-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--c-background);
+  border: 1px solid var(--c-light);
+  text-decoration: none;
+  color: inherit;
+}
+
+.lexicon-ref-link:hover {
+  background-color: var(--c-accent-two);
+  border-color: var(--c-accent);
+}
