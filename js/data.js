@@ -256,14 +256,14 @@ export const guideData = {
             {
               label: "Jeunes débutants",
               data: [-95000],
-              backgroundColor: "#F97316",
+              backgroundColor: "#F9A825",
               borderWidth: 0,
               stack: "stack",
             },
             {
               label: "Départs en fin de carrière",
               data: [285000],
-              backgroundColor: "#51576A",
+              backgroundColor: "#2C3A6B",
               borderWidth: 0,
               stack: "stack",
             },
@@ -280,28 +280,53 @@ export const guideData = {
           indexAxis: "y",
           maintainAspectRatio: false,
           responsive: true,
-          layout: { padding: { right: 60 } }, // Ajoute de l'espace à droite pour les étiquettes
           scales: {
             x: {
               stacked: true,
-              ticks: { callback: (value) => `${value / 1000}k` },
+              ticks: {
+                callback: (value) => `${value / 1000}k`,
+                font: { family: "Outfit", size: 12 },
+              },
             },
             y: { stacked: true, display: false },
           },
           plugins: {
             legend: {
               position: "bottom",
-              labels: { boxWidth: 15, font: { size: 10 } },
+              labels: { boxWidth: 15, font: { size: 11, family: "Outfit" } },
             },
-            tooltip: { enabled: true },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || "";
+                  if (label) {
+                    label += ": ";
+                  }
+                  if (context.raw !== null) {
+                    label += new Intl.NumberFormat("fr-FR").format(context.raw);
+                  }
+                  return label;
+                },
+              },
+            },
             datalabels: {
-              anchor: "end",
-              align: "end",
-              offset: 4,
-              font: { weight: "bold" },
-              color: (context) => context.dataset.backgroundColor, // Couleur dynamique
+              anchor: "center",
+              align: "center",
+              color: "white",
+              font: { weight: "bold", family: "Outfit", size: 12 },
               formatter: (value) =>
                 new Intl.NumberFormat("fr-FR").format(Math.abs(value)),
+              backgroundColor: (context) => context.dataset.backgroundColor,
+              borderColor: "white",
+              borderWidth: 2,
+              borderRadius: 25,
+              padding: {
+                top: 2,
+                bottom: 2,
+                left: 8,
+                right: 8,
+              },
             },
           },
         },
@@ -315,14 +340,14 @@ export const guideData = {
             {
               label: "Jeunes débutants",
               data: [-21500],
-              backgroundColor: "#F97316",
+              backgroundColor: "#F9A825",
               borderWidth: 0,
               stack: "stack",
             },
             {
               label: "Départs en fin de carrière",
               data: [32100],
-              backgroundColor: "#51576A",
+              backgroundColor: "#2C3A6B",
               borderWidth: 0,
               stack: "stack",
             },
@@ -339,28 +364,53 @@ export const guideData = {
           indexAxis: "y",
           maintainAspectRatio: false,
           responsive: true,
-          layout: { padding: { right: 60 } },
           scales: {
             x: {
               stacked: true,
-              ticks: { callback: (value) => `${value / 1000}k` },
+              ticks: {
+                callback: (value) => `${value / 1000}k`,
+                font: { family: "Outfit", size: 12 },
+              },
             },
             y: { stacked: true, display: false },
           },
           plugins: {
             legend: {
               position: "bottom",
-              labels: { boxWidth: 15, font: { size: 10 } },
+              labels: { boxWidth: 15, font: { size: 11, family: "Outfit" } },
             },
-            tooltip: { enabled: true },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || "";
+                  if (label) {
+                    label += ": ";
+                  }
+                  if (context.raw !== null) {
+                    label += new Intl.NumberFormat("fr-FR").format(context.raw);
+                  }
+                  return label;
+                },
+              },
+            },
             datalabels: {
-              anchor: "end",
-              align: "end",
-              offset: 4,
-              font: { weight: "bold" },
-              color: (context) => context.dataset.backgroundColor,
+              anchor: "center",
+              align: "center",
+              color: "white",
+              font: { weight: "bold", family: "Outfit", size: 12 },
               formatter: (value) =>
                 new Intl.NumberFormat("fr-FR").format(Math.abs(value)),
+              backgroundColor: (context) => context.dataset.backgroundColor,
+              borderColor: "white",
+              borderWidth: 2,
+              borderRadius: 25,
+              padding: {
+                top: 2,
+                bottom: 2,
+                left: 8,
+                right: 8,
+              },
             },
           },
         },
@@ -374,21 +424,21 @@ export const guideData = {
             {
               label: "Destructions nettes d'emplois",
               data: [25000],
-              backgroundColor: "#EF4444",
+              backgroundColor: "#E53935",
               borderWidth: 0,
               stack: "stack",
             },
             {
               label: "Jeunes débutants",
               data: [-50700],
-              backgroundColor: "#F97316",
+              backgroundColor: "#F9A825",
               borderWidth: 0,
               stack: "stack",
             },
             {
               label: "Départs en fin de carrière",
               data: [45500],
-              backgroundColor: "#51576A",
+              backgroundColor: "#2C3A6B",
               borderWidth: 0,
               stack: "stack",
             },
@@ -398,28 +448,53 @@ export const guideData = {
           indexAxis: "y",
           maintainAspectRatio: false,
           responsive: true,
-          layout: { padding: { right: 60 } },
           scales: {
             x: {
               stacked: true,
-              ticks: { callback: (value) => `${value / 1000}k` },
+              ticks: {
+                callback: (value) => `${value / 1000}k`,
+                font: { family: "Outfit", size: 12 },
+              },
             },
             y: { stacked: true, display: false },
           },
           plugins: {
             legend: {
               position: "bottom",
-              labels: { boxWidth: 15, font: { size: 10 } },
+              labels: { boxWidth: 15, font: { size: 11, family: "Outfit" } },
             },
-            tooltip: { enabled: true },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: function (context) {
+                  let label = context.dataset.label || "";
+                  if (label) {
+                    label += ": ";
+                  }
+                  if (context.raw !== null) {
+                    label += new Intl.NumberFormat("fr-FR").format(context.raw);
+                  }
+                  return label;
+                },
+              },
+            },
             datalabels: {
-              anchor: "end",
-              align: "end",
-              offset: 4,
-              font: { weight: "bold" },
-              color: (context) => context.dataset.backgroundColor,
+              anchor: "center",
+              align: "center",
+              color: "white",
+              font: { weight: "bold", family: "Outfit", size: 12 },
               formatter: (value) =>
                 new Intl.NumberFormat("fr-FR").format(Math.abs(value)),
+              backgroundColor: (context) => context.dataset.backgroundColor,
+              borderColor: "white",
+              borderWidth: 2,
+              borderRadius: 25,
+              padding: {
+                top: 2,
+                bottom: 2,
+                left: 8,
+                right: 8,
+              },
             },
           },
         },
@@ -588,14 +663,14 @@ export const guideData = {
                 <div class="idea-card p-4 md:p-6 rounded-lg mb-4">
                     <h4 class="font-bold text-lg mb-4" style="color: var(--c-primary);">1. Conducteurs de Véhicules</h4>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-                        <div class="relative">
-                            <div class="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none pt-2">
-                                <div class="bg-red-600 text-white font-bold py-1 px-3 rounded-lg text-center text-sm">
+                        <div class="relative pt-12">
+                            <div class="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none">
+                                <div class="bg-red-600 text-white font-bold py-0.5 px-3 rounded-lg text-center text-xs">
                                     <span>Déséquilibre</span>
-                                    <span class="block text-xl">+200 500</span>
+                                    <span class="block text-lg font-semibold">+200 500</span>
                                 </div>
                             </div>
-                            <div class="chart-container" style="height: 120px; padding-top: 50px;"><canvas id="projectionsConducteursChart"></canvas></div>
+                            <div class="chart-container" style="height: 100px;"><canvas id="projectionsConducteursChart"></canvas></div>
                         </div>
                         <div>
                             <p class="text-sm mb-2">Les <strong>95 000 jeunes débutants</strong> attendus ne suffiront pas à compenser les <strong>285 000 départs en fin de carrière</strong>, créant un besoin massif de recrutement.</p>
@@ -608,14 +683,14 @@ export const guideData = {
                 <div class="idea-card p-4 md:p-6 rounded-lg mb-4">
                     <h4 class="font-bold text-lg mb-4" style="color: var(--c-primary);">2. Agents d'Exploitation des Transports</h4>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-                        <div class="relative">
-                            <div class="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none pt-2">
-                                <div class="bg-red-600 text-white font-bold py-1 px-3 rounded-lg text-center text-sm">
+                        <div class="relative pt-12">
+                            <div class="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none">
+                                <div class="bg-red-600 text-white font-bold py-0.5 px-3 rounded-lg text-center text-xs">
                                     <span>Déséquilibre</span>
-                                    <span class="block text-xl">+25 100</span>
+                                    <span class="block text-lg font-semibold">+25 100</span>
                                 </div>
                             </div>
-                            <div class="chart-container" style="height: 120px; padding-top: 50px;"><canvas id="projectionsAgentsChart"></canvas></div>
+                            <div class="chart-container" style="height: 100px;"><canvas id="projectionsAgentsChart"></canvas></div>
                         </div>
                         <div>
                             <p class="text-sm mb-2">Comme pour les conducteurs, les <strong>21 500 jeunes débutants</strong> ne combleront pas les <strong>32 100 départs en retraite</strong>, malgré 14 500 créations nettes de postes.</p>
@@ -628,14 +703,14 @@ export const guideData = {
                 <div class="idea-card p-4 md:p-6 rounded-lg">
                     <h4 class="font-bold text-lg mb-4" style="color: var(--c-primary);">3. Ouvriers Qualifiés de la Réparation Automobile</h4>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-                        <div class="relative">
-                             <div class="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none pt-2">
-                                <div class="bg-green-600 text-white font-bold py-1 px-3 rounded-lg text-center text-sm">
+                        <div class="relative pt-12">
+                             <div class="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none">
+                                <div class="bg-green-600 text-white font-bold py-0.5 px-3 rounded-lg text-center text-xs">
                                     <span>Surplus</span>
-                                    <span class="block text-xl">-20 200</span>
+                                    <span class="block text-lg font-semibold">-20 200</span>
                                 </div>
                             </div>
-                            <div class="chart-container" style="height: 120px; padding-top: 50px;"><canvas id="projectionsMecaniciensChart"></canvas></div>
+                            <div class="chart-container" style="height: 100px;"><canvas id="projectionsMecaniciensChart"></canvas></div>
                         </div>
                         <div>
                             <p class="text-sm mb-2">Ce métier présente un profil inverse. Avec <strong>50 700 jeunes débutants</strong> pour seulement 30 500 postes à pourvoir, les difficultés de recrutement actuelles pourraient se réduire d'ici 2030.</p>
