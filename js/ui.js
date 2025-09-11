@@ -479,10 +479,133 @@ function openModal(modalId) {
         setTimeout(() => feedback.classList.add("hidden"), 2000);
       });
     });
+  } else if (modalId === "outil_storytelling_atelier") {
+    const modalActions = document.getElementById("modal-actions");
+    modalActions.insertAdjacentHTML(
+      "afterbegin",
+      `<button id="download-pdf-btn" class="tool-button mr-4">Télécharger en PDF</button>`
+    );
+
+    document
+      .getElementById("download-pdf-btn")
+      .addEventListener("click", async () => {
+        const contentToExport = document.getElementById(
+          "storytelling-content-to-export"
+        );
+        if (!contentToExport) return;
+
+        const { jsPDF } = window.jspdf;
+        const { html2canvas } = window;
+
+        // Clone the node to avoid any layout shifts and ensure all styles apply
+        const clone = contentToExport.cloneNode(true);
+        // Put the clone offscreen but visible so html2canvas can render it
+        clone.style.position = "fixed";
+        clone.style.left = "-9999px";
+        clone.style.top = "0";
+        clone.style.width = getComputedStyle(contentToExport).width;
+        clone.style.background = "#ffffff";
+        document.body.appendChild(clone);
+
+        // Wait for images inside the clone to load (or error) before rendering
+        const imgs = Array.from(clone.querySelectorAll("img"));
+        await Promise.all(
+          imgs.map(
+            (img) =>
+              new Promise((resolve) => {
+                if (img.complete) return resolve();
+                img.addEventListener("load", resolve);
+                img.addEventListener("error", resolve);
+              })
+          )
+        );
+
+        // Small pause to let webfonts/layout settle (helps with blank renders)
+        await new Promise((r) => setTimeout(r, 150));
+
+        try {
+          const canvas = await html2canvas(clone, {
+            scale: Math.max(2, window.devicePixelRatio || 1),
+            useCORS: true,
+            background: "#ffffff",
+            scrollY: -window.scrollY, // avoid clipping from scroll
+          });
+
+          const imgData = canvas.toDataURL("image/png");
+
+          const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+          });
+          const margin = 10;
+          const pdfWidth = pdf.internal.pageSize.getWidth() - margin * 2;
+
+          // Use jsPDF helper to get image dimensions and split into pages if needed
+          const imgProps = pdf.getImageProperties(imgData);
+          const imgWidth = imgProps.width;
+          const imgHeight = imgProps.height;
+
+          const ratio = imgHeight / imgWidth;
+          const pdfImgHeight = pdfWidth * ratio;
+
+          // Convert full canvas (potentially tall) into pages
+          const pageHeight = pdf.internal.pageSize.getHeight() - margin * 2;
+
+          let remainingHeight = pdfImgHeight;
+          let position = 0;
+          const pxPerMm = imgWidth / pdfWidth; // pixels per mm for this render
+
+          while (remainingHeight > 0) {
+            const canvasPage = document.createElement("canvas");
+            canvasPage.width = canvas.width;
+            // compute the slice height in pixels corresponding to the pageHeight
+            const sliceHeightPx = Math.round(pageHeight * pxPerMm);
+            canvasPage.height = sliceHeightPx;
+
+            const ctx = canvasPage.getContext("2d");
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvasPage.width, canvasPage.height);
+            ctx.drawImage(
+              canvas,
+              0,
+              position,
+              canvas.width,
+              sliceHeightPx,
+              0,
+              0,
+              canvasPage.width,
+              canvasPage.height
+            );
+
+            const imgPageData = canvasPage.toDataURL("image/png");
+            if (position > 0) pdf.addPage();
+            pdf.addImage(
+              imgPageData,
+              "PNG",
+              margin,
+              margin,
+              pdfWidth,
+              pageHeight
+            );
+
+            position += sliceHeightPx;
+            remainingHeight -= pageHeight;
+          }
+
+          pdf.save("atelier_storytelling.pdf");
+        } catch (err) {
+          console.error("PDF export failed:", err);
+          alert("Impossible d'exporter en PDF pour le moment.");
+        } finally {
+          // clean up the clone
+          clone.remove();
+        }
+      });
+    document
+      .getElementById("close-modal-btn")
+      .addEventListener("click", closeModal);
   }
-  document
-    .getElementById("close-modal-btn")
-    .addEventListener("click", closeModal);
 }
 
 function closeModal() {

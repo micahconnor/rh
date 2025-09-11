@@ -828,6 +828,12 @@ export const guideData = {
 
               </div>
               <br>Ces récits authentiques sont vos meilleurs arguments. Diffusez-les en vidéo sur votre site et vos réseaux sociaux.`,
+        tools: [
+          {
+            name: "Atelier Storytelling",
+            id: "outil_storytelling_atelier",
+          },
+        ],
       },
       {
         title:
@@ -3715,6 +3721,72 @@ Nous cherchons un sens des responsabilités, de la ponctualité et un excellent 
                 </ul>
 
                 <p class="mt-6"><em>« Je vous remercie beaucoup pour le temps que vous m'avez accordé et pour votre transparence. »</em></p>
+            </div>`,
+  },
+
+  outil_storytelling_atelier: {
+    title: "Outil : Atelier Storytelling pour Créer un Récit Authentique",
+    content: `<div id="storytelling-content-to-export" class="prose max-w-none">
+                <p>Un bon récit vaut mieux qu'une longue liste d'avantages. Cet atelier est conçu pour vous aider à transformer un parcours collaborateur en une histoire authentique et inspirante, capable de marquer les esprits de vos futurs candidats.</p>
+                
+                <h3 class="font-bold text-xl mt-8" style="color: var(--c-primary);">Étape 1 : Choisissez votre héros et son histoire</h3>
+                <p>Commencez par identifier une histoire qui incarne les valeurs de votre entreprise. Voici trois archétypes puissants :</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                  <div class="idea-card p-4 rounded-lg text-center">
+                      <div class="flex-shrink-0 bg-red-100 p-3 rounded-full w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                          <svg class="w-8 h-8" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                      </div>
+                      <h4 class="font-bold text-md mb-2">La Reconversion</h4>
+                      <p class="text-sm">Le parcours d'une personne venue d'un autre secteur, qui a trouvé sa voie et s'épanouit chez vous.</p>
+                  </div>
+                  <div class="idea-card p-4 rounded-lg text-center">
+                       <div class="flex-shrink-0 bg-red-100 p-3 rounded-full w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                          <svg class="w-8 h-8" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                      </div>
+                      <h4 class="font-bold text-md mb-2">L'Évolution Interne</h4>
+                      <p class="text-sm">L'histoire d'un collaborateur qui a gravi les échelons grâce à la formation et à la confiance que vous lui avez accordée.</p>
+                  </div>
+                  <div class="idea-card p-4 rounded-lg text-center">
+                       <div class="flex-shrink-0 bg-red-100 p-3 rounded-full w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                          <svg class="w-8 h-8" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
+                      </div>
+                      <h4 class="font-bold text-md mb-2">L'Apprentissage</h4>
+                      <p class="text-sm">Le parcours d'un jeune alternant qui a grandi avec l'entreprise et qui en est aujourd'hui un pilier.</p>
+                  </div>
+                </div>
+
+                <h3 class="font-bold text-xl mt-8" style="color: var(--c-primary);">Étape 2 : Structurez votre récit en 4 actes</h3>
+                <p>Pour qu'une histoire soit captivante, elle doit suivre une structure simple. Voici un canevas universel :</p>
+                <div class="mt-6 space-y-4">
+                    <div class="idea-card p-4 rounded-lg"><strong>1. La Situation Initiale (L'accroche) :</strong> Qui était votre héros avant ? Quel était son défi ?<br><em class="text-sm">Ex: "Il y a 3 ans, Marc était conducteur scolaire. Passionné de mécanique, il sentait qu'il pouvait apporter plus."</em></div>
+                    <div class="idea-card p-4 rounded-lg"><strong>2. L'Opportunité (Le tournant) :</strong> Quelle opportunité s'est présentée ? Quelle a été la décision ?<br><em class="text-sm">Ex: "Quand un poste s'est libéré à l'atelier, nous lui avons proposé de se former en interne pour évoluer."</em></div>
+                    <div class="idea-card p-4 rounded-lg"><strong>3. Le Parcours (Le développement) :</strong> Comment l'avez-vous accompagné (formation, tutorat) ? Quels défis a-t-il surmontés ?<br><em class="text-sm">Ex: "Accompagné par notre chef d'atelier, il a suivi une formation qualifiante et a mis toute son énergie pour apprendre ce nouveau métier."</em></div>
+                    <div class="idea-card p-4 rounded-lg"><strong>4. La Transformation (Le résultat) :</strong> Qui est-il aujourd'hui ? Quel est le bénéfice pour lui et pour l'entreprise ?<br><em class="text-sm">Ex: "Aujourd'hui, Marc est un mécanicien confirmé, et sa double connaissance du terrain et de la technique est un atout immense pour toute l'équipe."</em></div>
+                </div>
+
+                <h3 class="font-bold text-xl mt-8" style="color: var(--c-primary);">Étape 3 : Mettez votre histoire en scène</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                  <div class="bg-gray-50 p-4 rounded-lg border">
+                      <h4 class="font-bold mb-2">Format Vidéo : Storyboard en 5 plans</h4>
+                      <p class="text-sm">Une vidéo courte (1 min 30) est idéale. Pas besoin de gros moyens, un smartphone récent suffit.</p>
+                      <ul class="list-disc pl-5 mt-2 text-sm space-y-1">
+                          <li><strong>Plan 1 :</strong> Interview du collaborateur (face caméra).</li>
+                          <li><strong>Plan 2 :</strong> Le collaborateur en action (au volant, à l'atelier...).</li>
+                          <li><strong>Plan 3 :</strong> Interaction avec un collègue ou un tuteur.</li>
+                          <li><strong>Plan 4 :</strong> Gros plan sur un détail de son travail (ses mains, un outil...).</li>
+                          <li><strong>Plan 5 :</strong> Plan final souriant, regardant vers l'avenir.</li>
+                      </ul>
+                  </div>
+                   <div class="bg-gray-50 p-4 rounded-lg border">
+                      <h4 class="font-bold mb-2">Format Écrit : Modèle de Récit</h4>
+                      <p class="text-sm">Parfait pour votre site carrière ou un post LinkedIn. Remplissez les trous !</p>
+                      <div class="p-3 mt-2 bg-white rounded-md border text-sm italic">
+                        <p><strong>[Prénom] a rejoint [Nom Entreprise] il y a [X] ans comme [Poste initial].</strong> Rapidement, nous avons décelé chez lui/elle [Qualité 1] et [Qualité 2]. C'est pourquoi, lorsque l'opportunité de [Opportunité] s'est présentée, nous lui avons proposé de l'accompagner.</p>
+                        <p class="mt-2">Aujourd'hui, après avoir [Action de formation], il/elle occupe le poste de [Nouveau poste] et [Bénéfice pour l'entreprise].</p>
+                        <p class="mt-2 font-semibold not-italic">Son parcours est la preuve que chez nous, les talents ont toute la place pour grandir.</p>
+                      </div>
+                  </div>
+                </div>
             </div>`,
   },
 
