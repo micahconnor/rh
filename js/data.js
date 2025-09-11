@@ -790,7 +790,7 @@ export const guideData = {
             id: "outil_swot",
           },
           {
-            name: "Générateur de PVE",
+            name: "Définir votre PVE",
             id: "outil_pve_builder",
           },
         ],
@@ -3719,76 +3719,66 @@ Nous cherchons un sens des responsabilités, de la ponctualité et un excellent 
   },
 
   outil_pve_builder: {
-    title: "Outil : Assistant de Rédaction de PVE",
-    content: `<div class="prose max-w-none" id="pve-generator-container">
-                <style>
-                    #pve-generator-container .pve-category { border-left: 3px solid var(--c-light); padding-left: 1rem; margin-bottom: 1.5rem; }
-                    #pve-generator-container .pve-options label { display: flex; align-items: center; padding: 0.5rem; border-radius: 0.375rem; cursor: pointer; transition: background-color 0.2s ease; }
-                    #pve-generator-container .pve-options label:hover { background-color: #f9fafb; }
-                    #pve-generator-container .pve-options input[type='checkbox'] { margin-right: 0.75rem; width: 1rem; height: 1rem; accent-color: var(--c-primary); }
-                    #pve-generator-container .pve-options input[type='text'] { margin-top: 0.5rem; width: 100%; font-size: 0.875rem; }
-                    #pvePreviewArea .preview-section p { min-height: 1.5em; }
-                </style>
-                <p>Cochez les atouts qui décrivent le mieux votre entreprise, puis cliquez sur "Générer" pour créer votre proposition de valeur.</p>
+    title: "Définir votre Proposition de Valeur Employeur (PVE)",
+    content: `<div class="prose max-w-none">
+                <p>La Proposition de Valeur Employeur (PVE) est le cœur de votre marque employeur. C'est l'ensemble unique des avantages et des expériences que vous offrez à vos collaborateurs en échange de leurs compétences et de leur engagement.</p>
                 
-                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- COLONNE DE GAUCHE : SÉLECTION DES OPTIONS -->
-                    <div class="space-y-6">
-                        <div class="pve-category">
-                            <h4 class="font-bold" style="color: var(--c-primary);">🤝 Culture & Environnement</h4>
-                            <div class="pve-options mt-2 space-y-1 text-sm">
-                                <label><input type="checkbox" data-category="culture" value="une ambiance familiale où chacun se connaît"> Ambiance familiale</label>
-                                <label><input type="checkbox" data-category="culture" value="un management de proximité et à l'écoute"> Management de proximité</label>
-                                <label><input type="checkbox" data-category="culture" value="une forte solidarité entre collègues"> Solidarité et entraide</label>
-                                <input type="text" data-category="culture" class="mt-2 w-full p-2 border rounded-md text-sm" placeholder="Autre point fort (ex: locaux modernes)...">
-                            </div>
-                        </div>
-                        <div class="pve-category">
-                            <h4 class="font-bold" style="color: var(--c-primary);">🚀 Carrière & Développement</h4>
-                            <div class="pve-options mt-2 space-y-1 text-sm">
-                                <label><input type="checkbox" data-category="carriere" value="des formations régulières pour vous maintenir à jour"> Formations régulières</label>
-                                <label><input type="checkbox" data-category="carriere" value="de réelles perspectives d'évolution interne"> Parcours d'évolution</label>
-                                <label><input type="checkbox" data-category="carriere" value="un système de tutorat pour vous accompagner"> Tutorat pour les nouveaux</label>
-                                <input type="text" data-category="carriere" class="mt-2 w-full p-2 border rounded-md text-sm" placeholder="Autre opportunité...">
-                            </div>
-                        </div>
-                        <div class="pve-category">
-                            <h4 class="font-bold" style="color: var(--c-primary);">💰 Rémunération & Avantages</h4>
-                            <div class="pve-options mt-2 space-y-1 text-sm">
-                                <label><input type="checkbox" data-category="remuneration" value="un 13ème mois"> 13ème mois</label>
-                                <label><input type="checkbox" data-category="remuneration" value="une mutuelle d'entreprise performante"> Mutuelle de qualité</label>
-                                <label><input type="checkbox" data-category="remuneration" value="des chèques-vacances"> Chèques-vacances</label>
-                                <input type="text" data-category="remuneration" class="mt-2 w-full p-2 border rounded-md text-sm" placeholder="Autre avantage financier...">
-                            </div>
-                        </div>
-                         <div class="pve-category">
-                            <h4 class="font-bold" style="color: var(--c-primary);">❤️ Équilibre & Bien-être</h4>
-                            <div class="pve-options mt-2 space-y-1 text-sm">
-                                <label><input type="checkbox" data-category="equilibre" value="des plannings stables communiqués à l'avance"> Plannings stables</label>
-                                <label><input type="checkbox" data-category="equilibre" value="des véhicules récents et bien entretenus"> Véhicules récents</label>
-                                <label><input type="checkbox" data-category="equilibre" value="un véritable respect de l'équilibre vie pro/perso"> Respect de l'équilibre pro/perso</label>
-                                <input type="text" data-category="equilibre" class="mt-2 w-full p-2 border rounded-md text-sm" placeholder="Autre avantage (ex: salle de pause)...">
-                            </div>
-                        </div>
-                    </div>
+                <div class="p-4 my-6 rounded-lg bg-gray-50 border-l-4" style="border-color: var(--c-accent);">
+                    <p class="font-semibold text-lg" style="color: var(--c-primary);">En bref, votre PVE répond à une question essentielle :</p>
+                    <p class="italic text-md" style="color: var(--c-secondary);">« Pourquoi un talent devrait-il rejoindre notre entreprise plutôt qu'une autre, et surtout, pourquoi devrait-il y rester ? »</p>
+                </div>
 
-                    <!-- COLONNE DE DROITE : PVE GÉNÉRÉE -->
-                    <div class="bg-gray-50 p-6 rounded-lg border sticky top-24 h-fit">
-                        <h4 class="font-bold text-lg" style="color: var(--c-primary);">Votre Promesse Employeur</h4>
-                        <button id="generatePveBtn" class="tool-button w-full text-base !font-bold my-4" style="background-color: var(--c-primary); color: var(--c-white);">Générer / Mettre à jour</button>
-                        <p id="pveStatus" class="text-xs text-center text-gray-500 hidden">Génération en cours…</p>
-                        <div id="pvePreviewArea" class="hidden">
-                            <div class="preview-section space-y-3">
-                                <p id="previewCulture" class="text-sm"></p>
-                                <p id="previewCarriere" class="text-sm"></p>
-                                <p id="previewRemuneration" class="text-sm"></p>
-                                <p id="previewEquilibre" class="text-sm"></p>
-                            </div>
-                            <p id="copyPveFeedback" class="text-xs text-center text-green-600 hidden mt-3">Texte copié !</p>
-                            <button id="copyPveBtn" class="tool-button w-full text-sm mt-3">Copier le texte</button>
-                        </div>
+                <h3 class="font-bold text-xl mt-8" style="color: var(--c-primary);">Les 5 Piliers d'une PVE Complète</h3>
+                <p>Une PVE solide s'articule autour de cinq thématiques clés. Identifiez vos points forts dans chaque catégorie pour construire une promesse authentique.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <!-- Pilier 1 -->
+                    <div class="idea-card p-4 rounded-lg flex items-start space-x-4">
+                        <div class="flex-shrink-0 bg-red-100 p-2 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 16v-1m0 1v.01M12 16c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                        <div><h4 class="font-bold text-md">Rémunération & Avantages</h4><p class="text-sm">Salaires, primes, 13ème mois, mutuelle, titres-restaurant, chèques-vacances...</p></div>
+                    </div>
+                    <!-- Pilier 2 -->
+                    <div class="idea-card p-4 rounded-lg flex items-start space-x-4">
+                        <div class="flex-shrink-0 bg-red-100 p-2 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg></div>
+                        <div><h4 class="font-bold text-md">Carrière & Développement</h4><p class="text-sm">Opportunités de formation, perspectives d'évolution, mobilité interne, tutorat...</p></div>
+                    </div>
+                    <!-- Pilier 3 -->
+                    <div class="idea-card p-4 rounded-lg flex items-start space-x-4">
+                        <div class="flex-shrink-0 bg-red-100 p-2 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
+                        <div><h4 class="font-bold text-md">Culture & Environnement</h4><p class="text-sm">Ambiance de travail, valeurs, management de proximité, communication, convivialité...</p></div>
+                    </div>
+                     <!-- Pilier 4 -->
+                    <div class="idea-card p-4 rounded-lg flex items-start space-x-4">
+                        <div class="flex-shrink-0 bg-red-100 p-2 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                        <div><h4 class="font-bold text-md">Équilibre & Bien-être</h4><p class="text-sm">Qualité des plannings, flexibilité, confort des véhicules, qualité des locaux, sécurité...</p></div>
                     </div>
                 </div>
+
+                <h3 class="font-bold text-xl mt-8" style="color: var(--c-primary);">Comment Définir votre PVE en 3 Étapes</h3>
+                <div class="relative border-l-2 border-dashed ml-4 mt-6 space-y-8" style="border-color: var(--c-accent-light);">
+                    <!-- Étape 1 -->
+                    <div class="ml-8">
+                        <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold" style="background-color: var(--c-accent);">1</div>
+                        <h4 class="font-bold text-lg">Diagnostiquer</h4>
+                        <p class="text-sm mt-1">Identifiez vos forces réelles. Ne cherchez pas à deviner ! Organisez un atelier avec vos collaborateurs, menez des entretiens, analysez les raisons de départ mais aussi (et surtout) pourquoi vos meilleurs talents restent.</p>
+                    </div>
+                     <!-- Étape 2 -->
+                    <div class="ml-8">
+                        <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold" style="background-color: var(--c-accent);">2</div>
+                        <h4 class="font-bold text-lg">Formaliser</h4>
+                        <p class="text-sm mt-1">Rédigez une promesse claire et concise (3 à 5 phrases). Elle doit être authentique, différenciante et répondre aux attentes de vos candidats cibles. Mettez en avant ce qui vous rend unique.</p>
+                    </div>
+                     <!-- Étape 3 -->
+                    <div class="ml-8">
+                        <div class="absolute -left-4 mt-1.5 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold" style="background-color: var(--c-accent);">3</div>
+                        <h4 class="font-bold text-lg">Diffuser</h4>
+                        <p class="text-sm mt-1">Votre PVE doit vivre partout ! Infusez-la dans vos offres d'emploi, sur votre site carrière, dans vos messages sur les réseaux sociaux et dans le discours de vos managers lors des entretiens.</p>
+                    </div>
+                </div>
+
+                <div class="p-4 mt-8 rounded-lg bg-gray-50 border">
+                    <h4 class="font-bold text-lg mb-2" style="color: var(--c-primary);">Exemple Concret de PVE</h4>
+                    <p class="text-sm italic">"Rejoindre les Transports Martin, c'est intégrer une PME familiale où la solidarité n'est pas qu'un mot. Nous offrons des plannings stables et des véhicules récents pour garantir votre confort et votre sécurité. Chez nous, votre montée en compétences est une priorité, avec des formations régulières et de vraies perspectives d'évolution vers le tourisme ou l'exploitation."</p>
+             </div>
             </div>`,
   },
 
