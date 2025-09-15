@@ -797,7 +797,7 @@ export const guideData = {
       },
       {
         title:
-          "1.2 ⸺ Le Storytelling : Racontez Votre Histoire pour Marquer les Esprits",
+          "1.2 ⸺ Le Storytelling : Raconter Votre Histoire pour Marquer les Esprits",
         content: `Le storytelling est l'art de raconter des histoires pour créer une connexion émotionnelle. Dans le contexte de la marque employeur, il s'agit de dépasser la simple liste d'avantages pour donner vie à votre culture d'entreprise. Racontez des parcours individuels inspirants pour illustrer vos valeurs en action.
               <br><br>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
@@ -882,17 +882,25 @@ export const guideData = {
                   </div>
               </div>`,
         tools: [
-          { name: "Exemple d'Annonce", id: "outil_annonce" },
           {
-            name: "Trame Offre d'Emploi (Word)",
+            name: "Générateur — Offres Personnalisées",
             type: "link",
-            url: "https://drive.google.com/uc?export=download&id=1oMwIasL1TSv6kbLWdUfTtD6eZlolsOwR",
+            url: "https://codepen.io/reunir/live/Kwdjjjj/ad8b5b90b4e748fb327429df73d3676c",
+          },
+          {
+            name: "Créer un CV Inversé Percutant",
+            id: "outil_cv_inverse",
+          },
+          {
+            name: "Générateur — Flyers de Recrutement",
+            type: "link",
+            url: "https://codepen.io/reunir/live/myeZNao",
           },
         ],
       },
       {
         title:
-          "1.4 ⸺ Le Programme de Cooptation : Transformez vos Salariés en Ambassadeurs",
+          "1.4 ⸺ Le Programme de Cooptation : Transformer vos Salariés en Ambassadeurs",
         content: `La cooptation, ou recrutement par recommandation, est l'un des leviers les plus puissants et les plus rentables, et pourtant il est largement sous-utilisé. Le principe est simple : un salarié vous recommande une personne de son réseau. Si cette personne est embauchée, le salarié reçoit une gratification ou prime.
               <br><br>
               <h4 class="font-bold text-lg mt-4 mb-4" style="color: var(--c-primary);">Les Avantages d'un Programme de Cooptation :</h4>
@@ -976,7 +984,7 @@ export const guideData = {
       },
       {
         title:
-          "1.6 ⸺ Communiquer pour Attirer : Valorisez votre Impact et votre Identité",
+          "1.6 ⸺ Communiquer pour Attirer : Valoriser votre Impact et votre Identité",
         content: `Votre communication externe est la vitrine de votre marque employeur. Elle doit être active, authentique et ciblée pour attirer les bons profils.
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div class="idea-card p-4 rounded-lg flex items-center space-x-4">
@@ -1604,7 +1612,7 @@ export const guideData = {
                                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg></div>
                                     <h4 class="font-bold text-md mb-1 mt-3">Immersion et Stages</h4>
-                                    <p class="text-sm">Accueillez des stagiaires pour faire découvrir les coulisses de vos métiers et susciter des vocations futures.</p>
+                                    <p class="text-sm">Accueillir des stagiaires pour faire découvrir les coulisses de vos métiers et susciter des vocations futures.</p>
                                 </div>
                                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
@@ -1614,7 +1622,7 @@ export const guideData = {
                                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                                      <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75c0-.231-.035-.454-.1-.664M6.75 7.5H18a2.25 2.25 0 012.25 2.25v9a2.25 2.25 0 01-2.25-2.25H6.75a2.25 2.25 0 01-2.25-2.25v-9a2.25 2.25 0 012.25-2.25z" /></svg></div>
                                     <h4 class="font-bold text-md mb-1 mt-3">Onboarding Transparent</h4>
-                                    <p class="text-sm">Mettez en place un parcours d'intégration clairement défini et visible pour une prise de poste efficiente et rassurante.</p>
+                                    <p class="text-sm">Mettre en place un parcours d'intégration clairement défini et visible pour une prise de poste efficiente et rassurante.</p>
                                 </div>
                                
                             </div>`,
@@ -1757,7 +1765,7 @@ export const guideData = {
       },
       {
         title:
-          "4.3 ⸺ Développez vos Talents : Les Outils Exclusifs du Groupe Associatif Réunir",
+          "4.3 ⸺ Développer vos Talents : Les Outils Exclusifs du Groupe Associatif Réunir",
         content: `Au-delà des formations réglementaires, le réseau Réunir met à votre disposition des outils exclusifs pour faire monter en compétences vos équipes sur des sujets clés. Ces programmes, conçus par et pour des professionnels du TRV, sont des leviers puissants de performance et de fidélisation.
               <br><br>
               <div class="space-y-4">
@@ -1911,17 +1919,17 @@ export const guideData = {
                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
                     <h4 class="font-bold text-md mb-1 mt-3">Les "Flash Formations"</h4>
-                    <p class="text-sm">Organisez des sessions de formation très courtes (15-20 min) avant le début du service sur un point très précis : un rappel de sécurité, une nouvelle fonctionnalité du véhicule, une astuce de gestion de conflit...</p>
+                    <p class="text-sm">Organiser des sessions de formation très courtes (15-20 min) avant le début du service sur un point très précis : un rappel de sécurité, une nouvelle fonctionnalité du véhicule, une astuce de gestion de conflit...</p>
                 </div>
                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" /></svg></div>
                     <h4 class="font-bold text-md mb-1 mt-3">Le Tutorat Croisé</h4>
-                    <p class="text-sm">Faites intervenir un mécanicien expérimenté pour animer une session sur les "pannes évitables" auprès des conducteurs, ou organisez des échanges de pratiques entre conducteurs de différentes lignes.</p>
+                    <p class="text-sm">Faire intervenir un mécanicien expérimenté pour animer une session sur les "pannes évitables" auprès des conducteurs, ou organisez des échanges de pratiques entre conducteurs de différentes lignes.</p>
                 </div>
                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" /></svg></div>
                     <h4 class="font-bold text-md mb-1 mt-3">Le Challenge Éco-conduite</h4>
-                    <p class="text-sm">Lancez un défi mensuel ou trimestriel sur l'éco-conduite, avec un petit lot à la clé pour le conducteur ou l'équipe qui aura le plus réduit sa consommation. La gamification (l'utilisation des mécanismes du jeu dans d'autres domaines) rend l'apprentissage plus ludique !</p>
+                    <p class="text-sm">Lancer un défi mensuel ou trimestriel sur l'éco-conduite, avec un petit lot à la clé pour le conducteur ou l'équipe qui aura le plus réduit sa consommation. La gamification (l'utilisation des mécanismes du jeu dans d'autres domaines) rend l'apprentissage plus ludique !</p>
                 </div>
             </div>`,
       },
@@ -2361,7 +2369,7 @@ export const guideData = {
                                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg></div>
                                     <h4 class="font-bold text-md mb-1 mt-3">Management de Proximité</h4>
-                                    <p class="text-sm">Soyez à l'écoute, respectez l'équilibre de vie et faites preuve de souplesse pour renforcer l'engagement de vos équipes.</p>
+                                    <p class="text-sm">Être à l'écoute, respecter l'équilibre de vie et faire preuve de souplesse pour renforcer l'engagement de vos équipes.</p>
                                 </div>
                                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
@@ -2372,7 +2380,7 @@ export const guideData = {
                                 <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                                     <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg></div>
                                     <h4 class="font-bold text-md mb-1 mt-3">Comité d'Écoute</h4>
-                                    <p class="text-sm">Mettez en place un comité d'échange régulier avec les salariés pour améliorer continuellement l'environnement de travail.</p>
+                                    <p class="text-sm">Mettre en place un comité d'échange régulier avec les salariés pour améliorer continuellement l'environnement de travail.</p>
                                 </div>
                             </div>`,
       },
@@ -2491,17 +2499,17 @@ export const guideData = {
                         <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                             <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" /></svg></div>
                             <h4 class="font-bold text-md mb-1 mt-3">Annoncer le départ avec tact</h4>
-                            <p class="text-sm">Communiquez la nouvelle à l'équipe de manière factuelle et respectueuse, en précisant les modalités de la transition pour rassurer tout le monde.</p>
+                            <p class="text-sm">Communiquer la nouvelle à l'équipe de manière factuelle et respectueuse, en précisant les modalités de la transition pour rassurer tout le monde.</p>
                         </div>
                         <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                             <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.015-4.5-4.5-4.5zM12 1.5c-4.965 0-9 4.035-9 9s4.035 9 9 9 9-4.035 9-9-4.035-9-9-9zM12 6a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" /></svg></div>
                             <h4 class="font-bold text-md mb-1 mt-3">Organiser un "Pot de Transmission"</h4>
-                            <p class="text-sm">Pour les départs à la retraite, organisez un moment convivial où le partant peut partager quelques anecdotes et "secrets" de son métier aux plus jeunes.</p>
+                            <p class="text-sm">Pour les départs à la retraite, organiser un moment convivial où le partant peut partager quelques anecdotes et "secrets" de son métier aux plus jeunes.</p>
                         </div>
                         <div class="idea-card p-4 rounded-lg flex flex-col items-center text-center">
                             <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-9.75" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 6h-9.75" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 18h-9.75" /><path stroke-linecap="round" stroke-linejoin="round" d="M12.75 21v-3.375" /><path stroke-linecap="round" stroke-linejoin="round" d="M12.75 6.375V3" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 3.375V21" /></svg></div>
                             <h4 class="font-bold text-md mb-1 mt-3">Formaliser la passation</h4>
-                            <p class="text-sm">Utilisez une simple fiche de passation pour lister les tâches, contacts et informations importantes. Cela facilite la vie du remplaçant et de toute l'équipe.</p>
+                            <p class="text-sm">Utiliser une simple fiche de passation pour lister les tâches, contacts et informations importantes. Cela facilite la vie du remplaçant et de toute l'équipe.</p>
                         </div>
                     </div>`,
       },
@@ -2514,7 +2522,7 @@ export const guideData = {
     intro: `
         <div class="flex items-center mb-6">
             <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-8 h-8" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9 9 0 01-9-9h18a9 9 0 01-9 9zm0-18a9 9 0 00-9 9h18a9 9 0 00-9-9z"></path></svg></div>
-            <h3 class="text-xl font-bold ml-4" style="color: var(--c-primary);">Chapitre VII : Tech + IA, vos Alliés RH</h3>
+            <h3 class="text-xl font-bold ml-4" style="color: var(--c-primary);">Chapitre VII : Technologie + Intelligence Artificielle, vos Alliés RH</h3>
         </div>
         <div class="p-4 rounded-lg bg-gray-50 border-t-4 mb-6" style="border-color: var(--c-accent);">
             <div class="flex">
@@ -3915,6 +3923,69 @@ Nous cherchons un sens des responsabilités, de la ponctualité et un excellent 
                         </div>
                     </div>
 
+                </div>
+            </div>`,
+  },
+  outil_cv_inverse: {
+    title: "Outil : Créer un CV Inversé percutant",
+    content: `<div class="prose max-w-none">
+                <p>Le CV Inversé change les règles du jeu : au lieu d'attendre les candidatures, c'est l'entreprise qui se présente pour séduire les talents. C'est un outil puissant pour vous démarquer et toucher des profils qui ne sont pas en recherche active.</p>
+                
+                <div class="sub-nav-container mt-8 mb-0">
+                    <button class="sub-nav-button active" data-target="pane-cv-example">🖼️ L'Exemple en Action</button>
+                    <button class="sub-nav-button" data-target="pane-cv-guide">📝 Le Guide Pas à Pas</button>
+                </div>
+
+                <div id="pane-cv-example" class="sub-content-pane !pt-0">
+                    <div id="cv-inverse-example-export" class="p-6 bg-white border rounded-b-lg">
+                        <div class="text-center pb-4 border-b">
+                            <img src="https://i.postimg.cc/3xYdhRdZ/Logo-Reunir-Services-2.png" alt="Logo de votre entreprise" class="mx-auto h-12 mb-4" />
+                            <h3 class="text-xl font-bold" style="color: var(--c-primary);">Nous recrutons un(e) Conducteur/trice Scolaire (H/F)</h3>
+                            <p class="text-md" style="color: var(--c-secondary);">Et si c'était vous ?</p>
+                        </div>
+                        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                            <div class="md:col-span-2 space-y-4">
+                                <div>
+                                    <h4 class="font-bold text-md mb-1" style="color: var(--c-primary);">NOTRE PROFIL</h4>
+                                    <p>PME familiale depuis 30 ans, nous sommes fiers de notre rôle essentiel dans la vie locale. Notre culture est basée sur la proximité, l'entraide et la confiance.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-md mb-1" style="color: var(--c-primary);">VOS FUTURES MISSIONS</h4>
+                                    <p>Plus qu'un simple transport, vous serez le garant de la sécurité et du bien-être des enfants de notre commune. Un rôle clé qui a du sens.</p>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-bold text-md mb-1" style="color: var(--c-primary);">CONTACT</h4>
+                                    <p><strong>Prêt(e) à nous rencontrer ?</strong><br>Pas besoin de CV !<br>Appelez directement [Nom] au [Numéro] ou flashez ce code :</p>
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=tel:[0156026262]" alt="QR Code pour appeler" class="mt-2" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                             <h4 class="font-bold text-md mb-2 text-center" style="color: var(--c-primary);">NOS COMPÉTENCES (Ce que nous vous offrons)</h4>
+                             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                                <li class="flex items-start"><span class="mr-2 text-accent" style="color: var(--c-accent);">✔</span> Un CDI à temps partiel (20h/semaine)</li>
+                                <li class="flex items-start"><span class="mr-2 text-accent" style="color: var(--c-accent);">✔</span> Des horaires fixes uniquement en période scolaire</li>
+                                <li class="flex items-start"><span class="mr-2 text-accent" style="color: var(--c-accent);">✔</span> Un 13ème mois et une mutuelle de qualité</li>
+                                <li class="flex items-start"><span class="mr-2 text-accent" style="color: var(--c-accent);">✔</span> Des véhicules récents et bien entretenus</li>
+                                <li class="flex items-start"><span class="mr-2 text-accent" style="color: var(--c-accent);">✔</span> Une ambiance de travail solidaire et respectueuse</li>
+                                <li class="flex items-start"><span class="mr-2 text-accent" style="color: var(--c-accent);">✔</span> La fierté d'un métier utile à la communauté</li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pane-cv-guide" class="sub-content-pane !pt-0 hidden">
+                    <div id="cv-inverse-guide-export" class="p-6 bg-white border rounded-b-lg">
+                        <h3 class="text-xl font-bold text-center mb-4" style="color: var(--c-primary);">Guide Rapide : Créer votre CV Inversé</h3>
+                        <div class="space-y-4">
+                            <div class="idea-card p-4"><strong>Étape 1 : Définissez votre Cible.</strong> À qui parlez-vous ? Un retraité cherchant un complément ? Un parent au foyer ? Adaptez votre message à leurs attentes (ex: "horaires compatibles", "complément de revenus stable").</div>
+                            <div class="idea-card p-4"><strong>Étape 2 : Mettez en avant vos 3 atouts clés.</strong> Ne listez pas tout. Choisissez les 3 avantages les plus forts de votre PVE (ex: Stabilité du CDI, Ambiance familiale, Horaires fixes). C'est votre "accroche".</div>
+                            <div class="idea-card p-4"><strong>Étape 3 : Simplifiez le contact au maximum.</strong> L'objectif est de lever tous les freins. Oubliez le CV et la lettre de motivation. Proposez un simple appel téléphonique, un passage au dépôt, ou un QR code qui compose le numéro.</div>
+                            <div class="idea-card p-4"><strong>Étape 4 : Soignez le visuel.</strong> Utilisez un format A5 ou A6 facile à distribuer. Intégrez votre logo, une photo de vos véhicules ou de votre équipe. L'objectif : avoir l'air professionnel et accessible.</div>
+                        </div>
+                    </div>
                 </div>
             </div>`,
   },

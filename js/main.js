@@ -112,8 +112,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Close modal when clicking on overlay OR any X button inside the modal
   modalContainer.addEventListener("click", (e) => {
-    if (e.target === modalContainer) closeModal();
+    if (e.target === modalContainer) {
+      closeModal();
+      return;
+    }
+    const closeBtn = e.target.closest("#close-modal-btn, .close-modal-btn");
+    if (closeBtn) {
+      e.preventDefault();
+      closeModal();
+    }
   });
 
   searchInput.addEventListener("input", (e) => {

@@ -123,6 +123,12 @@ function openModal(modalId) {
     `;
   modalContainer.classList.add("visible");
 
+  // Ensure the header X button closes the modal for all tools
+  const headerCloseBtn = document.getElementById("close-modal-btn");
+  if (headerCloseBtn) {
+    headerCloseBtn.addEventListener("click", closeModal, { once: true });
+  }
+
   if (modalId === "outil_annonce") {
     const modalActions = document.getElementById("modal-actions");
     modalActions.insertAdjacentHTML(
@@ -558,6 +564,72 @@ function openModal(modalId) {
           contentToExport.style.backgroundColor = "";
         });
       });
+  } else if (modalId === "outil_cv_inverse") {
+    const modalActions = document.getElementById("modal-actions");
+    modalActions.insertAdjacentHTML(
+      "afterbegin",
+      `<button id="download-example-pdf-btn" class="tool-button mr-2">Télécharger l'Exemple</button>
+       <button id="download-guide-pdf-btn" class="tool-button mr-4" style="display: none;">Télécharger le Guide</button>`
+    );
+
+    const generatePdf = (elementId, filename) => {
+      const contentToExport = document.getElementById(elementId);
+      if (!contentToExport) return;
+
+      html2canvas(contentToExport, { scale: 2, useCORS: true }).then(
+        (canvas) => {
+          const imgData = canvas.toDataURL("image/jpeg", 0.95);
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+          });
+
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const contentWidth = pdfWidth - 30; // 15mm margins
+          const contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+          pdf.addImage(imgData, "JPEG", 15, 15, contentWidth, contentHeight);
+          pdf.save(filename);
+        }
+      );
+    };
+
+    document
+      .getElementById("download-example-pdf-btn")
+      .addEventListener("click", () => {
+        generatePdf("cv-inverse-example-export", "exemple_cv_inverse.pdf");
+      });
+    document
+      .getElementById("download-guide-pdf-btn")
+      .addEventListener("click", () => {
+        generatePdf("cv-inverse-guide-export", "guide_cv_inverse.pdf");
+      });
+
+    // Tab logic
+    const tabs = modalContent.querySelectorAll(".sub-nav-button");
+    const panes = modalContent.querySelectorAll(".sub-content-pane");
+    const btnExample = document.getElementById("download-example-pdf-btn");
+    const btnGuide = document.getElementById("download-guide-pdf-btn");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        const targetPaneId = tab.dataset.target;
+        panes.forEach((pane) => {
+          pane.classList.toggle("hidden", pane.id !== targetPaneId);
+        });
+
+        // Toggle visibility of download buttons
+        btnExample.style.display =
+          targetPaneId === "pane-cv-example" ? "inline-flex" : "none";
+        btnGuide.style.display =
+          targetPaneId === "pane-cv-guide" ? "inline-flex" : "none";
+      });
+    });
     document
       .getElementById("close-modal-btn")
       .addEventListener("click", closeModal);
