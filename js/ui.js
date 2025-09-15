@@ -1,5 +1,5 @@
 // This file handles all UI-related tasks: rendering content, managing charts, and modals.
-import { guideData, modalData, lexiconData } from "./data.js";
+import { guideData, modalData, lexiconData, getSelectedLogo } from "./data.js";
 
 let currentCharts = [];
 const contentArea = document.getElementById("content-area");
@@ -37,6 +37,90 @@ function applyLexicon(container) {
       node.parentNode.replaceChild(newNode, node);
     }
   }
+}
+
+// Nouvelle fonction d'assistance pour le téléchargement PDF générique
+function generateGenericPdf(contentElementId, titleText) {
+  const contentToExport = document.getElementById(contentElementId);
+  if (!contentToExport) return;
+
+  const { jsPDF } = window.jspdf;
+  const { html2canvas } = window;
+  const logoUrl = getSelectedLogo();
+  const headerContainer = document.createElement("div");
+  // Crée un nom de fichier sécurisé à partir du titre
+  const filename =
+    (titleText || "outil_rh")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .substring(0, 40) + ".pdf";
+
+  let logoHTML = "";
+  if (logoUrl) {
+    logoHTML = `<img src="${logoUrl}" style="max-height: 40px; width: auto; margin: 0 auto;" crossorigin="anonymous" />`;
+  }
+
+  // Crée un en-tête complet incluant le logo et le titre de l'outil
+  headerContainer.id = "temp-pdf-header";
+  headerContainer.style.textAlign = "center";
+  headerContainer.style.paddingBottom = "15px";
+  headerContainer.style.borderBottom = "1px solid #eee";
+  headerContainer.style.marginBottom = "15px";
+  headerContainer.innerHTML = `
+    ${logoHTML}
+    <h2 style="font-size: 1.5rem; font-weight: 700; color: #0D142D; margin-top: 10px; padding: 0 20px;">
+      ${titleText}
+    </h2>`;
+
+  // Prépare le contenu pour la capture
+  contentToExport.prepend(headerContainer);
+  contentToExport.style.padding = "20px";
+  contentToExport.style.backgroundColor = "#ffffff";
+
+  html2canvas(contentToExport, {
+    scale: 2,
+    useCORS: true,
+    logging: false,
+    windowWidth: contentToExport.scrollWidth,
+    windowHeight: contentToExport.scrollHeight,
+  }).then((canvas) => {
+    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const margin = 15;
+    const contentWidth = pdfWidth - margin * 2;
+    const contentHeight = (canvas.height * contentWidth) / canvas.width;
+    let heightLeft = contentHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, "JPEG", margin, margin, contentWidth, contentHeight);
+    heightLeft -= pdfHeight - margin * 2;
+
+    while (heightLeft > 0) {
+      position = heightLeft - contentHeight;
+      pdf.addPage();
+      pdf.addImage(
+        imgData,
+        "JPEG",
+        margin,
+        position - margin,
+        contentWidth,
+        contentHeight
+      );
+      heightLeft -= pdfHeight - margin * 2;
+    }
+    pdf.save(filename);
+
+    // Nettoyage du DOM
+    contentToExport.removeChild(headerContainer);
+    contentToExport.style.padding = "";
+    contentToExport.style.backgroundColor = "";
+  });
 }
 
 function openLexiconModal(term) {
@@ -119,7 +203,7 @@ function openModal(modalId) {
                 <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
             </div>
         </div>
-        <div class="prose max-w-none" style="color: var(--c-secondary);">${data.content}</div>
+        <div id="modal-exportable-content" class="prose max-w-none" style="color: var(--c-secondary);">${data.content}</div>
     `;
   modalContainer.classList.add("visible");
 
@@ -501,19 +585,31 @@ function openModal(modalId) {
         const { jsPDF } = window.jspdf;
         const { html2canvas } = window;
 
-        // Temporarily adjust styles for better PDF rendering
+        const logoUrl = getSelectedLogo(); // <-- Utilise la fonction importée
+        const logoContainer = document.createElement("div");
+
+        if (logoUrl) {
+          logoContainer.id = "temp-pdf-logo-header";
+          logoContainer.style.textAlign = "center";
+          logoContainer.style.paddingBottom = "15px";
+          logoContainer.style.borderBottom = "1px solid #eee";
+          logoContainer.style.marginBottom = "15px";
+          logoContainer.innerHTML = `<img src="${logoUrl}" style="max-height: 40px; width: auto; margin: 0 auto;" crossorigin="anonymous" />`;
+          contentToExport.prepend(logoContainer);
+        }
+
+        // Appliquer les styles temporaires
         contentToExport.style.padding = "20px";
         contentToExport.style.backgroundColor = "#ffffff";
 
         html2canvas(contentToExport, {
-          scale: 2, // Use a higher scale for better resolution
-          useCORS: true,
+          scale: 2,
+          useCORS: true, // Nécessaire pour l'image cross-origin
           logging: false,
           windowWidth: contentToExport.scrollWidth,
           windowHeight: contentToExport.scrollHeight,
         }).then((canvas) => {
-          const imgData = canvas.toDataURL("image/jpeg", 0.95); // Use JPEG for smaller file size
-
+          const imgData = canvas.toDataURL("image/jpeg", 0.95);
           const pdf = new jsPDF({
             orientation: "portrait",
             unit: "mm",
@@ -522,15 +618,13 @@ function openModal(modalId) {
 
           const pdfWidth = pdf.internal.pageSize.getWidth();
           const pdfHeight = pdf.internal.pageSize.getHeight();
-          const margin = 15; // 15mm margin
-
+          const margin = 15;
           const contentWidth = pdfWidth - margin * 2;
           const contentHeight = (canvas.height * contentWidth) / canvas.width;
 
           let heightLeft = contentHeight;
           let position = 0;
 
-          // Add the first page
           pdf.addImage(
             imgData,
             "JPEG",
@@ -541,11 +635,9 @@ function openModal(modalId) {
           );
           heightLeft -= pdfHeight - margin * 2;
 
-          // Add new pages if content overflows
           while (heightLeft > 0) {
             position = heightLeft - contentHeight;
             pdf.addPage();
-            // The negative position shifts the image up to show the next part
             pdf.addImage(
               imgData,
               "JPEG",
@@ -559,7 +651,10 @@ function openModal(modalId) {
 
           pdf.save("atelier_storytelling.pdf");
 
-          // Restore original styles
+          // --- Nettoyage ---
+          if (logoUrl) {
+            contentToExport.removeChild(logoContainer);
+          }
           contentToExport.style.padding = "";
           contentToExport.style.backgroundColor = "";
         });
@@ -576,24 +671,43 @@ function openModal(modalId) {
       const contentToExport = document.getElementById(elementId);
       if (!contentToExport) return;
 
-      html2canvas(contentToExport, { scale: 2, useCORS: true }).then(
-        (canvas) => {
-          const imgData = canvas.toDataURL("image/jpeg", 0.95);
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "mm",
-            format: "a4",
-          });
+      const logoUrl = getSelectedLogo(); // <-- Utilise la fonction importée
+      const logoContainer = document.createElement("div");
 
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const contentWidth = pdfWidth - 30; // 15mm margins
-          const contentHeight = (canvas.height * contentWidth) / canvas.width;
+      if (logoUrl) {
+        logoContainer.id = "temp-pdf-logo-header";
+        logoContainer.style.textAlign = "center";
+        logoContainer.style.paddingBottom = "15px";
+        logoContainer.style.borderBottom = "1px solid #eee";
+        logoContainer.style.marginBottom = "15px";
+        logoContainer.innerHTML = `<img src="${logoUrl}" style="max-height: 40px; width: auto; margin: 0 auto;" crossorigin="anonymous" />`;
+        contentToExport.prepend(logoContainer);
+      }
 
-          pdf.addImage(imgData, "JPEG", 15, 15, contentWidth, contentHeight);
-          pdf.save(filename);
+      html2canvas(contentToExport, {
+        scale: 2,
+        useCORS: true, // Nécessaire pour l'image cross-origin
+      }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/jpeg", 0.95);
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4",
+        });
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const contentWidth = pdfWidth - 30; // 15mm margins
+        const contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+        pdf.addImage(imgData, "JPEG", 15, 15, contentWidth, contentHeight);
+        pdf.save(filename);
+
+        // --- Nettoyage ---
+        if (logoUrl) {
+          contentToExport.removeChild(logoContainer);
         }
-      );
+      });
     };
 
     document
@@ -634,6 +748,31 @@ function openModal(modalId) {
       .getElementById("close-modal-btn")
       .addEventListener("click", closeModal);
   }
+  // --- NOUVELLE LOGIQUE CI-DESSOUS ---
+  // Ajoute un bouton de téléchargement PDF générique à tous les outils
+  // SAUF ceux qui ont des boutons personnalisés ou qui sont interactifs.
+  const specialTools = [
+    "outil_annonce", // A des boutons PDF/Word personnalisés
+    "outil_pve_builder", // Est un outil interactif (copier le texte est la fonction)
+    "outil_storytelling_atelier", // A son propre bouton PDF personnalisé
+    "outil_cv_inverse", // A deux boutons PDF personnalisés
+  ];
+
+  if (!specialTools.includes(modalId)) {
+    const modalActions = document.getElementById("modal-actions");
+    modalActions.insertAdjacentHTML(
+      "afterbegin",
+      `<button id="generic-download-pdf-btn" class="tool-button mr-4">Télécharger en PDF</button>`
+    );
+
+    document
+      .getElementById("generic-download-pdf-btn")
+      .addEventListener("click", () => {
+        // Appelle notre nouvelle fonction d'assistance
+        generateGenericPdf("modal-exportable-content", data.title);
+      });
+  }
+  // --- FIN DE LA NOUVELLE LOGIQUE ---
 }
 
 function closeModal() {

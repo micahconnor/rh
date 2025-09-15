@@ -983,27 +983,60 @@ export const guideData = {
         ],
       },
       {
-        title:
-          "1.6 ⸺ Communiquer pour Attirer : Valoriser votre Impact et votre Identité",
-        content: `Votre communication externe est la vitrine de votre marque employeur. Elle doit être active, authentique et ciblée pour attirer les bons profils.
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div class="idea-card p-4 rounded-lg flex items-center space-x-4">
-                <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L12 12" /></svg></div>
-                <div><h4 class="font-bold text-md">Valorisez l'Utilité Sociale</h4><p class="text-sm">Mettez en avant votre rôle dans la mobilité durable, le lien social et la cohésion territoriale.</p></div>
-            </div>
-            <div class="idea-card p-4 rounded-lg flex items-center space-x-4">
-                <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
-                <div><h4 class="font-bold text-md">Affirmez votre Identité</h4><p class="text-sm">Communiquez sur vos valeurs humaines, votre convivialité et votre culture positive pour vous différencier.</p></div>
-            </div>
-            <div class="idea-card p-4 rounded-lg flex items-center space-x-4">
-                <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg></div>
-                <div><h4 class="font-bold text-md">Communiquez sur votre Démarche RSE</h4><p class="text-sm">Mettez en avant vos actions concrètes : flotte électrique, carburants alternatifs, obtention de labels.</p></div>
-            </div>
-             <div class="idea-card p-4 rounded-lg flex items-center space-x-4">
-                <div class="flex-shrink-0 bg-red-100 p-3 rounded-full"><svg class="w-6 h-6" style="color: var(--c-accent);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
-                <div><h4 class="font-bold text-md">Valorisez la Diversité et l'Inclusion</h4><p class="text-sm">Lancez des campagnes valorisant la mixité : femmes conductrices, reconversions, seniors, jeunes diplômés.</p></div>
-            </div>
-        </div>`,
+        title: "1.6 ⸺ Communiquer pour Attirer",
+        content: `La communication est la dernière étape pour rendre visible tous vos efforts. Elle doit être authentique, ciblée et régulière pour porter ses fruits.
+              <br><br>
+              <div class="space-y-4">
+
+                  <div class="idea-card p-4 rounded-lg">
+                      <div class="flex items-start">
+                          <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                              <svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                          </div>
+                          <div class="ml-4">
+                              <h5 class="font-bold text-md" style="color: var(--c-primary);">Votre Site Carrière : Votre Vitrine Principale</h5>
+                              <p class="text-sm mt-1">C'est le pilier de votre communication. Il doit être simple, visuellement attractif et optimisé pour le mobile. Mettez-y en avant votre PVE, vos témoignages et des offres d'emploi claires. C'est l'image que vous renvoyez en premier.</p>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="idea-card p-4 rounded-lg">
+                      <div class="flex items-start">
+                          <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                               <svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                          </div>
+                          <div class="ml-4">
+                              <h5 class="font-bold text-md" style="color: var(--c-primary);">Les Réseaux Sociaux : Créez de l'Interaction</h5>
+                              <p class="text-sm mt-1">Ne vous contentez pas de poster des annonces. Partagez la vie de l'entreprise : un anniversaire, l'arrivée d'un nouveau véhicule, un événement d'équipe. Utilisez la vidéo pour des témoignages courts et percutants.</p>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="idea-card p-4 rounded-lg">
+                      <div class="flex items-start">
+                          <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                              <svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                          </div>
+                          <div class="ml-4">
+                              <h5 class="font-bold text-md" style="color: var(--c-primary);">Les Relations Écoles et Partenaires Locaux</h5>
+                              <p class="text-sm mt-1">Soyez proactifs. Intervenez dans les lycées professionnels, les CFA, et nouez des liens forts avec France Travail et les missions locales. Votre futur talent s'y trouve peut-être déjà.</p>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="idea-card p-4 rounded-lg">
+                      <div class="flex items-start">
+                          <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                               <svg class="w-6 h-6" style="color: var(--c-accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                          </div>
+                          <div class="ml-4">
+                              <h5 class="font-bold text-md" style="color: var(--c-primary);">Collaboration RSE : Donnez du sens à votre Marque Employeur</h5>
+                              <p class="text-sm mt-1">Vos engagements sociétaux et environnementaux sont un puissant levier d'attraction. Contactez le pôle partenariats et développement durable de Réunir pour valoriser vos actions. Le <a href="https://reunir.org/nos-services/label-reunir-rse" target="_blank" class="underline" style="color: var(--c-accent); font-weight: bold;">Label Réunir RSE</a> est une preuve concrète de cet engagement, un atout majeur pour votre communication RH qui renforce l'attractivité et la fierté d'appartenance.</p>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>`,
       },
       {
         title: "1.7 ⸺ Votre Audit Marque Employeur Financé : Le Levier PCRH",
@@ -4091,4 +4124,396 @@ Nous cherchons un sens des responsabilités, de la ponctualité et un excellent 
     title: "Outil : Checklist Administrative de Départ (Offboarding)",
     content: `<div class="prose max-w-none"><h3>Checklist de Départ - [Nom du Collaborateur]</h3><ul class="list-disc pl-5 space-y-2"><li><strong>Phase 1 : Préparation</strong><ul class="list-disc pl-5"><li>[ ] Annoncer le départ à l'équipe</li><li>[ ] Définir le plan de passation des connaissances</li><li>[ ] Planifier l'entretien de départ</li></ul></li><li class="mt-4"><strong>Phase 2 : Dernier Jour</strong><ul class="list-disc pl-5"><li>[ ] Mener l'entretien de départ</li><li>[ ] Organiser un pot de départ / geste de remerciement</li><li>[ ] Restitution du matériel par le salarié (ordinateur, téléphone, badge, véhicule, uniforme...)</li><li>[ ] Signature du solde de tout compte</li></ul></li><li class="mt-4"><strong>Phase 3 : Après le Départ</strong><ul class="list-disc pl-5"><li>[ ] Remise des documents de fin de contrat (certificat de travail, attestation France Travail)</li><li>[ ] Clôture des accès informatiques (emails, logiciels)</li><li>[ ] Informer l'organisme de mutuelle de la fin du contrat pour la portabilité</li><li>[ ] Proposer au salarié de rejoindre le réseau des anciens (Alumni)</li></ul></li></ul></div>`,
   },
+};
+
+export const companyLogos = [
+  { name: "Barriere", url: "https://i.postimg.cc/BZpDQQtM/Barriere.png" },
+  { name: "Berthelet", url: "https://i.postimg.cc/zB5b89rs/Berthelet.png" },
+  {
+    name: "Borini Chablais",
+    url: "https://i.postimg.cc/GhSyG7FD/Borini-Chablais.png",
+  },
+  {
+    name: "Borini Mont Blanc",
+    url: "https://i.postimg.cc/63073Y6y/Borini-Mont-Blanc.png",
+  },
+  { name: "Chabannes", url: "https://i.postimg.cc/285WqRZm/Chabannes.png" },
+  { name: "Chazot", url: "https://i.postimg.cc/MG1fkzh0/Chazot.png" },
+  {
+    name: "Color Group Experience",
+    url: "https://i.postimg.cc/Vkx0HJHL/Color-Group-Experience.png",
+  },
+  { name: "Combrailles", url: "https://i.postimg.cc/kg6tcQsp/Combrailles.png" },
+  { name: "Coudert", url: "https://i.postimg.cc/DfxJ3jYN/Coudert.png" },
+  {
+    name: "Courriers Rhodaniens",
+    url: "https://i.postimg.cc/8PsFpR2z/Courriers-Rhodaniens.png",
+  },
+  {
+    name: "Flouret Tourisme",
+    url: "https://i.postimg.cc/3NxkDmW9/Flouret-Tourisme.png",
+  },
+  { name: "Fontanon", url: "https://i.postimg.cc/QxPFHBDk/Fontanon.png" },
+  {
+    name: "Gavot Tourisme",
+    url: "https://i.postimg.cc/g0brHfnx/Gavot-Tourisme.png",
+  },
+  { name: "Jacquet", url: "https://i.postimg.cc/9MWMvZPV/Jacquet.png" },
+  {
+    name: "Lyon City Tour",
+    url: "https://i.postimg.cc/nz0zZrTm/Lyon-City-Tour.png",
+  },
+  { name: "Meunier", url: "https://i.postimg.cc/Wzz44VfH/Meunier.png" },
+  { name: "Migratour", url: "https://i.postimg.cc/jdGjRG6M/Migratour.png" },
+  { name: "Perraud", url: "https://i.postimg.cc/0Q2ktxxy/Perraud.png" },
+  { name: "SAT", url: "https://i.postimg.cc/L4QXbqJK/SAT.png" },
+  { name: "Schmitt", url: "https://i.postimg.cc/KY7jqJMJ/Schmitt.png" },
+  {
+    name: "SEYT Auvergne",
+    url: "https://i.postimg.cc/3xmxNnnY/SEYT-Auvergne.png",
+  },
+  { name: "Trans Alpes", url: "https://i.postimg.cc/g0KcqjC7/Trans-Alpes.png" },
+  { name: "Trans Cove", url: "https://i.postimg.cc/x1zcH0Tr/Trans-Cove.png" },
+  {
+    name: "Vallee d Azergues",
+    url: "https://i.postimg.cc/1zS5qwj6/Valle-e-d-Azergues.png",
+  },
+  { name: "Adria Cars", url: "https://i.postimg.cc/4xkXDpZM/Adria-Cars.png" },
+  { name: "Bardy", url: "https://i.postimg.cc/d0Jw1vhj/Bardy.png" },
+  { name: "Bluestation", url: "https://i.postimg.cc/1RdmKLdy/Bluestation.png" },
+  {
+    name: "Cars Moreau 77",
+    url: "https://i.postimg.cc/Nj6QBLj0/Cars-Moreau-77.png",
+  },
+  { name: "Collard", url: "https://i.postimg.cc/NMzcpHpd/Collard.png" },
+  {
+    name: "Compagnie Sevigne",
+    url: "https://i.postimg.cc/KYcjWtDb/Compagnie-S-vign.png",
+  },
+  {
+    name: "Coutarel Voyages",
+    url: "https://i.postimg.cc/3RRhXBCy/Coutarel-Voyages.png",
+  },
+  { name: "Darbier", url: "https://i.postimg.cc/DfSJFdky/Darbier.png" },
+  { name: "Delafoy", url: "https://i.postimg.cc/pLHpDw9p/Delafoy.jpg" },
+  { name: "Dominique", url: "https://i.postimg.cc/XqB0hYP4/Dominique.png" },
+  {
+    name: "Gilbert James",
+    url: "https://i.postimg.cc/wxntByg5/Gilbert-James.png",
+  },
+  { name: "Gonin", url: "https://i.postimg.cc/c6qNNNqY/Gonin.png" },
+  { name: "LCP", url: "https://i.postimg.cc/Pr8tVSGY/LCP.png" },
+  { name: "LGD Paris", url: "https://i.postimg.cc/FzSHSpNy/LGD-Paris.png" },
+  { name: "Moventis", url: "https://i.postimg.cc/mkKT2H9P/Moventis.png" },
+  { name: "Nogent", url: "https://i.postimg.cc/bNbZSyw7/Nogent.jpg" },
+  { name: "Schidler", url: "https://i.postimg.cc/cLB6TFYT/Schidler.webp" },
+  { name: "Viabus", url: "https://i.postimg.cc/bvL8SMbc/Viabus.png" },
+  { name: "Viaest", url: "https://i.postimg.cc/vBkmDkF8/Viaest.png" },
+  {
+    name: "Vincent Bobet",
+    url: "https://i.postimg.cc/pd0rMysF/Vincent-Bobet.jpg",
+  },
+  {
+    name: "Voyages Rouzeau",
+    url: "https://i.postimg.cc/JnGnrmFd/Voyages-Rouzeau.png",
+  },
+  { name: "Abers", url: "https://i.postimg.cc/76nkrRHQ/Abers.png" },
+  { name: "ADL", url: "https://i.postimg.cc/SNzMLLDt/ADL.png" },
+  { name: "Aiglons", url: "https://i.postimg.cc/XYkmJ5Sp/Aiglons.jpg" },
+  {
+    name: "Alliance Tours",
+    url: "https://i.postimg.cc/JnGb9f5R/Alliance-Tours.png",
+  },
+  {
+    name: "Aquitaine Cars",
+    url: "https://i.postimg.cc/DyWqj3y6/Aquitaine-Cars.png",
+  },
+  { name: "Archambault", url: "https://i.postimg.cc/hPHVNZXB/Archambault.png" },
+  { name: "Arcoutel", url: "https://i.postimg.cc/sg75zPWZ/Arcoutel.png" },
+  { name: "Arlaud", url: "https://i.postimg.cc/CMr2n0Qs/Arlaud.png" },
+  { name: "ASO", url: "https://i.postimg.cc/5tJL2H5K/ASO.png" },
+  { name: "ASTG", url: "https://i.postimg.cc/s2JSQVwj/ASTG.png" },
+  { name: "Auran", url: "https://i.postimg.cc/0Q2S7LBp/Auran.jpg" },
+  {
+    name: "Auray Voyages",
+    url: "https://i.postimg.cc/Dwp0t8jb/Auray-Voyages.png",
+  },
+  {
+    name: "Autocars du Lot",
+    url: "https://i.postimg.cc/Vkq0pfyq/Autocars-du-Lot.png",
+  },
+  {
+    name: "Autocars du Sud Ouest",
+    url: "https://i.postimg.cc/DfNGbpdX/Autocars-du-Sud-Ouest.png",
+  },
+  {
+    name: "Autocars Vallee d Azur",
+    url: "https://i.postimg.cc/SRHzFjNr/Autocars-Valle-e-d-Azur.jpg",
+  },
+  {
+    name: "Autocars vallees nicoises",
+    url: "https://i.postimg.cc/CxTfcZ2M/Autocars-valle-es-nic-oises.jpg",
+  },
+  {
+    name: "Azur Pullman",
+    url: "https://i.postimg.cc/xd9NSwYW/Azur-Pullman.png",
+  },
+  {
+    name: "Barousse Transports",
+    url: "https://i.postimg.cc/vm9y3Bpy/Barousse-Transports.png",
+  },
+  { name: "Bellier", url: "https://i.postimg.cc/nzgvZ33B/Bellier.png" },
+  { name: "Bihan", url: "https://i.postimg.cc/D0G1z1ND/Bihan.png" },
+  { name: "Boceno", url: "https://i.postimg.cc/0NZM5Vyr/Boc-no.png" },
+  {
+    name: "Bonnaffoux Bremond",
+    url: "https://i.postimg.cc/G22B4v4K/Bonnaffoux-Bremond.png",
+  },
+  {
+    name: "Bordeaux City Tours",
+    url: "https://i.postimg.cc/q78f2F3M/Bordeaux-City-Tours.png",
+  },
+  { name: "Boubet", url: "https://i.postimg.cc/0N5GCM6M/Boubet.png" },
+  { name: "Bouisse", url: "https://i.postimg.cc/Y9svYjgH/Bouisse.jpg" },
+  { name: "BPV", url: "https://i.postimg.cc/J0CGPvT6/BPV.png" },
+  {
+    name: "Bus en ligne",
+    url: "https://i.postimg.cc/rsRKJcCt/Bus-en-ligne.png",
+  },
+  { name: "Cars Bleus", url: "https://i.postimg.cc/fTXvWhnL/Cars-Bleus.jpg" },
+  {
+    name: "Catteau Voyages",
+    url: "https://i.postimg.cc/vZtL9Lmw/Catteau-Voyages.jpg",
+  },
+  { name: "Cav", url: "https://i.postimg.cc/zvTRN8bY/Cav.jpg" },
+  {
+    name: "Color Group Experience",
+    url: "https://i.postimg.cc/MGs736Rs/Color-Group-Exp-rience.png",
+  },
+  { name: "Cottin", url: "https://i.postimg.cc/SKXRqk31/Cottin.jpg" },
+  { name: "Crespel", url: "https://i.postimg.cc/9FGG5tZw/Crespel.png" },
+  { name: "Darriot", url: "https://i.postimg.cc/sX72QKVp/Darriot.png" },
+  {
+    name: "De Maillard Voyages",
+    url: "https://i.postimg.cc/G2rWKjFP/De-Maillard-Voyages.png",
+  },
+  { name: "Delbos", url: "https://i.postimg.cc/6TsTbSYb/Delbos.png" },
+  { name: "Douaisiens", url: "https://i.postimg.cc/9Xwd1jfp/Douaisiens.png" },
+  { name: "Dumont", url: "https://i.postimg.cc/sDFpN0QR/Dumont.png" },
+  { name: "Durand", url: "https://i.postimg.cc/xdWC1BSf/Durand.png" },
+  { name: "Elorn", url: "https://i.postimg.cc/wMzjhJvn/lorn.png" },
+  { name: "Farouault", url: "https://i.postimg.cc/VNHtB7Qp/Farouault.png" },
+  { name: "Faure", url: "https://i.postimg.cc/C54LJ1n5/Faure.png" },
+  { name: "Fiageo", url: "https://i.postimg.cc/mgB7bzyX/Fiageo.png" },
+  { name: "Gougeul", url: "https://i.postimg.cc/hvMcT5N7/Gougeul.png" },
+  { name: "Grosbois", url: "https://i.postimg.cc/RZdKqSPM/Grosbois.png" },
+  { name: "Guennec", url: "https://i.postimg.cc/BZFFHch7/Guennec.png" },
+  { name: "Guilloux", url: "https://i.postimg.cc/kXn5GxLb/Guilloux.png" },
+  { name: "Hascot", url: "https://i.postimg.cc/qqv9VMZz/Hasco-t.png" },
+  { name: "Hiruak Bat", url: "https://i.postimg.cc/fTBR9Vhg/Hiruak-Bat.png" },
+  { name: "Hommet", url: "https://i.postimg.cc/RFkn2N0T/Hommet.png" },
+  { name: "Ideabus", url: "https://i.postimg.cc/vZTHLGY8/Ideabus.png" },
+  { name: "Inglard", url: "https://i.postimg.cc/5yPW6FFB/Inglard.png" },
+  {
+    name: "Jezequel Mobilite",
+    url: "https://i.postimg.cc/2Stj0gyQ/J-z-quel-Mobilit.png",
+  },
+  {
+    name: "Jezequel Tourisme",
+    url: "https://i.postimg.cc/R0nSyGJj/J-z-quel-Tourisme.png",
+  },
+  { name: "Junqua", url: "https://i.postimg.cc/bJTKB2g7/Junqua.png" },
+  { name: "Kerjan", url: "https://i.postimg.cc/Xq1tVSTx/Kerjan.png" },
+  { name: "LCB", url: "https://i.postimg.cc/fyMM3NqN/LCB.png" },
+  { name: "LDT", url: "https://i.postimg.cc/gkSG01vC/LDT.png" },
+  {
+    name: "Le Basque Bondissant",
+    url: "https://i.postimg.cc/B600y30K/Le-Basque-Bondissant.png",
+  },
+  { name: "Le Bris", url: "https://i.postimg.cc/T2cRzKhY/Le-Bris.png" },
+  { name: "Le Coeur", url: "https://i.postimg.cc/MKKWqzj0/Le-C-ur.png" },
+  { name: "Le Meur", url: "https://i.postimg.cc/pLmR5kCp/Le-Meur.png" },
+  { name: "Le Roux", url: "https://i.postimg.cc/t48y3PvD/Le-Roux.png" },
+  { name: "Le Vacon", url: "https://i.postimg.cc/9FprYxyb/Le-Vacon.png" },
+  { name: "Lefort", url: "https://i.postimg.cc/s22Shk85/Lefort.png" },
+  {
+    name: "Gascogne Tourisme",
+    url: "https://i.postimg.cc/bNJj4LK3/Logo-GASCOGNE-TOURISME-removebg-preview.png",
+  },
+  {
+    name: "Moreau 36",
+    url: "https://i.postimg.cc/xdrDJQq4/LOGO-MOREAU-36-removebg-preview.png",
+  },
+  {
+    name: "Raynal",
+    url: "https://i.postimg.cc/jj69DJpD/Logo-Raynal-VER01.png",
+  },
+  { name: "lete", url: "https://i.postimg.cc/qRskMRLw/l-e-te-logo.png" },
+  {
+    name: "Made Tourisme",
+    url: "https://i.postimg.cc/nLfgV1P8/Made-Tourisme.png",
+  },
+  {
+    name: "Mariot Voyages",
+    url: "https://i.postimg.cc/8P3x9Gdz/Mariot-Voyages-Quali-removebg-preview.png",
+  },
+  { name: "Mauger", url: "https://i.postimg.cc/4x9jT0wb/MAUGER-CMJN.jpg" },
+  { name: "MCF", url: "https://i.postimg.cc/zBJQKGN0/MCF.png" },
+  { name: "Merlier", url: "https://i.postimg.cc/QNvbrdzw/Merlier.jpg" },
+  { name: "Metereau", url: "https://i.postimg.cc/ydvbPCYB/METEREAU.png" },
+  { name: "Michel", url: "https://i.postimg.cc/Qd8WLLjv/Michel.png" },
+  { name: "Mignaton", url: "https://i.postimg.cc/RFDThSZ3/Mignaton.png" },
+  { name: "Miral", url: "https://i.postimg.cc/NFFPCC5X/Miral.png" },
+  { name: "Negoti", url: "https://i.postimg.cc/RVQnbCxc/N-goti.png" },
+  { name: "Negoti EPTR", url: "https://i.postimg.cc/tCLmD5y1/N-goti-EPTR.png" },
+  {
+    name: "Nicolas Voyages",
+    url: "https://i.postimg.cc/15gjpTxh/Nicolas-Voyages.png",
+  },
+  { name: "Nombalais", url: "https://i.postimg.cc/Njd2BNMF/Nombalais.png" },
+  {
+    name: "Normandie Tourisme",
+    url: "https://i.postimg.cc/pTGsjQqL/Normandie-Tourisme.png",
+  },
+  { name: "Notcar", url: "https://i.postimg.cc/4xV209NW/Notcar.png" },
+  {
+    name: "Notcar Espace du Voyage",
+    url: "https://i.postimg.cc/LsSQF8J2/Notcar-Espace-du-Voyage.png",
+  },
+  { name: "Noyon Cars", url: "https://i.postimg.cc/PqM3XnDZ/Noyon-Cars.png" },
+  { name: "Ocelorn", url: "https://i.postimg.cc/4dN8n2v0/Oc-lorn.png" },
+  {
+    name: "Parent Delattre",
+    url: "https://i.postimg.cc/zfMLRVT1/Parent-Delattre.png",
+  },
+  { name: "Peirani", url: "https://i.postimg.cc/mkP8yc5N/Peirani.png" },
+  {
+    name: "Perigord Voyages",
+    url: "https://i.postimg.cc/pTFmQRB5/P-rigord-Voyages.png",
+  },
+  { name: "Piel", url: "https://i.postimg.cc/ZnYhbL0Y/Piel.jpg" },
+  { name: "Pineau", url: "https://i.postimg.cc/sfLnDcMn/Pineau.png" },
+  { name: "Pinet", url: "https://i.postimg.cc/CKdB1jBN/Pinet.png" },
+  {
+    name: "Place Cambrai",
+    url: "https://i.postimg.cc/FsqxNsnw/Place-Cambrai.png",
+  },
+  {
+    name: "Place Cambresis",
+    url: "https://i.postimg.cc/pdQQfQXt/Place-Cambresis.png",
+  },
+  {
+    name: "Place Caudresis Catesis",
+    url: "https://i.postimg.cc/Xqqw6TKV/Place-Caudresis-Catesis.png",
+  },
+  {
+    name: "Place Groupe",
+    url: "https://i.postimg.cc/hjSLpJfQ/Place-Groupe.png",
+  },
+  {
+    name: "Place Lolli Douaisis",
+    url: "https://i.postimg.cc/fR9fLnGy/Place-Lolli-Douaisis.png",
+  },
+  {
+    name: "Place Pays d Artois",
+    url: "https://i.postimg.cc/CKpHnr0N/Place-Pays-d-Artois.png",
+  },
+  {
+    name: "Place Pays Solesmois",
+    url: "https://i.postimg.cc/Px2mctw3/Place-Pays-Solesmois.png",
+  },
+  {
+    name: "Place Autocars",
+    url: "https://i.postimg.cc/8kXRmzDs/Place-Autocars.png",
+  },
+  {
+    name: "Place Voyages",
+    url: "https://i.postimg.cc/NFnRspbR/Place-Voyages.png",
+  },
+  {
+    name: "Plattey Voyages",
+    url: "https://i.postimg.cc/Vv24Gfyy/Plattey-Voyages.png",
+  },
+  { name: "Ponsot", url: "https://i.postimg.cc/bN2mGtbq/Ponsot.png" },
+  {
+    name: "Provence Panorama",
+    url: "https://i.postimg.cc/HkDBbk4X/Provence-Panorama.png",
+  },
+  {
+    name: "Pullman d Aquitaine",
+    url: "https://i.postimg.cc/yxhW5jtV/Pullman-d-Aquitaine.png",
+  },
+  {
+    name: "Pullmans de Tarn et Garonne",
+    url: "https://i.postimg.cc/9X1hxsND/Pullmans-de-Tarn-et-Garonne.png",
+  },
+  {
+    name: "RGO Mobilites",
+    url: "https://i.postimg.cc/qvsQwHjY/RGO-Mobilit-s.png",
+  },
+  { name: "Ricouard", url: "https://i.postimg.cc/h42k8Tfx/Ricouard.png" },
+  {
+    name: "Robert Voyages",
+    url: "https://i.postimg.cc/zDHQh6Ym/Robert-Voyages.png",
+  },
+  { name: "Robin", url: "https://i.postimg.cc/RVDzmKm9/Robin.png" },
+  {
+    name: "Rolland Kreisker",
+    url: "https://i.postimg.cc/FR5r4cj1/Rolland-Kreisker.png",
+  },
+  { name: "Rouillard", url: "https://i.postimg.cc/7ZZbsgVk/Rouillard.png" },
+  { name: "Saffores", url: "https://i.postimg.cc/5NjZsyCr/Saffores.png" },
+  {
+    name: "Salan Limousines",
+    url: "https://i.postimg.cc/9Fj7pRKm/Sala-n-Limousines.png",
+  },
+  { name: "Sarrazin", url: "https://i.postimg.cc/3J7kpM0W/Sarrazin.png" },
+  { name: "SCAL", url: "https://i.postimg.cc/XvnLD1Pv/SCAL.png" },
+  { name: "Soulard", url: "https://i.postimg.cc/XN9ZpNJT/Soulard.png" },
+  { name: "Thorin", url: "https://i.postimg.cc/N0bDh7hk/Thorin.png" },
+  { name: "TLV", url: "https://i.postimg.cc/C11NwBST/TLV.png" },
+  {
+    name: "Touraine Excursions",
+    url: "https://i.postimg.cc/sxG4ZkMT/Touraine-Excursions.jpg",
+  },
+  {
+    name: "Trans Comtat",
+    url: "https://i.postimg.cc/Vs23H1WL/Trans-Comtat.png",
+  },
+  {
+    name: "Transports T",
+    url: "https://i.postimg.cc/7P5FVb7W/Transports-T.png",
+  },
+  { name: "Villessot", url: "https://i.postimg.cc/zXW4sMxw/Villessot.png" },
+  { name: "Voisin", url: "https://i.postimg.cc/wvymWh9v/Voisin.png" },
+  {
+    name: "Voyages Arnaud",
+    url: "https://i.postimg.cc/4dmSBFK9/Voyages-Arnaud.png",
+  },
+  {
+    name: "Voyages Castelnau",
+    url: "https://i.postimg.cc/zB6PMSWP/Voyages-Castelnau.png",
+  },
+  {
+    name: "Voyages du Bas Quercy",
+    url: "https://i.postimg.cc/hG4w7GcM/Voyages-du-Bas-Quercy.png",
+  },
+  {
+    name: "Voyages Merer",
+    url: "https://i.postimg.cc/rphHGLpT/Voyages-Merer.gif",
+  },
+  {
+    name: "Voyages Moleux",
+    url: "https://i.postimg.cc/fRN1DKPG/Voyages-Moleux.png",
+  },
+  {
+    name: "Vriet Autocars",
+    url: "https://i.postimg.cc/x8mFSJ3j/Vriet-Autocars.png",
+  },
+];
+
+let selectedLogoUrl = null;
+export const getSelectedLogo = () => selectedLogoUrl;
+export const setSelectedLogo = (url) => {
+  selectedLogoUrl = url;
 };

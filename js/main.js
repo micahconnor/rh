@@ -6,7 +6,26 @@ import {
   renderSearchResults,
   openLexiconModal,
 } from "./ui.js";
-import { guideData } from "./data.js";
+import { guideData, companyLogos, setSelectedLogo } from "./data.js";
+
+function initLogoSelector() {
+  const selector = document.getElementById("logo-selector");
+  if (!selector) return;
+
+  // Trier les logos par ordre alphabétique
+  companyLogos.sort((a, b) => a.name.localeCompare(b.name));
+
+  companyLogos.forEach((logo) => {
+    selector.insertAdjacentHTML(
+      "beforeend",
+      `<option value="${logo.url}">${logo.name}</option>`
+    );
+  });
+
+  selector.addEventListener("change", (e) => {
+    setSelectedLogo(e.target.value || null); // Met à jour l'état partagé dans data.js
+  });
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const navContainer = document.getElementById("nav-container");
@@ -19,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchResultsContainer = document.getElementById(
     "searchResultsContainer"
   );
+  initLogoSelector();
 
   const navigateToSection = (targetId, practiceIndex = null) => {
     document.querySelectorAll(".nav-button").forEach((btn) => {

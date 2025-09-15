@@ -61,245 +61,274 @@
         </p>
       </header>
 
-      <nav class="bg-white rounded-lg p-2 mb-8 sticky top-4 z-40">
-        <button
-          id="mobile-menu-button"
-          class="w-full flex justify-between items-center lg:hidden p-2 rounded-md hover:bg-gray-100"
-        >
-          <h2 class="font-bold text-lg px-2" style="color: var(--c-primary)">
-            Menu du Guide
-          </h2>
-          <div class="relative w-6 h-6">
-            <svg
-              id="menu-open-icon"
-              class="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+      <nav
+        class="bg-white rounded-lg p-2 mb-8 sticky top-4 z-40 lg:flex lg:justify-between lg:items-center"
+      >
+        <div>
+          <button
+            id="mobile-menu-button"
+            class="w-full flex justify-between items-center lg:hidden p-2 rounded-md hover:bg-gray-100"
+          >
+            <h2 class="font-bold text-lg px-2" style="color: var(--c-primary)">
+              Menu du Guide
+            </h2>
+            <div class="relative w-6 h-6">
+              <svg
+                id="menu-open-icon"
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+              <svg
+                id="menu-close-icon"
+                class="h-6 w-6 hidden"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </div>
+          </button>
+          <div id="nav-container" class="hidden lg:grid">
+            <button
+              data-target="dashboard"
+              class="nav-button active flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-            <svg
-              id="menu-close-icon"
-              class="h-6 w-6 hidden"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V5.75A2.25 2.25 0 0018 3.5H6A2.25 2.25 0 003.75 5.75v12.5A2.25 2.25 0 006 20.25z"
+                ></path>
+              </svg>
+              Tableau de Bord
+            </button>
+
+            <button
+              data-target="intro_contexte"
+              class="nav-button flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                ></path>
+              </svg>
+              Contexte
+            </button>
+
+            <button
+              data-target="attractivite"
+              class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                ></path>
+              </svg>
+              I. Attirer
+            </button>
+
+            <button
+              data-target="recrutement"
+              class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+              II. Recruter
+            </button>
+
+            <button
+              data-target="onboarding"
+              class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                ></path>
+              </svg>
+              III. Intégrer
+            </button>
+
+            <button
+              data-target="developpement"
+              class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                ></path>
+              </svg>
+              IV. Former
+            </button>
+
+            <button
+              data-target="epanouissement_fidelisation"
+              class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                ></path>
+              </svg>
+              V. Engager
+            </button>
+
+            <button
+              data-target="depart"
+              class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                ></path>
+              </svg>
+              VI. Finaliser
+            </button>
+
+            <button
+              data-target="piloter"
+              class="nav-button flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M12 21a9 9 0 01-9-9h18a9 9 0 01-9 9zm0-18a9 9 0 00-9 9h18a9 9 0 00-9-9z"
+                ></path>
+              </svg>
+              Tech + IA
+            </button>
+
+            <button
+              data-target="ressources"
+              class="nav-button flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
+            >
+              <svg
+                class="w-6 h-6 mb-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                ></path>
+              </svg>
+              Ressources
+            </button>
           </div>
-        </button>
-        <div id="nav-container" class="hidden lg:grid">
-          <button
-            data-target="dashboard"
-            class="nav-button active flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V5.75A2.25 2.25 0 0018 3.5H6A2.25 2.25 0 003.75 5.75v12.5A2.25 2.25 0 006 20.25z"
-              ></path>
-            </svg>
-            Tableau de Bord
-          </button>
+        </div>
 
-          <button
-            data-target="intro_contexte"
-            class="nav-button flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+        <div class="hidden lg:block">
+          <div id="logo-selector-container" class="relative p-2">
+            <select
+              id="logo-selector"
+              class="text-sm rounded border border-gray-300 px-3 py-2 pr-8 appearance-none bg-white text-gray-600 focus:outline-none focus:ring-2 focus:ring-accent-light"
+              style="color: var(--c-secondary); max-width: 220px"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-              ></path>
-            </svg>
-            Contexte
-          </button>
-
-          <button
-            data-target="attractivite"
-            class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+              <option value="">Personnalisez avec votre logo...</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 mr-2"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              ></path>
-            </svg>
-            I. Attirer
-          </button>
-
-          <button
-            data-target="recrutement"
-            class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
-            </svg>
-            II. Recruter
-          </button>
-
-          <button
-            data-target="onboarding"
-            class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-              ></path>
-            </svg>
-            III. Intégrer
-          </button>
-
-          <button
-            data-target="developpement"
-            class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-              ></path>
-            </svg>
-            IV. Former
-          </button>
-
-          <button
-            data-target="epanouissement_fidelisation"
-            class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-              ></path>
-            </svg>
-            V. Engager
-          </button>
-
-          <button
-            data-target="depart"
-            class="nav-button font-semibold py-3 px-2 rounded-md text-xs md:text-sm flex flex-col items-center justify-center"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
-              ></path>
-            </svg>
-            VI. Finaliser
-          </button>
-
-          <button
-            data-target="piloter"
-            class="nav-button flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M12 21a9 9 0 01-9-9h18a9 9 0 01-9 9zm0-18a9 9 0 00-9 9h18a9 9 0 00-9-9z"
-              ></path>
-            </svg>
-            Tech + IA
-          </button>
-
-          <button
-            data-target="ressources"
-            class="nav-button flex flex-col items-center justify-center text-center py-3 px-2 rounded-md text-xs md:text-sm"
-          >
-            <svg
-              class="w-6 h-6 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-              ></path>
-            </svg>
-            Ressources
-          </button>
+              <svg
+                class="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </nav>
 
