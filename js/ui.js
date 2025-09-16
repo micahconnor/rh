@@ -1,5 +1,11 @@
+import {
+  guideData,
+  modalData,
+  lexiconData,
+  partnersData,
+  getSelectedLogo,
+} from "./data.js";
 // This file handles all UI-related tasks: rendering content, managing charts, and modals.
-import { guideData, modalData, lexiconData, getSelectedLogo } from "./data.js";
 
 let currentCharts = [];
 const contentArea = document.getElementById("content-area");
@@ -142,7 +148,8 @@ function generateGenericPdf(contentElementId, titleText) {
         onclone: (clonedDoc) => {
           try {
             // Scope et styles dans le clone
-            const clonedContainer = clonedDoc.getElementById("pdf-export-sandbox")?.firstElementChild;
+            const clonedContainer =
+              clonedDoc.getElementById("pdf-export-sandbox")?.firstElementChild;
             if (clonedContainer) clonedContainer.setAttribute(scopeAttr, "");
             // Inject style into clone's head to ensure application
             const styleInClone = clonedDoc.createElement("style");
@@ -167,41 +174,49 @@ function generateGenericPdf(contentElementId, titleText) {
           }
         },
       }).then((canvas) => {
-    // Utiliser PNG (sans perte) pour conserver un texte net et contrasté
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    const margin = 15;
-    const contentWidth = pdfWidth - margin * 2;
-    const contentHeight = (canvas.height * contentWidth) / canvas.width;
-    let heightLeft = contentHeight;
-    let position = 0;
+        // Utiliser PNG (sans perte) pour conserver un texte net et contrasté
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4",
+        });
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const margin = 15;
+        const contentWidth = pdfWidth - margin * 2;
+        const contentHeight = (canvas.height * contentWidth) / canvas.width;
+        let heightLeft = contentHeight;
+        let position = 0;
 
-    pdf.addImage(imgData, "PNG", margin, margin, contentWidth, contentHeight);
-    heightLeft -= pdfHeight - margin * 2;
+        pdf.addImage(
+          imgData,
+          "PNG",
+          margin,
+          margin,
+          contentWidth,
+          contentHeight
+        );
+        heightLeft -= pdfHeight - margin * 2;
 
-    while (heightLeft > 0) {
-      position = heightLeft - contentHeight;
-      pdf.addPage();
-      pdf.addImage(
-        imgData,
-        "PNG",
-        margin,
-        position - margin,
-        contentWidth,
-        contentHeight
-      );
-      heightLeft -= pdfHeight - margin * 2;
-    }
-      pdf.save(filename);
+        while (heightLeft > 0) {
+          position = heightLeft - contentHeight;
+          pdf.addPage();
+          pdf.addImage(
+            imgData,
+            "PNG",
+            margin,
+            position - margin,
+            contentWidth,
+            contentHeight
+          );
+          heightLeft -= pdfHeight - margin * 2;
+        }
+        pdf.save(filename);
 
-      // Nettoyage du sandbox
-      if (sandbox && sandbox.parentNode) sandbox.parentNode.removeChild(sandbox);
+        // Nettoyage du sandbox
+        if (sandbox && sandbox.parentNode)
+          sandbox.parentNode.removeChild(sandbox);
       });
     });
   });
@@ -407,7 +422,7 @@ function openModal(modalId) {
     const generatorContainer = document.getElementById(
       "pve-generator-container"
     );
-  if (!generatorContainer) return;
+    if (!generatorContainer) return;
 
     const generateBtn = generatorContainer.querySelector("#generatePveBtn");
     const copyBtn = generatorContainer.querySelector("#copyPveBtn");
@@ -802,7 +817,14 @@ function openModal(modalId) {
             const sliceImg = sliceCanvas.toDataURL("image/png");
             const sliceHeightMm = sliceHeightPx * mmPerPx;
 
-            pdf.addImage(sliceImg, "PNG", margin, margin, contentWidth, sliceHeightMm);
+            pdf.addImage(
+              sliceImg,
+              "PNG",
+              margin,
+              margin,
+              contentWidth,
+              sliceHeightMm
+            );
 
             currentTopPx = nextBreakPx;
             if (currentTopPx < canvas.height) {
@@ -1002,6 +1024,59 @@ function renderContent(targetId) {
       lexiconContent += `<button class="lexicon-grid-item resources-item" data-term="${term}" data-search-content="${term} ${lexiconData[term]}">${term}</button>`;
     }
     lexiconContent += "</div>";
+    lexiconContent += "</div>";
+
+    // --- Build Partners Content (intro + grid) ---
+    let partnersContent = `
+      <div class="mb-5 rounded-md border p-4 md:p-5" style="background: var(--c-white); border-color: var(--c-light); color: var(--c-primary);">
+        <div class="flex items-center gap-3">
+          <span class="text-xl md:text-2xl leading-none" aria-hidden="true">ℹ️</span>
+          <p class="m-0 leading-snug text-base md:text-lg">
+            Sélection de partenaires référencés, choisis pour leur utilité directe auprès des équipes RH : formation, conformité, pilotage social, planification et communication terrain.
+          </p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">`;
+    const fallbackLogo =
+      "https://i.postimg.cc/3xYdhRdZ/Logo-Reunir-Services-2.png";
+    (partnersData || []).forEach((p) => {
+      const safeName = (p?.name || "").replace(/"/g, "&quot;");
+      const logo = p?.logoUrl || fallbackLogo;
+      const tags = Array.isArray(p?.keywords) ? p.keywords.filter(Boolean) : [];
+      const displayTags = tags.map((raw) =>
+        String(raw).replace(
+          /(^|[\s-])([a-zà-ÿ])/gi,
+          (m, p1, p2) => p1 + p2.toUpperCase()
+        )
+      );
+      const tagsHtml = displayTags.length
+        ? `<div class=\"mt-2 flex flex-wrap gap-1.5 justify-center\">${displayTags
+            .slice(0, 4)
+            .map(
+              (t) => `
+              <span class=\"inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] rounded-full border font-semibold\" 
+                    style=\"background: var(--c-white); color: var(--c-secondary); border-color: var(--c-light); font-family: 'Outfit', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;\">
+                <span class=\"inline-block w-1.5 h-1.5 rounded-full\" style=\"background: var(--c-accent);\"></span>
+                ${t}
+              </span>`
+            )
+            .join("")}</div>`
+        : "";
+
+      const searchContent = `${safeName} ${tags.join(" ")}`.trim();
+
+      const cardInner = `
+        <div class="border rounded-lg p-3 bg-white flex flex-col items-center justify-between text-center resources-item h-40 md:h-44" data-search-content="${searchContent}">
+          <div class="w-24 h-24 flex items-center justify-center overflow-hidden">
+            <img src="${logo}" alt="${safeName}" class="max-w-full max-h-full object-contain partner-logo" onerror="this.src='${fallbackLogo}'" />
+          </div>
+          ${tagsHtml}
+        </div>`;
+      partnersContent += p?.website
+        ? `<a href="${p.website}" target="_blank" rel="noopener noreferrer" class="block">${cardInner}</a>`
+        : cardInner;
+    });
+    partnersContent += "</div>";
 
     // --- Assemble the final HTML with Tabs and NEW SEARCH BAR ---
     const finalHTML = `
@@ -1020,6 +1095,7 @@ function renderContent(targetId) {
             <div class="sub-nav-container">
                 <button class="sub-nav-button active" data-target="sub-pane-toolbox">🧰 Boîte à Outils</button>
                 <button class="sub-nav-button" data-target="sub-pane-lexicon">📖 Lexique</button>
+                <button class="sub-nav-button" data-target="sub-pane-partners">🤝 Partenaires</button>
             </div>
 
             <div id="resources-no-results" class="hidden text-center py-8 text-gray-500">
@@ -1032,6 +1108,9 @@ function renderContent(targetId) {
             <div id="sub-pane-lexicon" class="sub-content-pane hidden">
                 ${lexiconContent}
             </div>
+      <div id="sub-pane-partners" class="sub-content-pane hidden">
+        ${partnersContent}
+      </div>
         </div>`;
 
     contentArea.innerHTML = finalHTML;
