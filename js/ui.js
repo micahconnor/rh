@@ -72,19 +72,103 @@ function generateGenericPdf(contentElementId, titleText) {
       ${titleText}
     </h2>`;
 
-  // Prépare le contenu pour la capture
-  contentToExport.prepend(headerContainer);
-  contentToExport.style.padding = "20px";
-  contentToExport.style.backgroundColor = "#ffffff";
+  // === Sandbox hors écran pour la capture ===
+  const sandbox = document.createElement("div");
+  sandbox.id = "pdf-export-sandbox";
+  sandbox.style.position = "fixed";
+  sandbox.style.left = "-10000px"; // hors écran mais visible
+  sandbox.style.top = "0";
+  const measuredWidth = Math.max(
+    contentToExport.scrollWidth || 0,
+    contentToExport.offsetWidth || 0,
+    800
+  );
+  sandbox.style.width = measuredWidth + "px";
+  sandbox.style.background = "#ffffff";
+  sandbox.style.zIndex = "-1"; // s'assure qu'il ne couvre rien
 
-  html2canvas(contentToExport, {
-    scale: 2,
-    useCORS: true,
-    logging: false,
-    windowWidth: contentToExport.scrollWidth,
-    windowHeight: contentToExport.scrollHeight,
-  }).then((canvas) => {
-    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+  // Clone profond du contenu à exporter
+  const cloned = contentToExport.cloneNode(true);
+  // Éviter un id dupliqué
+  cloned.id = contentElementId + "-clone-for-pdf";
+
+  // Insérer l'en-tête puis le contenu cloné
+  const container = document.createElement("div");
+  container.style.padding = "20px";
+  container.style.backgroundColor = "#ffffff";
+  container.appendChild(headerContainer);
+  container.appendChild(cloned);
+  sandbox.appendChild(container);
+  document.body.appendChild(sandbox);
+
+  // Applique un attribut de scope et une feuille de style temporaire pour forcer la couleur du texte (dans le sandbox)
+  const scopeAttr = "data-pdf-export-scope";
+  container.setAttribute(scopeAttr, "");
+  const tempStyle = document.createElement("style");
+  tempStyle.id = "temp-pdf-contrast-style";
+  tempStyle.textContent = `
+    [data-pdf-export-scope],
+    [data-pdf-export-scope] * { color: #111111 !important; opacity: 1 !important; }
+    [data-pdf-export-scope] h1,
+    [data-pdf-export-scope] h2,
+    [data-pdf-export-scope] h3,
+    [data-pdf-export-scope] h4,
+    [data-pdf-export-scope] h5,
+    [data-pdf-export-scope] h6 { color: #0D142D !important; }
+    [data-pdf-export-scope] th,
+    [data-pdf-export-scope] td { color: #111111 !important; border-color: #444444 !important; }
+    [data-pdf-export-scope] th { font-weight: 700 !important; }
+    [data-pdf-export-scope] td { font-weight: 500 !important; }
+  `;
+  // Le style dans le body est pris en compte par html2canvas; on le met aussi dans <head> via onclone par sécurité
+  sandbox.appendChild(tempStyle);
+
+  // Forcer un reflow et attendre 2 frames pour garantir l'application des styles
+  // afin d'éviter les captures parfois sans les overrides de contraste
+  // Reflow
+  void sandbox.offsetHeight;
+  // Attente double RAF
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      html2canvas(container, {
+        // Échelle plus élevée pour améliorer la netteté du texte
+        scale: 3,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        letterRendering: true,
+        logging: false,
+        windowWidth: container.scrollWidth,
+        windowHeight: container.scrollHeight,
+        onclone: (clonedDoc) => {
+          try {
+            // Scope et styles dans le clone
+            const clonedContainer = clonedDoc.getElementById("pdf-export-sandbox")?.firstElementChild;
+            if (clonedContainer) clonedContainer.setAttribute(scopeAttr, "");
+            // Inject style into clone's head to ensure application
+            const styleInClone = clonedDoc.createElement("style");
+            styleInClone.textContent = `
+              [data-pdf-export-scope],
+              [data-pdf-export-scope] * { color: #111111 !important; }
+              [data-pdf-export-scope] h1,
+              [data-pdf-export-scope] h2,
+              [data-pdf-export-scope] h3,
+              [data-pdf-export-scope] h4,
+              [data-pdf-export-scope] h5,
+              [data-pdf-export-scope] h6 { color: #0D142D !important; }
+              [data-pdf-export-scope] th,
+              [data-pdf-export-scope] td { color: #111111 !important; border-color: #444444 !important; }
+              [data-pdf-export-scope] th { font-weight: 700 !important; }
+              [data-pdf-export-scope] td { font-weight: 500 !important; }
+            `;
+            clonedDoc.head.appendChild(styleInClone);
+          } catch (e) {
+            // En cas d'erreur d'injection dans le clone, on s'appuie sur les styles injectés dans le DOM original
+            console.warn("onclone style injection failed", e);
+          }
+        },
+      }).then((canvas) => {
+    // Utiliser PNG (sans perte) pour conserver un texte net et contrasté
+    const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
@@ -98,7 +182,7 @@ function generateGenericPdf(contentElementId, titleText) {
     let heightLeft = contentHeight;
     let position = 0;
 
-    pdf.addImage(imgData, "JPEG", margin, margin, contentWidth, contentHeight);
+    pdf.addImage(imgData, "PNG", margin, margin, contentWidth, contentHeight);
     heightLeft -= pdfHeight - margin * 2;
 
     while (heightLeft > 0) {
@@ -106,7 +190,7 @@ function generateGenericPdf(contentElementId, titleText) {
       pdf.addPage();
       pdf.addImage(
         imgData,
-        "JPEG",
+        "PNG",
         margin,
         position - margin,
         contentWidth,
@@ -114,12 +198,12 @@ function generateGenericPdf(contentElementId, titleText) {
       );
       heightLeft -= pdfHeight - margin * 2;
     }
-    pdf.save(filename);
+      pdf.save(filename);
 
-    // Nettoyage du DOM
-    contentToExport.removeChild(headerContainer);
-    contentToExport.style.padding = "";
-    contentToExport.style.backgroundColor = "";
+      // Nettoyage du sandbox
+      if (sandbox && sandbox.parentNode) sandbox.parentNode.removeChild(sandbox);
+      });
+    });
   });
 }
 
@@ -294,10 +378,36 @@ function openModal(modalId) {
         saveAs(htmlDocx.asBlob(fullHtml), "offre_emploi.docx");
       });
   } else if (modalId === "outil_pve_builder") {
+    // Ajout d'un bouton PDF personnalisé pour exporter la zone de prévisualisation
+    const pveModalActions = document.getElementById("modal-actions");
+    if (pveModalActions) {
+      pveModalActions.insertAdjacentHTML(
+        "afterbegin",
+        `<button id="pve-download-pdf-btn" class="tool-button mr-4">Télécharger en PDF</button>`
+      );
+    }
+    // Attache dès maintenant un handler générique opérationnel (fallback sur le contenu de la modale)
+    const pvePdfBtnEarly = document.getElementById("pve-download-pdf-btn");
+    if (pvePdfBtnEarly) {
+      pvePdfBtnEarly.addEventListener("click", () => {
+        const preview = document.getElementById("pvePreviewArea");
+        const hasPreview =
+          preview &&
+          !preview.classList.contains("hidden") &&
+          preview.innerHTML &&
+          preview.innerHTML.trim().length > 0;
+        const targetId = hasPreview
+          ? "pvePreviewArea"
+          : document.getElementById("pve-generator-container")
+          ? "pve-generator-container"
+          : "modal-exportable-content";
+        generateGenericPdf(targetId, data.title);
+      });
+    }
     const generatorContainer = document.getElementById(
       "pve-generator-container"
     );
-    if (!generatorContainer) return;
+  if (!generatorContainer) return;
 
     const generateBtn = generatorContainer.querySelector("#generatePveBtn");
     const copyBtn = generatorContainer.querySelector("#copyPveBtn");
@@ -308,6 +418,8 @@ function openModal(modalId) {
       console.error("PVE Builder elements not found in the modal.");
       return;
     }
+
+    // (Optionnel) On pourrait ré-attacher ici si besoin, mais le handler early suffit pour tous les cas
 
     // === Configure your endpoint here ===
     const EVP_API_ENDPOINT = "/api/evp/generate"; // << change if needed
@@ -602,6 +714,30 @@ function openModal(modalId) {
         contentToExport.style.padding = "20px";
         contentToExport.style.backgroundColor = "#ffffff";
 
+        // --- Mesure des points de coupure candidats (limiter les coupes au milieu du texte) ---
+        const getBreakCandidatesPx = () => {
+          const base = contentToExport.getBoundingClientRect().top;
+          const selectors = [
+            "h1,h2,h3,h4,h5,h6,p,ul,ol,li,hr,table,blockquote,pre,section,article,div",
+            ".idea-card,.bg-gray-50,.border,.grid",
+          ].join(",");
+          const nodes = Array.from(contentToExport.querySelectorAll(selectors));
+          const bottoms = new Set();
+          nodes.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            const height = rect.height || 0;
+            // On ignore les éléments trop petits (icônes, etc.)
+            if (height < 24) return;
+            const bottom = Math.round(rect.bottom - base);
+            if (bottom > 0) bottoms.add(bottom);
+          });
+          // Inclure la fin de contenu comme dernier candidat
+          const endRect = contentToExport.getBoundingClientRect();
+          bottoms.add(Math.round(endRect.height));
+          return Array.from(bottoms).sort((a, b) => a - b);
+        };
+        const breakCandidatesPx = getBreakCandidatesPx();
+
         html2canvas(contentToExport, {
           scale: 2,
           useCORS: true, // Nécessaire pour l'image cross-origin
@@ -609,7 +745,7 @@ function openModal(modalId) {
           windowWidth: contentToExport.scrollWidth,
           windowHeight: contentToExport.scrollHeight,
         }).then((canvas) => {
-          const imgData = canvas.toDataURL("image/jpeg", 0.95);
+          const imgData = canvas.toDataURL("image/png");
           const pdf = new jsPDF({
             orientation: "portrait",
             unit: "mm",
@@ -621,32 +757,57 @@ function openModal(modalId) {
           const margin = 15;
           const contentWidth = pdfWidth - margin * 2;
           const contentHeight = (canvas.height * contentWidth) / canvas.width;
+          const pageInner = pdfHeight - margin * 2; // hauteur utile par page en mm
+          const mmPerPx = contentHeight / canvas.height; // conversion px -> mm selon l'image
+          const pxPerMm = 1 / mmPerPx;
+          const pageInnerPx = Math.floor(pageInner * pxPerMm);
+          const minChunkPx = Math.floor(10 * pxPerMm); // ~10mm mini
 
-          let heightLeft = contentHeight;
-          let position = 0;
+          // Itération avec SLICES non chevauchantes alignées sur les blocs
+          let currentTopPx = 0;
+          while (currentTopPx < canvas.height) {
+            const targetPx = currentTopPx + pageInnerPx;
+            // Plus grand candidat <= targetPx et > currentTopPx + minChunkPx
+            let nextBreakPx = null;
+            for (let i = breakCandidatesPx.length - 1; i >= 0; i--) {
+              const c = breakCandidatesPx[i];
+              if (c <= targetPx && c > currentTopPx + minChunkPx) {
+                nextBreakPx = c;
+                break;
+              }
+            }
+            if (!nextBreakPx) {
+              nextBreakPx = Math.min(targetPx, canvas.height);
+            }
 
-          pdf.addImage(
-            imgData,
-            "JPEG",
-            margin,
-            margin,
-            contentWidth,
-            contentHeight
-          );
-          heightLeft -= pdfHeight - margin * 2;
+            const sliceHeightPx = Math.max(0, nextBreakPx - currentTopPx);
+            if (sliceHeightPx === 0) break;
 
-          while (heightLeft > 0) {
-            position = heightLeft - contentHeight;
-            pdf.addPage();
-            pdf.addImage(
-              imgData,
-              "JPEG",
-              margin,
-              position - margin,
-              contentWidth,
-              contentHeight
+            // Créer un canvas slice pour cette page
+            const sliceCanvas = document.createElement("canvas");
+            sliceCanvas.width = canvas.width;
+            sliceCanvas.height = sliceHeightPx;
+            const sctx = sliceCanvas.getContext("2d");
+            sctx.drawImage(
+              canvas,
+              0,
+              currentTopPx,
+              canvas.width,
+              sliceHeightPx,
+              0,
+              0,
+              canvas.width,
+              sliceHeightPx
             );
-            heightLeft -= pdfHeight - margin * 2;
+            const sliceImg = sliceCanvas.toDataURL("image/png");
+            const sliceHeightMm = sliceHeightPx * mmPerPx;
+
+            pdf.addImage(sliceImg, "PNG", margin, margin, contentWidth, sliceHeightMm);
+
+            currentTopPx = nextBreakPx;
+            if (currentTopPx < canvas.height) {
+              pdf.addPage();
+            }
           }
 
           pdf.save("atelier_storytelling.pdf");
@@ -891,6 +1052,27 @@ function renderContent(targetId) {
           : `<div class="bg-gray-50 p-4 rounded-lg text-center flex flex-col justify-center stat-card"><h3 class="font-semibold text-lg" style="color: var(--c-primary);">${stat.label}</h3><p class="text-4xl font-bold my-2" style="color: var(--c-primary);">${stat.value}</p><p class="text-sm" style="color: var(--c-secondary);">${stat.detail}</p></div>`;
     });
     contentHTML += "</div>";
+
+    // Section additionnelle: Projections d'avenir (harmonisée)
+    contentHTML += `
+      <div class="mt-8">
+        <h3 class="font-semibold text-xl mb-4 navigate-to-practice" data-section="intro_contexte" data-practice-title="Projections d'Avenir" style="color: var(--c-primary); cursor: pointer;">Projections d'avenir (2030)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-gray-50 p-4 rounded-lg text-center stat-card navigate-to-practice" data-section="intro_contexte" data-practice-title="Projections d'Avenir" style="cursor: pointer;">
+            <h4 class="font-semibold" style="color: var(--c-primary);">Conducteurs de Véhicules</h4>
+            <div class="chart-container mt-4"><canvas id="projectionsConducteursChart"></canvas></div>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg text-center stat-card navigate-to-practice" data-section="intro_contexte" data-practice-title="Projections d'Avenir" style="cursor: pointer;">
+            <h4 class="font-semibold" style="color: var(--c-primary);">Agents d'Exploitation</h4>
+            <div class="chart-container mt-4"><canvas id="projectionsAgentsChart"></canvas></div>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg text-center stat-card navigate-to-practice" data-section="intro_contexte" data-practice-title="Projections d'Avenir" style="cursor: pointer;">
+            <h4 class="font-semibold" style="color: var(--c-primary);">Ouvriers Qualifiés (Mécanique)</h4>
+            <div class="chart-container mt-4"><canvas id="projectionsMecaniciensChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    `;
   } else if (data.practices && data.practices.length > 0) {
     contentHTML += '<div class="space-y-4">';
     data.practices.forEach((practice) => {
@@ -936,10 +1118,12 @@ function renderContent(targetId) {
       // On parcourt les clés de l'objet 'charts' de la section actuelle
       for (const chartId in data.charts) {
         // On cherche l'élément canvas correspondant à la clé (ex: "marqueEmployeurStatsChart")
+        const config = data.charts[chartId];
+        if (!config) continue; // ignore null/undefined placeholders
         const ctx = document.getElementById(chartId)?.getContext("2d");
         if (ctx) {
           // Si on le trouve, on crée le graphique
-          currentCharts.push(new Chart(ctx, { ...data.charts[chartId] }));
+          currentCharts.push(new Chart(ctx, { ...config }));
         }
       }
     }, 0); // setTimeout garantit que le DOM est prêt

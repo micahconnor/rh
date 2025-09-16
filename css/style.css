@@ -190,6 +190,16 @@ nav {
 .accordion-header.open .accordion-icon {
   transform: rotate(180deg);
 }
+
+/* Utility: centered circular icon for idea cards */
+.icon-circle {
+  width: 3rem; /* 48px */
+  height: 3rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .modal-overlay {
   position: fixed;
   top: 0;

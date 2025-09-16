@@ -114,6 +114,32 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Navigation directe vers une pratique via attributs data-
+    const navigateEl = e.target.closest('.navigate-to-practice');
+    if (navigateEl) {
+      const sectionId = navigateEl.dataset.section || 'intro_contexte';
+      const practiceTitleQuery = navigateEl.dataset.practiceTitle || '';
+      // Naviguer d'abord vers la section cible
+      navigateToSection(sectionId);
+      // Ouvrir ensuite l'accordéon dont le titre contient le texte recherché
+      setTimeout(() => {
+        const accordions = document.querySelectorAll('#content-area .accordion-header');
+        let opened = false;
+        accordions.forEach((header, idx) => {
+          const hText = header.textContent || '';
+          if (!opened && hText.toLowerCase().includes(practiceTitleQuery.toLowerCase())) {
+            if (!header.classList.contains('open')) {
+              header.classList.add('open');
+              header.nextElementSibling.classList.add('open');
+            }
+            header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            opened = true;
+          }
+        });
+      }, 150);
+      return;
+    }
+
     const closeLexiconBtn = e.target.closest("#close-lexicon-modal-btn");
     const lexiconOverlay = e.target.closest("#lexicon-modal-overlay");
     if (closeLexiconBtn || (lexiconOverlay && e.target === lexiconOverlay)) {
