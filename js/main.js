@@ -114,25 +114,44 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Clic sur un terme surligné pour ouvrir directement sa fiche complète
+    const inlineLexiconTerm = e.target.closest(".lexicon-term");
+    if (inlineLexiconTerm && inlineLexiconTerm.dataset.term) {
+      openLexiconModal(inlineLexiconTerm.dataset.term);
+      return;
+    }
+
+    // Bouton dans l'infobulle
+    const seeBtn = e.target.closest(".see-in-lexicon-btn");
+    if (seeBtn && seeBtn.dataset.term) {
+      openLexiconModal(seeBtn.dataset.term);
+      return;
+    }
+
     // Navigation directe vers une pratique via attributs data-
-    const navigateEl = e.target.closest('.navigate-to-practice');
+    const navigateEl = e.target.closest(".navigate-to-practice");
     if (navigateEl) {
-      const sectionId = navigateEl.dataset.section || 'intro_contexte';
-      const practiceTitleQuery = navigateEl.dataset.practiceTitle || '';
+      const sectionId = navigateEl.dataset.section || "intro_contexte";
+      const practiceTitleQuery = navigateEl.dataset.practiceTitle || "";
       // Naviguer d'abord vers la section cible
       navigateToSection(sectionId);
       // Ouvrir ensuite l'accordéon dont le titre contient le texte recherché
       setTimeout(() => {
-        const accordions = document.querySelectorAll('#content-area .accordion-header');
+        const accordions = document.querySelectorAll(
+          "#content-area .accordion-header"
+        );
         let opened = false;
         accordions.forEach((header, idx) => {
-          const hText = header.textContent || '';
-          if (!opened && hText.toLowerCase().includes(practiceTitleQuery.toLowerCase())) {
-            if (!header.classList.contains('open')) {
-              header.classList.add('open');
-              header.nextElementSibling.classList.add('open');
+          const hText = header.textContent || "";
+          if (
+            !opened &&
+            hText.toLowerCase().includes(practiceTitleQuery.toLowerCase())
+          ) {
+            if (!header.classList.contains("open")) {
+              header.classList.add("open");
+              header.nextElementSibling.classList.add("open");
             }
-            header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            header.scrollIntoView({ behavior: "smooth", block: "start" });
             opened = true;
           }
         });

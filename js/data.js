@@ -31,6 +31,28 @@ export const lexiconData = {
   CQP: "Certificat de Qualification Professionnelle. Certification créée et reconnue par une branche professionnelle pour attester de compétences spécifiques à un métier.",
   "WhatsApp Business":
     "Version professionnelle et gratuite de l'application WhatsApp, elle peut être installé en parallèle de l'application WhatsApp classique afin d'avoir deux comptes WhatsApp liés à deux numéros différents sur un seul téléphone.",
+  KPI: "Key Performance Indicator. Indicateur chiffré permettant de mesurer l'atteinte d'un objectif (ex : délai de recrutement, taux d'absentéisme).",
+  "People analytics":
+    "Analyse des données RH pour éclairer les décisions (recrutement, engagement, performance, rétention) et objectiver les priorités d'action.",
+  "Marque employeur":
+    "Perception globale et réputation d'une entreprise en tant qu'employeur (valeurs, promesse, expériences vécues par candidats et salariés).",
+  GPEC: "Gestion Prévisionnelle des Emplois et des Compétences. Démarche anticipant les évolutions des métiers, des effectifs et des compétences nécessaires.",
+  CSE: "Comité Social et Économique. Instance représentative du personnel obligatoire à partir de 11 salariés, fusionnant les anciennes IRP (DP, CE, CHSCT).",
+  RSE: "Responsabilité Sociétale des Entreprises. Intégration volontaire des préoccupations sociales, environnementales et éthiques dans les activités et la stratégie.",
+  NPS: "Net Promoter Score. Indicateur de recommandation (clients ou candidats) basé sur la question : 'Recommanderiez-vous ... ?' (score -100 à +100).",
+  eNPS: "Employee Net Promoter Score. Variation du NPS appliquée aux salariés pour mesurer leur propension à recommander l'entreprise comme employeur.",
+  Cooptation:
+    "Mécanisme par lequel un salarié recommande un candidat de son réseau en échange d'une reconnaissance ou prime si embauche réussie.",
+  Offboarding:
+    "Processus d'accompagnement structuré du départ d'un salarié (transmission, aspects légaux, feedback, maintien d'une relation positive).",
+  "Mobilité interne":
+    "Changement de poste, fonction ou périmètre d'un salarié au sein de la même entreprise pour développer compétences et rétention.",
+  ROI: "Return On Investment. Rapport entre les gains obtenus et les ressources investies (ex : coût d'un outil vs réduction du turnover).",
+  OKR: "Objectives and Key Results. Méthode de pilotage fixant des objectifs qualitatifs étayés par 3–5 résultats clés mesurables.",
+  "Talent acquisition":
+    "Ensemble des stratégies pour attirer et convertir des talents (marque employeur, sourcing ciblé, expérience candidat, outils digitaux).",
+  Storytelling:
+    "Art de structurer et raconter des récits pour incarner la culture d'entreprise et renforcer l'engagement (ex : parcours salarié).",
 };
 
 // PARTENAIRES COMMERCIAUX (à compléter)

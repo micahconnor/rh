@@ -331,7 +331,7 @@ nav {
   color: var(--c-white);
   text-align: center;
   border-radius: 6px;
-  padding: 10px;
+  padding: 10px 12px 12px;
   position: absolute;
   z-index: 10;
   bottom: 125%;
@@ -345,6 +345,34 @@ nav {
 .lexicon-term:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.lexicon-term .tooltip-text .definition-block {
+  display: block;
+  margin-bottom: 0.5rem;
+  line-height: 1.25rem;
+  text-align: left;
+}
+
+.see-in-lexicon-btn {
+  display: inline-block;
+  background: var(--c-white);
+  color: var(--c-primary);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--c-light);
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+.see-in-lexicon-btn:hover {
+  background: var(--c-accent-two);
+  border-color: var(--c-accent);
 }
 
 @media print {
