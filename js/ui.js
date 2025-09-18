@@ -15,34 +15,71 @@ const modalContent = document.getElementById("modal-content");
 // --- FONCTIONS DU LEXIQUE ---
 
 function applyLexicon(container) {
-  const terms = Object.keys(lexiconData);
-  if (terms.length === 0) return;
-  const regex = new RegExp(`\\b(${terms.join("|")})\\b`, "gi");
+  if (!container || !lexiconData) return;
+  const terms = Object.keys(lexiconData || {});
+  if (!terms.length) return;
+
+  // Trier par longueur décroissante pour éviter que "RH" ne capture dans une chaine plus longue.
+  const sorted = [...terms].sort((a, b) => b.length - a.length);
+  // Construire une class d'ensemble en échappant les caractères spéciaux.
+  const escaped = sorted.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const regex = new RegExp(`(?!<[^>]*)(?:\\b(${escaped.join("|")})\\b)`, "gi");
+
   const walker = document.createTreeWalker(
     container,
     NodeFilter.SHOW_TEXT,
-    null,
+    {
+      acceptNode(node) {
+        if (!node.nodeValue || !node.nodeValue.trim())
+          return NodeFilter.FILTER_REJECT;
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        if (
+          parent.closest(".lexicon-term") ||
+          parent.tagName === "A" ||
+          parent.closest("button") ||
+          parent.closest(".tooltip-text")
+        )
+          return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    },
     false
   );
+
+  const toProcess = [];
   let node;
-  while ((node = walker.nextNode())) {
-    if (
-      node.parentElement.tagName === "A" ||
-      node.parentElement.classList.contains("lexicon-term")
-    )
-      continue;
-    const matches = node.nodeValue.match(regex);
-    if (matches) {
-      const newNode = document.createElement("span");
-      newNode.innerHTML = node.nodeValue.replace(regex, (match) => {
-        const termKey = Object.keys(lexiconData).find(
-          (key) => key.toLowerCase() === match.toLowerCase()
-        );
-        return `<span class="lexicon-term">${match}<span class="tooltip-text">${lexiconData[termKey]}</span></span>`;
-      });
-      node.parentNode.replaceChild(newNode, node);
+  while ((node = walker.nextNode())) toProcess.push(node);
+
+  toProcess.forEach((textNode) => {
+    const original = textNode.nodeValue;
+    if (!regex.test(original)) return; // test rapide
+    regex.lastIndex = 0; // reset après test
+
+    // Remplacement manuel pour préserver toutes les occurrences
+    const frag = document.createDocumentFragment();
+    let lastIndex = 0;
+    let match;
+    while ((match = regex.exec(original))) {
+      const termText = match[0];
+      const before = original.slice(lastIndex, match.index);
+      if (before) frag.appendChild(document.createTextNode(before));
+      const key = terms.find((k) => k.toLowerCase() === termText.toLowerCase());
+      if (!key) {
+        frag.appendChild(document.createTextNode(termText));
+      } else {
+        const wrapper = document.createElement("span");
+        wrapper.className = "lexicon-term";
+        wrapper.setAttribute("data-term", key);
+        wrapper.innerHTML = `${termText}<span class="tooltip-text"><span class="definition-block">${lexiconData[key]}</span><button class="see-in-lexicon-btn" data-term="${key}" type="button">Voir dans le lexique</button></span>`;
+        frag.appendChild(wrapper);
+      }
+      lastIndex = match.index + termText.length;
     }
-  }
+    const rest = original.slice(lastIndex);
+    if (rest) frag.appendChild(document.createTextNode(rest));
+    textNode.parentNode.replaceChild(frag, textNode);
+  });
 }
 
 // Nouvelle fonction d'assistance pour le téléchargement PDF générique
@@ -310,6 +347,12 @@ function openModal(modalId) {
   const headerCloseBtn = document.getElementById("close-modal-btn");
   if (headerCloseBtn) {
     headerCloseBtn.addEventListener("click", closeModal, { once: true });
+  }
+
+  // Appliquer le lexique sur le contenu de la modale (pour souligner les nouveaux termes)
+  const modalExportable = document.getElementById("modal-exportable-content");
+  if (modalExportable) {
+    applyLexicon(modalExportable);
   }
 
   if (modalId === "outil_annonce") {
@@ -1020,8 +1063,11 @@ function renderContent(targetId) {
     // --- Build Lexicon Content (interactive grid) ---
     let lexiconContent = '<div class="lexicon-grid">';
     for (const term in lexiconData) {
-      // Add "resources-item" class and search content
-      lexiconContent += `<button class="lexicon-grid-item resources-item" data-term="${term}" data-search-content="${term} ${lexiconData[term]}">${term}</button>`;
+      // Add "resources-item" class and search content + id anchor
+      const anchorId = `lexicon-term-${term
+        .replace(/[^a-z0-9]+/gi, "-")
+        .toLowerCase()}`;
+      lexiconContent += `<button id="${anchorId}" class="lexicon-grid-item resources-item" data-term="${term}" data-search-content="${term} ${lexiconData[term]}">${term}</button>`;
     }
     lexiconContent += "</div>";
     lexiconContent += "</div>";
@@ -1066,14 +1112,14 @@ function renderContent(targetId) {
       const searchContent = `${safeName} ${tags.join(" ")}`.trim();
 
       const cardInner = `
-        <div class="border rounded-lg p-3 bg-white flex flex-col items-center justify-between text-center resources-item h-40 md:h-44" data-search-content="${searchContent}">
+        <div class="border rounded-lg p-3 bg-white flex flex-col items-center justify-between text-center resources-item h-40 md:h-44" data-search-content="${searchContent}" title="${safeName}">
           <div class="w-24 h-24 flex items-center justify-center overflow-hidden">
             <img src="${logo}" alt="${safeName}" class="max-w-full max-h-full object-contain partner-logo" onerror="this.src='${fallbackLogo}'" />
           </div>
           ${tagsHtml}
         </div>`;
       partnersContent += p?.website
-        ? `<a href="${p.website}" target="_blank" rel="noopener noreferrer" class="block">${cardInner}</a>`
+        ? `<a href="${p.website}" target="_blank" rel="noopener noreferrer" class="block" title="${safeName}">${cardInner}</a>`
         : cardInner;
     });
     partnersContent += "</div>";
