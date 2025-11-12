@@ -80,14 +80,35 @@ function initLogoSelector() {
     toggleBtn,
     comboBox,
     containerEl,
+    options = {},
   }) => {
     if (!inputEl || !listEl || !toggleBtn || !comboBox || !containerEl) {
       return null;
     }
 
+    const isMobileInstance = Boolean(options.isMobile);
+
     let filteredItems = logosData;
     let isOpen = false;
     let activeIndex = -1;
+
+    const ensureMobileComboboxVisibility = () => {
+      if (!isMobileInstance || window.innerWidth >= 1024) {
+        return;
+      }
+      requestAnimationFrame(() => {
+        const rect = comboBox.getBoundingClientRect();
+        const viewportPadding = 12;
+        const targetTop = Math.max(
+          window.scrollY + rect.top - viewportPadding,
+          0
+        );
+        window.scrollTo({
+          top: targetTop,
+          behavior: "smooth",
+        });
+      });
+    };
 
     const renderList = () => {
       if (!filteredItems.length) {
@@ -144,6 +165,7 @@ function initLogoSelector() {
         filteredItems = logosData;
       }
       setOpenState(true);
+      ensureMobileComboboxVisibility();
     };
 
     const filterItems = (query) => {
@@ -326,6 +348,7 @@ function initLogoSelector() {
       toggleBtn: mobileToggle,
       comboBox,
       containerEl: wrapper,
+      options: { isMobile: true },
     });
   }
 }
@@ -334,6 +357,7 @@ function setupTutorial(navigateToSection) {
   const helpButton = document.getElementById("tutorial-help-button");
   const overlay = document.getElementById("tutorial-overlay");
   const cardLayer = document.getElementById("tutorial-card-layer");
+  const tutorialCard = document.getElementById("tutorial-card");
   const progressEl = document.getElementById("tutorial-progress");
   const titleEl = document.getElementById("tutorial-title");
   const descriptionEl = document.getElementById("tutorial-description");
@@ -446,8 +470,7 @@ function setupTutorial(navigateToSection) {
       fallbackSelector: ".container",
       title: "Bienvenue dans le guide Réunir",
       description: `
-        <p>Que vous soyez dirigeant, responsable ou collaborateur, chaque bloc a été pensé pour vous aider à passer de la stratégie à l'action.</p>
-        <p>Suivez les étapes de ce tutoriel afin de comprendre comment utiliser le guide pour trouver les informations et les outils que vous cherchez</p>
+        <p>Suivez les étapes de ce tutoriel afin de comprendre comment utiliser le guide pour trouver les informations et les outils pour passer de la stratégie à l'action.</p>
       `,
       scroll: "start",
       disableHighlight: true,
@@ -458,10 +481,7 @@ function setupTutorial(navigateToSection) {
       title: "Lexique interactif",
       description: `
         <p>Tout mot souligné fonctionne comme un mini lexique embarqué : survolez ou touchez le mot pour afficher sa définition instantanément.</p>
-        <ul>
-          <li><strong>Compréhension partagée :</strong> idéal pour expliquer un sigle (PVE, PCRH…) aux managers en direct.</li>
-          <li><strong>Bouton « Voir dans le lexique » :</strong> ouvre la fiche complète et liste les sections où le terme est cité.</li>
-        </ul>
+        <p><strong>Bouton « Voir dans le lexique » :</strong> ouvre la fiche complète et liste les sections où le terme est cité.</p>
         <p>Essayez avec <strong>PVE</strong> ci-dessous pour voir l'infobulle.</p>
       `,
       showLexiconDemo: true,
@@ -472,8 +492,6 @@ function setupTutorial(navigateToSection) {
       selector: "nav",
       title: "Suivez le parcours RH complet",
       description: `
-        <p>Le menu reste collé à l'écran et respecte l'ordre chronologique : Attirer ➜ Recruter ➜ Intégrer ➜ Former ➜ Engager ➜ Finaliser, puis <strong>Tech + IA</strong> et <strong>Ressources</strong>.</p>
-        <ul>
           <li><strong>Sur ordinateur :</strong> cliquez directement sur le chapitre qui vous intéresse.</li>
           <li><strong>Sur mobile :</strong> ouvrez « Menu du guide » pour retrouver les mêmes sections.</li>
         </ul>
@@ -487,7 +505,7 @@ function setupTutorial(navigateToSection) {
       selector: "#guideSearchInput",
       title: "Recherchez dans tout le guide",
       description: `
-        <p>Le moteur de recherche passe en revue l'intégralité des contenus (titres, bonnes pratiques, outils, lexique…). Tapez simplement 3 lettres et laissez-vous guider par les extraits surlignés.</p>
+        <p>Le moteur de recherche passe en revue l'intégralité des contenus (titres, bonnes pratiques, outils, lexique…). Saisissez simplement de début de votre recherche ou mot clé, et laissez-vous guider par les extraits surlignés.</p>
         <p>Un clic sur un résultat ouvre directement l'accordéon correspondant : idéal pour répondre à une question précise en quelques secondes.</p>
       `,
     },
@@ -647,6 +665,23 @@ function setupTutorial(navigateToSection) {
     }
   };
 
+  const ensureHighlightVisible = (element) => {
+    if (!element || !tutorialCard) return;
+    if (tutorialCard.contains(element)) return;
+    requestAnimationFrame(() => {
+      const rect = element.getBoundingClientRect();
+      const cardRect = tutorialCard.getBoundingClientRect();
+      const padding = 20;
+      if (rect.bottom > cardRect.top - padding) {
+        const offset = rect.bottom - (cardRect.top - padding);
+        window.scrollBy({ top: offset, behavior: "smooth" });
+      } else if (rect.top < padding) {
+        const offset = rect.top - padding;
+        window.scrollBy({ top: offset, behavior: "smooth" });
+      }
+    });
+  };
+
   const highlightStep = (step) => {
     clearHighlight();
     if (!step) return;
@@ -681,6 +716,7 @@ function setupTutorial(navigateToSection) {
           });
         }
       }
+      ensureHighlightVisible(target);
 
       const extraSelectors = Array.isArray(step.extraHighlightSelectors)
         ? step.extraHighlightSelectors
@@ -692,6 +728,7 @@ function setupTutorial(navigateToSection) {
           if (!currentHighlights.includes(extraElement)) {
             currentHighlights.push(extraElement);
           }
+          ensureHighlightVisible(extraElement);
         }
       });
     };

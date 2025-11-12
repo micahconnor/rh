@@ -87,7 +87,7 @@ nav {
 .tutorial-highlight {
   position: relative !important;
   overflow: visible !important;
-  z-index: 10001 !important;
+  z-index: 12000 !important;
   box-shadow: 0 0 0 4px rgba(67, 52, 165, 0.95),
     0 0 0 9px rgba(97, 203, 233, 0.72),
     inset 0 0 22px rgba(67, 52, 165, 0.2),
@@ -951,7 +951,7 @@ body.tutorial-open {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 10002;
+  z-index: 13000;
 }
 .tutorial-card-layer.visible {
   opacity: 1;
