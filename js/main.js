@@ -994,12 +994,15 @@ function setupTutorial(navigateToSection) {
   document.addEventListener("keydown", onKeyDown);
   document.addEventListener("click", (event) => {
     if (!isOpen) return;
-    if (
-      !overlay.contains(event.target) &&
-      !cardLayer.contains(event.target) &&
-      event.target !== helpButton &&
-      !helpButton.contains(event.target)
-    ) {
+    const target = event.target;
+    const isInsideOverlay =
+      overlay.contains(target) || cardLayer.contains(target);
+    const isHelpButton =
+      target === helpButton || helpButton.contains(target);
+    const isSummaryButton =
+      mobileSummaryButton &&
+      (target === mobileSummaryButton || mobileSummaryButton.contains(target));
+    if (!isInsideOverlay && !isHelpButton && !isSummaryButton) {
       closeTutorial();
     }
   });
