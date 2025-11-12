@@ -361,6 +361,19 @@ function setupTutorial(navigateToSection) {
   const progressEl = document.getElementById("tutorial-progress");
   const titleEl = document.getElementById("tutorial-title");
   const descriptionEl = document.getElementById("tutorial-description");
+  const contentScrollArea = document.getElementById("tutorial-card-content");
+  const collapseToggleBtn = document.getElementById(
+    "tutorial-collapse-toggle"
+  );
+  const mobileSummaryButton = document.getElementById(
+    "tutorial-mobile-summary"
+  );
+  const mobileSummaryProgress = document.getElementById(
+    "tutorial-summary-progress"
+  );
+  const mobileSummaryTitle = document.getElementById(
+    "tutorial-summary-title"
+  );
   const prevBtn = document.getElementById("tutorial-prev");
   const nextBtn = document.getElementById("tutorial-next");
   const closeBtn = document.getElementById("tutorial-close");
@@ -393,6 +406,59 @@ function setupTutorial(navigateToSection) {
   let forcedVisibleElement = null;
   let currentSectionId = "dashboard";
   let pendingAutoSectionHighlight = false;
+  const isMobileViewport = () => window.innerWidth < 640;
+  let isCardCollapsed = false;
+  let lastViewportWasMobile = isMobileViewport();
+
+  const updateSummaryContent = (step) => {
+    if (!mobileSummaryButton || !mobileSummaryProgress || !mobileSummaryTitle) {
+      return;
+    }
+    mobileSummaryProgress.textContent = progressEl.textContent;
+    mobileSummaryTitle.textContent = step?.title || "";
+  };
+
+  const applyCollapsedState = (collapsed) => {
+    const collapseForMobile = collapsed && isMobileViewport();
+    isCardCollapsed = collapseForMobile;
+    const cardHiddenClass = "mobile-collapsed";
+    if (tutorialCard) {
+      tutorialCard.classList.toggle(cardHiddenClass, collapseForMobile);
+      tutorialCard.classList.toggle("expanded", !collapseForMobile);
+      tutorialCard.setAttribute(
+        "aria-hidden",
+        collapseForMobile ? "true" : "false"
+      );
+    }
+    if (collapseToggleBtn) {
+      collapseToggleBtn.setAttribute(
+        "aria-expanded",
+        collapseForMobile ? "false" : "true"
+      );
+      collapseToggleBtn.setAttribute(
+        "aria-label",
+        collapseForMobile ? "Afficher le détail" : "Masquer le détail"
+      );
+    }
+    document.body.classList.toggle(
+      "tutorial-collapsed",
+      collapseForMobile && isOpen
+    );
+    overlay.classList.toggle("summary-mode", collapseForMobile && isOpen);
+    if (mobileSummaryButton) {
+      mobileSummaryButton.classList.toggle(
+        "hidden",
+        !collapseForMobile || !isOpen
+      );
+      mobileSummaryButton.setAttribute(
+        "aria-expanded",
+        collapseForMobile ? "false" : "true"
+      );
+    }
+    if (!collapseForMobile && contentScrollArea) {
+      contentScrollArea.scrollTop = 0;
+    }
+  };
 
   const openMobileNavForTutorial = () => {
     const { container, menuOpenIcon, menuCloseIcon } = navElements;
@@ -767,6 +833,9 @@ function setupTutorial(navigateToSection) {
     if (emailButton) {
       emailButton.classList.toggle("hidden", step.id !== "help");
     }
+    updateSummaryContent(step);
+    const autoCollapse = isMobileViewport() && currentStepIndex > 0;
+    applyCollapsedState(autoCollapse);
     prevBtn.disabled = currentStepIndex === 0;
     nextBtn.textContent =
       currentStepIndex === steps.length - 1 ? "Terminer" : "Suivant";
@@ -789,6 +858,15 @@ function setupTutorial(navigateToSection) {
       }
     }, 50);
   };
+
+  collapseToggleBtn?.addEventListener("click", () => {
+    if (!isMobileViewport()) return;
+    applyCollapsedState(true);
+  });
+  mobileSummaryButton?.addEventListener("click", () => {
+    if (!isOpen) return;
+    applyCollapsedState(false);
+  });
 
   const markTutorialSeen = () => {
     if (hasMarkedSeen) return;
@@ -828,7 +906,33 @@ function setupTutorial(navigateToSection) {
     }
     pendingAutoSectionHighlight = false;
     markTutorialSeen();
+    if (typeof navigateToSection === "function") {
+      navigateToSection("dashboard");
+      currentSectionId = "dashboard";
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    applyCollapsedState(false);
+    document.body.classList.remove("tutorial-collapsed");
+    overlay.classList.remove("summary-mode");
+    mobileSummaryButton?.classList.add("hidden");
   };
+
+  window.addEventListener("resize", () => {
+    const mobileNow = isMobileViewport();
+    if (!isOpen) {
+      lastViewportWasMobile = mobileNow;
+      return;
+    }
+    if (!mobileNow) {
+      applyCollapsedState(false);
+    } else if (!lastViewportWasMobile && mobileNow) {
+      const autoCollapse = currentStepIndex > 0;
+      applyCollapsedState(autoCollapse);
+    } else {
+      applyCollapsedState(isCardCollapsed);
+    }
+    lastViewportWasMobile = mobileNow;
+  });
 
   const goToStep = (newIndex) => {
     if (newIndex < 0 || newIndex > steps.length - 1) return;

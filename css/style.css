@@ -940,6 +940,10 @@ body.tutorial-open {
   visibility: visible;
   pointer-events: auto;
 }
+.tutorial-overlay.summary-mode {
+  background: rgba(13, 20, 45, 0.35);
+  pointer-events: none !important;
+}
 
 .tutorial-card-layer {
   position: fixed;
@@ -956,6 +960,10 @@ body.tutorial-open {
 .tutorial-card-layer.visible {
   opacity: 1;
   visibility: visible;
+}
+
+body.tutorial-collapsed .tutorial-card-layer {
+  pointer-events: none;
 }
 
 .tutorial-card {
@@ -997,6 +1005,7 @@ body.tutorial-open {
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
 }
 
 .tutorial-description {
@@ -1014,6 +1023,50 @@ body.tutorial-open {
 }
 .tutorial-description strong {
   color: #ffffff;
+}
+
+.tutorial-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.tutorial-card-content::-webkit-scrollbar {
+  display: none;
+}
+
+.tutorial-collapse-toggle {
+  display: none;
+  border: none;
+  border-radius: 9999px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.28);
+  color: var(--c-primary);
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.tutorial-collapse-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.tutorial-collapse-toggle:hover {
+  transform: translateY(2px);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.tutorial-mobile-summary {
+  display: none;
+}
+.tutorial-mobile-summary.hidden {
+  display: none !important;
 }
 
 .tutorial-lexicon-demo {
@@ -1113,12 +1166,114 @@ body.tutorial-open {
 
 @media (max-width: 640px) {
   .tutorial-card-layer {
-    padding: 1rem;
+    padding: 0.75rem;
     align-items: flex-end;
+    justify-content: center;
   }
   .tutorial-card {
-    width: 100%;
+    width: min(420px, 96vw);
     max-height: calc(100vh - 2rem);
+    padding: 1.2rem 1.25rem 1rem;
+    border-radius: 1.5rem 1.5rem 1rem 1rem;
+    box-shadow: 0 26px 45px rgba(6, 7, 15, 0.6);
+    transition: transform 0.35s ease, opacity 0.3s ease;
+    margin: 0 auto;
+  }
+  .tutorial-card.mobile-collapsed {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    pointer-events: none;
+  }
+  .tutorial-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+  }
+  .tutorial-card-content {
+    max-height: min(60vh, 360px);
     overflow-y: auto;
+    padding-right: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tutorial-collapse-toggle {
+    display: flex;
+    position: absolute;
+    top: 0.9rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 12px 24px rgba(8, 10, 25, 0.45);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .tutorial-card.mobile-collapsed .tutorial-collapse-toggle {
+    pointer-events: none;
+    opacity: 0;
+  }
+  .tutorial-card.expanded .tutorial-collapse-toggle svg {
+    transform: rotate(180deg);
+  }
+  .tutorial-mobile-summary {
+    position: fixed;
+    bottom: 5.5rem;
+    right: 1rem;
+    display: none;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.15rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: linear-gradient(
+      125deg,
+      rgba(67, 52, 165, 0.92),
+      rgba(97, 203, 233, 0.9)
+    );
+    color: #f5fbff;
+    box-shadow: 0 20px 35px rgba(8, 10, 25, 0.45);
+    z-index: 14000;
+    cursor: pointer;
+  }
+  .tutorial-mobile-summary svg {
+    width: 20px;
+    height: 20px;
+    transform: rotate(-90deg);
+    transition: transform 0.2s ease;
+  }
+  .tutorial-mobile-summary:hover svg {
+    transform: rotate(-90deg) translateX(2px);
+  }
+  .tutorial-mobile-summary .summary-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .tutorial-mobile-summary .summary-progress {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .tutorial-mobile-summary .summary-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    max-width: 12rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  body.tutorial-open .tutorial-mobile-summary {
+    display: flex;
+  }
+  body.tutorial-open:not(.tutorial-collapsed) .tutorial-mobile-summary {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .tutorial-mobile-summary {
+    display: none !important;
   }
 }
