@@ -10,12 +10,22 @@ import { guideData, companyLogos, setSelectedLogo } from "./data.js";
 
 function initLogoSelector() {
   const hiddenInput = document.getElementById("logo-selector");
-  const inputEl = document.getElementById("logo-selector-input");
-  const listEl = document.getElementById("logo-selector-list");
-  const toggleBtn = document.getElementById("logo-selector-toggle");
-  const containerEl = document.getElementById("logo-selector-container");
-  const comboBox = containerEl?.querySelector(".logo-combobox");
-  if (!hiddenInput || !inputEl || !listEl || !toggleBtn || !comboBox) return;
+  const desktopContainer = document.getElementById("logo-selector-container");
+  const desktopCombo = desktopContainer?.querySelector(".logo-combobox");
+  const desktopInput = document.getElementById("logo-selector-input");
+  const desktopList = document.getElementById("logo-selector-list");
+  const desktopToggle = document.getElementById("logo-selector-toggle");
+
+  if (
+    !hiddenInput ||
+    !desktopContainer ||
+    !desktopCombo ||
+    !desktopInput ||
+    !desktopList ||
+    !desktopToggle
+  ) {
+    return;
+  }
 
   const normalize = (value) =>
     (value || "")
@@ -36,11 +46,7 @@ function initLogoSelector() {
       for (let j = 1; j <= b.length; j++) {
         const charB = b[j - 1];
         const cost = charA === charB ? 0 : 1;
-        curr[j] = Math.min(
-          curr[j - 1] + 1, // insertion
-          prev[j] + 1, // deletion
-          prev[j - 1] + cost // substitution
-        );
+        curr[j] = Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost);
       }
       for (let j = 0; j <= b.length; j++) {
         prev[j] = curr[j];
@@ -57,158 +63,271 @@ function initLogoSelector() {
       id: `logo-option-${index}`,
     }));
 
-  let filteredItems = logosData;
-  let isOpen = false;
-  let activeIndex = -1;
+  const combos = [];
 
-  const renderList = () => {
-    if (!filteredItems.length) {
-      listEl.innerHTML =
-        '<div class="logo-combobox-empty">Aucune entreprise trouvée</div>';
-      return;
-    }
-    listEl.innerHTML = filteredItems
-      .map((item, index) => {
-        const isActive = index === activeIndex;
-        return `<button type="button" class="logo-combobox-option ${
-          isActive ? "active" : ""
-        }" data-index="${index}" data-url="${item.url}" id="${
-          item.id
-        }" role="option">
-            ${item.name}
-        </button>`;
-      })
-      .join("");
-    if (activeIndex >= 0) {
-      const activeEl = listEl.querySelector(`[data-index="${activeIndex}"]`);
-      activeEl?.scrollIntoView({ block: "nearest" });
-    }
+  const applySelection = (item) => {
+    const value = item ? item.name : "";
+    const url = item ? item.url : "";
+    combos.forEach((combo) => combo.setValue(value));
+    hiddenInput.value = url;
+    setSelectedLogo(url || null);
+    combos.forEach((combo) => combo.closeList());
   };
 
-  const setOpenState = (open) => {
-    isOpen = open;
-    comboBox.dataset.open = open ? "true" : "false";
-    listEl.classList.toggle("hidden", !open);
-    inputEl.setAttribute("aria-expanded", String(open));
-    if (open) {
-      renderList();
+  const createInstance = ({
+    inputEl,
+    listEl,
+    toggleBtn,
+    comboBox,
+    containerEl,
+  }) => {
+    if (!inputEl || !listEl || !toggleBtn || !comboBox || !containerEl) {
+      return null;
     }
-  };
 
-  const closeList = () => {
-    activeIndex = -1;
-    setOpenState(false);
-  };
+    let filteredItems = logosData;
+    let isOpen = false;
+    let activeIndex = -1;
 
-  const openList = () => {
-    if (filteredItems.length === 0) {
-      filteredItems = logosData;
-    }
-    setOpenState(true);
-  };
-
-  const filterItems = (query) => {
-    const normalizedQuery = normalize(query);
-    if (!normalizedQuery) {
-      filteredItems = logosData;
-      activeIndex = -1;
-      renderList();
-      return;
-    }
-    const scored = logosData.map((item) => ({
-      ...item,
-      score: item.searchKey.includes(normalizedQuery)
-        ? 0
-        : levenshtein(normalizedQuery, item.searchKey),
-    }));
-    scored.sort((a, b) => a.score - b.score || a.name.localeCompare(b.name));
-    const threshold = Math.max(2, Math.round(normalizedQuery.length * 0.4) + 1);
-    const closeMatches = scored.filter((entry) => entry.score <= threshold);
-    filteredItems = (closeMatches.length ? closeMatches : scored).slice(0, 20);
-    activeIndex = filteredItems.length ? 0 : -1;
-    renderList();
-  };
-
-  const selectLogo = (item) => {
-    if (!item) return;
-    inputEl.value = item.name;
-    hiddenInput.value = item.url;
-    setSelectedLogo(item.url);
-    closeList();
-  };
-
-  inputEl.addEventListener("focus", () => {
-    filterItems(inputEl.value);
-    openList();
-  });
-
-  inputEl.addEventListener("input", (event) => {
-    const value = event.target.value;
-    filterItems(value);
-    if (!isOpen) openList();
-    if (!value.trim()) {
-      hiddenInput.value = "";
-      setSelectedLogo(null);
-    }
-  });
-
-  inputEl.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      if (!isOpen) openList();
-      if (!filteredItems.length) return;
-      activeIndex = (activeIndex + 1) % filteredItems.length;
-      renderList();
-      return;
-    }
-    if (event.key === "ArrowUp") {
-      event.preventDefault();
-      if (!isOpen) openList();
-      if (!filteredItems.length) return;
-      activeIndex =
-        activeIndex <= 0
-          ? filteredItems.length - 1
-          : Math.max(0, activeIndex - 1);
-      renderList();
-      return;
-    }
-    if (event.key === "Enter") {
-      if (isOpen && activeIndex >= 0) {
-        event.preventDefault();
-        selectLogo(filteredItems[activeIndex]);
+    const renderList = () => {
+      if (!filteredItems.length) {
+        listEl.innerHTML =
+          '<div class="logo-combobox-empty">Aucune entreprise trouvée</div>';
+        return;
       }
-      return;
-    }
-    if (event.key === "Escape") {
-      closeList();
-    }
-  });
+      listEl.innerHTML = filteredItems
+        .map((item, index) => {
+          const isActive = index === activeIndex;
+          return `<button type="button" class="logo-combobox-option ${
+            isActive ? "active" : ""
+          }" data-index="${index}" data-url="${item.url}" id="${
+            item.id
+          }" role="option">
+              ${item.name}
+          </button>`;
+        })
+        .join("");
+      if (activeIndex >= 0) {
+        const activeEl = listEl.querySelector(`[data-index="${activeIndex}"]`);
+        activeEl?.scrollIntoView({ block: "nearest" });
+      }
+    };
 
-  toggleBtn.addEventListener("click", () => {
-    if (isOpen) {
-      closeList();
-    } else {
+    const setOpenState = (open) => {
+      isOpen = open;
+      comboBox.dataset.open = open ? "true" : "false";
+      listEl.classList.toggle("hidden", !open);
+      inputEl.setAttribute("aria-expanded", String(open));
+      if (open) {
+        renderList();
+        const rect = comboBox.getBoundingClientRect();
+        const listRect = listEl.getBoundingClientRect();
+        const toBottom = window.innerHeight - listRect.bottom;
+        const toTop = rect.top;
+        const preferUp = toBottom < 40 && toTop > listRect.height;
+        listEl.style.transformOrigin = preferUp ? "bottom" : "top";
+        if (preferUp) {
+          listEl.classList.add("dropdown-up");
+        } else {
+          listEl.classList.remove("dropdown-up");
+        }
+      }
+    };
+
+    const closeList = () => {
+      activeIndex = -1;
+      setOpenState(false);
+    };
+
+    const openList = () => {
+      if (!filteredItems.length) {
+        filteredItems = logosData;
+      }
+      setOpenState(true);
+    };
+
+    const filterItems = (query) => {
+      const normalizedQuery = normalize(query);
+      if (!normalizedQuery) {
+        filteredItems = logosData;
+        activeIndex = -1;
+        renderList();
+        return;
+      }
+      const scored = logosData.map((item) => ({
+        ...item,
+        score: item.searchKey.includes(normalizedQuery)
+          ? 0
+          : levenshtein(normalizedQuery, item.searchKey),
+      }));
+      scored.sort((a, b) => a.score - b.score || a.name.localeCompare(b.name));
+      const threshold = Math.max(
+        2,
+        Math.round(normalizedQuery.length * 0.4) + 1
+      );
+      const closeMatches = scored.filter((entry) => entry.score <= threshold);
+      filteredItems = (closeMatches.length ? closeMatches : scored).slice(
+        0,
+        20
+      );
+      activeIndex = filteredItems.length ? 0 : -1;
+      renderList();
+    };
+
+    const selectByIndex = (index) => {
+      const item = filteredItems[index];
+      if (item) {
+        applySelection(item);
+      }
+    };
+
+    inputEl.addEventListener("focus", () => {
       filterItems(inputEl.value);
       openList();
-      inputEl.focus();
-    }
+    });
+
+    inputEl.addEventListener("input", (event) => {
+      const value = event.target.value;
+      filterItems(value);
+      if (!isOpen) openList();
+      if (!value.trim()) {
+        applySelection(null);
+      }
+    });
+
+    inputEl.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        if (!isOpen) openList();
+        if (!filteredItems.length) return;
+        activeIndex = (activeIndex + 1) % filteredItems.length;
+        renderList();
+        return;
+      }
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        if (!isOpen) openList();
+        if (!filteredItems.length) return;
+        activeIndex =
+          activeIndex <= 0
+            ? filteredItems.length - 1
+            : Math.max(0, activeIndex - 1);
+        renderList();
+        return;
+      }
+      if (event.key === "Enter") {
+        if (isOpen && activeIndex >= 0) {
+          event.preventDefault();
+          selectByIndex(activeIndex);
+        }
+        return;
+      }
+      if (event.key === "Escape") {
+        closeList();
+      }
+    });
+
+    toggleBtn.addEventListener("click", () => {
+      if (isOpen) {
+        closeList();
+      } else {
+        filterItems(inputEl.value);
+        openList();
+        inputEl.focus();
+      }
+    });
+
+    listEl.addEventListener("mousedown", (event) => event.preventDefault());
+    listEl.addEventListener("click", (event) => {
+      const option = event.target.closest(".logo-combobox-option");
+      if (!option) return;
+      const index = parseInt(option.dataset.index, 10);
+      selectByIndex(index);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (
+        !containerEl.contains(event.target) &&
+        !listEl.contains(event.target)
+      ) {
+        closeList();
+      }
+    });
+
+    filterItems("");
+
+    const instanceApi = {
+      setValue: (value) => {
+        inputEl.value = value || "";
+      },
+      closeList,
+    };
+    combos.push(instanceApi);
+    return instanceApi;
+  };
+
+  createInstance({
+    inputEl: desktopInput,
+    listEl: desktopList,
+    toggleBtn: desktopToggle,
+    comboBox: desktopCombo,
+    containerEl: desktopContainer,
   });
 
-  listEl.addEventListener("mousedown", (event) => event.preventDefault());
-  listEl.addEventListener("click", (event) => {
-    const option = event.target.closest(".logo-combobox-option");
-    if (!option) return;
-    const index = parseInt(option.dataset.index, 10);
-    selectLogo(filteredItems[index]);
-  });
+  const mobileSlot = document.getElementById("logo-selector-mobile-slot");
+  if (mobileSlot) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "mobile-logo-selector";
 
-  document.addEventListener("click", (event) => {
-    if (!containerEl?.contains(event.target)) {
-      closeList();
-    }
-  });
+    const comboBox = document.createElement("div");
+    comboBox.className = "logo-combobox";
+    comboBox.dataset.open = "false";
 
-  filterItems("");
+    const mobileInput = document.createElement("input");
+    mobileInput.type = "text";
+    mobileInput.id = "logo-selector-input-mobile";
+    mobileInput.className = "logo-combobox-input";
+    mobileInput.placeholder = "Personnalisez avec votre logo...";
+    mobileInput.autocomplete = "off";
+    mobileInput.setAttribute("role", "combobox");
+    mobileInput.setAttribute("aria-autocomplete", "list");
+    mobileInput.setAttribute("aria-expanded", "false");
+    mobileInput.setAttribute("aria-controls", "logo-selector-list-mobile");
+
+    const mobileToggle = document.createElement("button");
+    mobileToggle.id = "logo-selector-toggle-mobile";
+    mobileToggle.className = "logo-combobox-toggle";
+    mobileToggle.type = "button";
+    mobileToggle.setAttribute(
+      "aria-label",
+      "Afficher la liste des entreprises"
+    );
+    mobileToggle.innerHTML = `
+      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+      </svg>
+    `;
+
+    comboBox.appendChild(mobileInput);
+    comboBox.appendChild(mobileToggle);
+
+    const mobileList = document.createElement("div");
+    mobileList.id = "logo-selector-list-mobile";
+    mobileList.className = "logo-combobox-list hidden";
+    mobileList.setAttribute("role", "listbox");
+
+    wrapper.appendChild(comboBox);
+    wrapper.appendChild(mobileList);
+    mobileSlot.appendChild(wrapper);
+
+    const api = createInstance({
+      inputEl: mobileInput,
+      listEl: mobileList,
+      toggleBtn: mobileToggle,
+      comboBox,
+      containerEl: wrapper,
+    });
+  }
 }
 
 function setupTutorial(navigateToSection) {
@@ -223,6 +342,7 @@ function setupTutorial(navigateToSection) {
   const closeBtn = document.getElementById("tutorial-close");
   const ctaBtn = document.getElementById("tutorial-cta");
   const emailButton = document.getElementById("tutorial-email-button");
+  const lexiconDemo = document.getElementById("tutorial-lexicon-demo");
   const navElements = {
     container: document.getElementById("nav-container"),
     menuOpenIcon: document.getElementById("menu-open-icon"),
@@ -333,6 +453,21 @@ function setupTutorial(navigateToSection) {
       disableHighlight: true,
     },
     {
+      id: "lexicon",
+      selector: "#tutorial-lexicon-demo .lexicon-term",
+      title: "Lexique interactif",
+      description: `
+        <p>Tout mot souligné fonctionne comme un mini lexique embarqué : survolez ou touchez le mot pour afficher sa définition instantanément.</p>
+        <ul>
+          <li><strong>Compréhension partagée :</strong> idéal pour expliquer un sigle (PVE, PCRH…) aux managers en direct.</li>
+          <li><strong>Bouton « Voir dans le lexique » :</strong> ouvre la fiche complète et liste les sections où le terme est cité.</li>
+        </ul>
+        <p>Essayez avec <strong>PVE</strong> ci-dessous pour voir l'infobulle.</p>
+      `,
+      showLexiconDemo: true,
+      extraHighlightSelectors: ["#tutorial-lexicon-demo"],
+    },
+    {
       id: "navigation",
       selector: "nav",
       title: "Suivez le parcours RH complet",
@@ -362,11 +497,15 @@ function setupTutorial(navigateToSection) {
       fallbackSelector: "nav",
       title: "Ajoutez votre logo aux exports",
       description: `
-        <p>Sélectionnez votre entreprise pour afficher automatiquement votre logo sur toutes les fiches téléchargeables (PDF/Word) ainsi que sur les impressions via html2canvas.</p>
-        <p>Le sélecteur apparaît en haut à droite sur ordinateur. Depuis un mobile, notez simplement de revenir sur un écran large avant de générer vos documents.</p>
+        <p>Cherchez et sélectionnez votre entreprise pour afficher automatiquement votre logo sur toutes les fiches téléchargeables (PDF/Word).</p>
+        <p>Le sélecteur apparaît en haut à droite sur ordinateur. Sur mobile, ouvrez « Menu du guide » et retrouvez-le tout en bas de la liste.</p>
       `,
       forceVisibleSelector: "#logo-selector-wrapper",
-      extraHighlightSelectors: ["nav"],
+      extraHighlightSelectors: [
+        "nav",
+        "#logo-selector-mobile-slot",
+        "#logo-selector-container",
+      ],
     },
     {
       id: "content",
@@ -383,7 +522,7 @@ function setupTutorial(navigateToSection) {
       `,
       getDescription: (sectionId) => `
         ${getSectionDescription(sectionId)}
-        <p class="mt-3 text-sm text-gray-600">Psst : vous pouvez laisser ce tutoriel ouvert et naviguer, il se met à jour automatiquement.</p>
+        
       `,
     },
     {
@@ -585,6 +724,9 @@ function setupTutorial(navigateToSection) {
         ? step.getDescription(currentSectionId)
         : step.description;
     descriptionEl.innerHTML = descriptionHTML;
+    if (lexiconDemo) {
+      lexiconDemo.classList.toggle("hidden", !step.showLexiconDemo);
+    }
     if (emailButton) {
       emailButton.classList.toggle("hidden", step.id !== "help");
     }
@@ -644,6 +786,9 @@ function setupTutorial(navigateToSection) {
     clearHighlight();
     clearForcedVisibility();
     closeMobileNavForTutorial();
+    if (lexiconDemo) {
+      lexiconDemo.classList.add("hidden");
+    }
     pendingAutoSectionHighlight = false;
     markTutorialSeen();
   };
