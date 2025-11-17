@@ -362,18 +362,14 @@ function setupTutorial(navigateToSection) {
   const titleEl = document.getElementById("tutorial-title");
   const descriptionEl = document.getElementById("tutorial-description");
   const contentScrollArea = document.getElementById("tutorial-card-content");
-  const collapseToggleBtn = document.getElementById(
-    "tutorial-collapse-toggle"
-  );
+  const collapseToggleBtn = document.getElementById("tutorial-collapse-toggle");
   const mobileSummaryButton = document.getElementById(
     "tutorial-mobile-summary"
   );
   const mobileSummaryProgress = document.getElementById(
     "tutorial-summary-progress"
   );
-  const mobileSummaryTitle = document.getElementById(
-    "tutorial-summary-title"
-  );
+  const mobileSummaryTitle = document.getElementById("tutorial-summary-title");
   const prevBtn = document.getElementById("tutorial-prev");
   const nextBtn = document.getElementById("tutorial-next");
   const closeBtn = document.getElementById("tutorial-close");
@@ -408,7 +404,6 @@ function setupTutorial(navigateToSection) {
   let pendingAutoSectionHighlight = false;
   const isMobileViewport = () => window.innerWidth < 640;
   let isCardCollapsed = false;
-  let lastViewportWasMobile = isMobileViewport();
 
   const updateSummaryContent = (step) => {
     if (!mobileSummaryButton || !mobileSummaryProgress || !mobileSummaryTitle) {
@@ -418,9 +413,9 @@ function setupTutorial(navigateToSection) {
     mobileSummaryTitle.textContent = step?.title || "";
   };
 
-  const applyCollapsedState = (collapsed) => {
-    const collapseForMobile = collapsed && isMobileViewport();
-    isCardCollapsed = collapseForMobile;
+  const applyCollapsedState = (nextState = isCardCollapsed) => {
+    isCardCollapsed = nextState;
+    const collapseForMobile = isMobileViewport() && isCardCollapsed;
     const cardHiddenClass = "mobile-collapsed";
     if (tutorialCard) {
       tutorialCard.classList.toggle(cardHiddenClass, collapseForMobile);
@@ -481,54 +476,6 @@ function setupTutorial(navigateToSection) {
     navOpenedByTutorial = false;
   };
 
-  const getSectionDescription = (sectionId) => {
-    const section = guideData[sectionId] || {};
-    const sectionName =
-      section.shortTitle || section.title || "cette partie du guide";
-    const chunks = [];
-
-    chunks.push(
-      `<p>Vous consultez actuellement <strong>${sectionName}</strong>. Chaque bloc associe contexte, idées applicables et liens directs vers les outils cités.</p>`
-    );
-
-    const hasStats = Array.isArray(section.stats) && section.stats.length > 0;
-    const hasPractices =
-      Array.isArray(section.practices) && section.practices.length > 0;
-    const hasTools =
-      hasPractices &&
-      section.practices.some(
-        (practice) => Array.isArray(practice.tools) && practice.tools.length
-      );
-
-    const list = [];
-    if (hasStats) {
-      list.push("Des chiffres clés et graphiques pour cadrer vos décisions.");
-    }
-    if (hasPractices) {
-      list.push(
-        "Des fiches pratiques avec diagnostics, plans d'action et points de vigilance."
-      );
-    }
-    if (hasTools) {
-      list.push(
-        "Des boutons « Outil » menant aux générateurs et modèles prêts à télécharger."
-      );
-    }
-    if (!list.length) {
-      list.push(
-        "Un résumé clair et des pistes concrètes pour passer à l'action rapidement."
-      );
-    }
-
-    chunks.push(
-      `<ul>${list.map((entry) => `<li>${entry}</li>`).join("")}</ul>`
-    );
-    chunks.push(
-      `<p>Adaptez ces contenus à votre entreprise : tout est pensé pour les équipes RH et dirigeants du TRV.</p>`
-    );
-    return chunks.join("");
-  };
-
   const stepsDefinition = [
     {
       id: "welcome",
@@ -571,7 +518,7 @@ function setupTutorial(navigateToSection) {
       selector: "#guideSearchInput",
       title: "Recherchez dans tout le guide",
       description: `
-        <p>Le moteur de recherche passe en revue l'intégralité des contenus (titres, bonnes pratiques, outils, lexique…). Saisissez simplement de début de votre recherche ou mot clé, et laissez-vous guider par les extraits surlignés.</p>
+        <p>Le moteur de recherche passe en revue l'intégralité des contenus (titres, bonnes pratiques, outils, lexique…). Saisissez simplement le début de votre recherche ou un mot clé, et laissez-vous guider par les extraits surlignés.</p>
         <p>Un clic sur un résultat ouvre directement l'accordéon correspondant : idéal pour répondre à une question précise en quelques secondes.</p>
       `,
     },
@@ -582,7 +529,7 @@ function setupTutorial(navigateToSection) {
       title: "Ajoutez votre logo aux exports",
       description: `
         <p>Cherchez et sélectionnez votre entreprise pour afficher automatiquement votre logo sur toutes les fiches téléchargeables (PDF/Word).</p>
-        <p>Le sélecteur apparaît en haut à droite sur ordinateur. Sur mobile, ouvrez « Menu du guide » et retrouvez-le tout en bas de la liste.</p>
+        <p>Le menu déroulant apparaît en haut à droite sur ordinateur. Sur mobile, ouvrez « Menu du guide » et retrouvez le menu avec votre logo en haut de la liste.</p>
       `,
       forceVisibleSelector: "#logo-selector-wrapper",
       extraHighlightSelectors: [
@@ -592,35 +539,35 @@ function setupTutorial(navigateToSection) {
       ],
     },
     {
-      id: "content",
-      selector: "#content-area",
-      title: "Pratiques, chiffres et outils actionnables",
+      id: "dashboard",
+      selector: "#content-area .stat-card",
+      fallbackSelector: "#content-area",
+      ensureSection: "dashboard",
+      title: "Votre Tableau de Bord",
       description: `
-        <ul>
-          <li><strong>Accordéons thématiques :</strong> ouvrez-les pour découvrir diagnostics, idées terrain et plans d'action prêts à l'emploi.</li>
-          <li><strong>Cartes & graphiques :</strong> appuyez vos décisions grâce aux KPIs issus de l'enquête Réunir.</li>
-          <li><strong>Termes soulignés :</strong> survolez-les pour consulter la définition du lexique sans quitter la page.</li>
-          <li><strong>Boutons « Outil » :</strong> accédez aux générateurs (annonces, SWOT, Prompt Book, feedback DESC…) et exportez-les en PDF ou Word, déjà estampillés avec votre logo.</li>
-        </ul>
-        <p>Cela permet à la fois aux profils peu technophiles et aux plus avancés d'agir immédiatement.</p>
+        <p>Sur le <strong>Tableau de Bord</strong> se trouvent les chiffres clés et graphiques issus de notre sondage et des études sectorielles.</p>
+        <p>Adaptez ces contenus à votre entreprise : tout est pensé pour les équipes RH et dirigeants du TRV.</p>
       `,
-      getDescription: (sectionId) => `
-        ${getSectionDescription(sectionId)}
-        
-      `,
+      extraHighlightSelectors: [
+        "#content-area .stat-card:nth-of-type(2)",
+        "#content-area .stat-card:nth-of-type(3)",
+        "#content-area .chart-container canvas",
+      ],
     },
     {
       id: "tech",
       selector: "#content-area",
       title: "Chapitre Tech + IA",
       ensureSection: "piloter",
+      scrollToTopOnMobile: true,
       description: `
-        <p>Ce chapitre condense nos recommandations d'outils numériques pour automatiser sans déshumaniser.</p>
+        <p>Bienvenue dans <strong>Tech + IA</strong> : ici on détaille plusieurs IA, quand les utiliser, comment briefer vos équipes et comment garder la touche humaine.</p>
         <ul>
-          <li><strong>Veille & benchmark :</strong> Perplexity, Gemini et LinkedIn Talent Insights avec des prompts clés prêts à copier.</li>
-          <li><strong>Contenus attractifs :</strong> modèles pour rédiger vos offres, générer visuels et vidéos, ainsi qu'un Prompt Book guidé.</li>
-          <li><strong>Conseils d'usage :</strong> pour chaque outil, nous indiquons quand l'utiliser, comment briefer l'IA et ce qu'il faut vérifier avant diffusion.</li>
+          <li>Prompts pré-écrits pour vos benchmarks, annonces et visuels.</li>
+          <li>Raccourcis vers les outils phares (Perplexity, Gemini, Canva, etc.).</li>
+          <li>Conseils d'usage pour sécuriser vos données et gagner du temps.</li>
         </ul>
+        <p>Gardez ces exemples sous la main pour former vos managers sans les noyer de jargon.</p>
       `,
       getDescription: () => `
         <p>Bienvenue dans <strong>Tech + IA</strong> : on y détaille quand utiliser chaque IA, comment briefer vos équipes et comment garder la touche humaine.</p>
@@ -637,22 +584,24 @@ function setupTutorial(navigateToSection) {
       selector: "#content-area",
       title: "Le hub Ressources & Lexique",
       ensureSection: "ressources",
+      scrollToTopOnMobile: true,
       description: `
-        <p>La section « Ressources » rassemble l'ensemble des outils cités dans le guide, un moteur de filtrage et le lexique interactif.</p>
+        <p>Dans l’onglet <strong>Ressources & Lexique</strong> vous pouvez :</p>
         <ul>
-          <li><strong>Recherche intelligente :</strong> tapez un mot pour filtrer simultanément outils, partenaires et définitions.</li>
-          <li><strong>Lexique :</strong> cliquez sur un terme pour ouvrir sa fiche détaillée et accéder aux pratiques où il apparaît.</li>
-          <li><strong>Partenaires clés :</strong> contacts utiles (PCRH, OPCO Mobilités, etc.) avec liens directs.</li>
+          <li>Filtrer les outils par besoin, sans retourner dans chaque chapitre.</li>
+          <li>Ouvrir le lexique en grille et accéder directement aux sections où chaque terme est cité.</li>
+          <li>Garder sous la main les contacts essentiels : PCRH, OPCO, partenaires spécialisés.</li>
         </ul>
+        <p>C'est la boîte à outils centrale pour préparer un entretien, une formation ou un plan d'action complet, et pour vous accompagner au quotidien.</p>
       `,
       getDescription: () => `
-        <p>Tout ce que vous voyez ailleurs (boutons d'outils, partenaires, lexique) se retrouve ici pour gagner du temps.</p>
+        <p>Dans l’onglet <strong>Ressources & Lexique</strong> vous pouvez :</p>
         <ul>
-          <li>Filtrez les outils par besoin, sans retourner dans chaque chapitre.</li>
-          <li>Ouvrez le lexique en grille et accédez directement aux pratiques où chaque terme est cité.</li>
-          <li>Gardez sous la main les contacts essentiels : PCRH, OPCO Mobilités, partenaires spécialisés.</li>
+          <li>Filtrer les outils par besoin, sans retourner dans chaque chapitre.</li>
+          <li>Ouvrir le lexique en grille et accéder directement aux sections où chaque terme est cité.</li>
+          <li>Garder sous la main les contacts essentiels : PCRH, OPCO, partenaires spécialisés.</li>
         </ul>
-        <p>C'est la boîte à outils centrale pour préparer un atelier, une formation ou un plan d'action complet.</p>
+        <p>C'est la boîte à outils centrale pour préparer un entretien, une formation ou un plan d'action complet, et pour vous accompagner au quotidien.</p>
       `,
     },
     {
@@ -748,6 +697,20 @@ function setupTutorial(navigateToSection) {
     });
   };
 
+  const applyElementHighlight = (element, options = {}) => {
+    if (!element) return;
+    element.classList.remove("tutorial-highlight");
+    // Force reflow so the glow animation restarts even if the same node was highlighted previously.
+    void element.offsetWidth;
+    element.classList.add("tutorial-highlight");
+    if (!currentHighlights.includes(element)) {
+      currentHighlights.push(element);
+    }
+    if (!options.skipEnsureVisibility) {
+      ensureHighlightVisible(element);
+    }
+  };
+
   const highlightStep = (step) => {
     clearHighlight();
     if (!step) return;
@@ -763,39 +726,55 @@ function setupTutorial(navigateToSection) {
 
       if (step.disableHighlight) return;
 
-      const target = findTarget(step);
-      if (!target) return;
-      target.classList.add("tutorial-highlight");
-      if (!currentHighlights.includes(target)) {
-        currentHighlights.push(target);
-      }
-      if (!step.preventScroll) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: step.scroll || "center",
-          inline: "nearest",
-        });
-        if (typeof step.scrollOffset === "number") {
-          window.scrollBy({
-            top: step.scrollOffset,
-            behavior: "smooth",
-          });
-        }
-      }
-      ensureHighlightVisible(target);
-
       const extraSelectors = Array.isArray(step.extraHighlightSelectors)
         ? step.extraHighlightSelectors
         : [];
-      extraSelectors.forEach((extraSelector) => {
-        const extraElement = document.querySelector(extraSelector);
-        if (extraElement) {
-          extraElement.classList.add("tutorial-highlight");
-          if (!currentHighlights.includes(extraElement)) {
-            currentHighlights.push(extraElement);
+      const extraElements = extraSelectors
+        .map((extraSelector) => document.querySelector(extraSelector))
+        .filter(Boolean);
+
+      const target = findTarget(step);
+      const scrollTarget = target || extraElements[0];
+      if (!target && !extraElements.length) return;
+
+      const shouldScrollToTopFirst =
+        Boolean(step.scrollToTopOnMobile && isMobileViewport());
+
+      if (!step.preventScroll) {
+        if (shouldScrollToTopFirst && scrollTarget) {
+          const padding = 12;
+          const rect = scrollTarget.getBoundingClientRect();
+          const targetTop = Math.max(
+            window.scrollY + rect.top - padding,
+            0
+          );
+          window.scrollTo({
+            top: targetTop,
+            behavior: "smooth",
+          });
+        } else if (scrollTarget) {
+          scrollTarget.scrollIntoView({
+            behavior: "smooth",
+            block: step.scroll || "center",
+            inline: "nearest",
+          });
+          if (typeof step.scrollOffset === "number") {
+            window.scrollBy({
+              top: step.scrollOffset,
+              behavior: "smooth",
+            });
           }
-          ensureHighlightVisible(extraElement);
         }
+      }
+      const skipEnsureVisibility = shouldScrollToTopFirst;
+      if (target) {
+        applyElementHighlight(target, { skipEnsureVisibility });
+      }
+      const filteredExtras = target
+        ? extraElements.filter((element) => element !== target)
+        : extraElements;
+      filteredExtras.forEach((extraElement) => {
+        applyElementHighlight(extraElement, { skipEnsureVisibility });
       });
     };
 
@@ -834,8 +813,11 @@ function setupTutorial(navigateToSection) {
       emailButton.classList.toggle("hidden", step.id !== "help");
     }
     updateSummaryContent(step);
-    const autoCollapse = isMobileViewport() && currentStepIndex > 0;
-    applyCollapsedState(autoCollapse);
+    applyCollapsedState();
+    const isHelpStep = step.id === "help";
+    const shouldRaiseCard =
+      isHelpStep && !(isMobileViewport() && isCardCollapsed);
+    tutorialCard?.classList.toggle("tutorial-card--raised", shouldRaiseCard);
     prevBtn.disabled = currentStepIndex === 0;
     nextBtn.textContent =
       currentStepIndex === steps.length - 1 ? "Terminer" : "Suivant";
@@ -860,7 +842,7 @@ function setupTutorial(navigateToSection) {
   };
 
   collapseToggleBtn?.addEventListener("click", () => {
-    if (!isMobileViewport()) return;
+    if (!isMobileViewport() || !isOpen) return;
     applyCollapsedState(true);
   });
   mobileSummaryButton?.addEventListener("click", () => {
@@ -887,6 +869,7 @@ function setupTutorial(navigateToSection) {
     cardLayer.setAttribute("aria-hidden", "false");
     document.body.classList.add("tutorial-open");
     helpButton.setAttribute("aria-pressed", "true");
+    applyCollapsedState(false);
     renderStep();
   };
 
@@ -915,23 +898,14 @@ function setupTutorial(navigateToSection) {
     document.body.classList.remove("tutorial-collapsed");
     overlay.classList.remove("summary-mode");
     mobileSummaryButton?.classList.add("hidden");
+    tutorialCard?.classList.remove("tutorial-card--raised");
   };
 
   window.addEventListener("resize", () => {
-    const mobileNow = isMobileViewport();
     if (!isOpen) {
-      lastViewportWasMobile = mobileNow;
       return;
     }
-    if (!mobileNow) {
-      applyCollapsedState(false);
-    } else if (!lastViewportWasMobile && mobileNow) {
-      const autoCollapse = currentStepIndex > 0;
-      applyCollapsedState(autoCollapse);
-    } else {
-      applyCollapsedState(isCardCollapsed);
-    }
-    lastViewportWasMobile = mobileNow;
+    applyCollapsedState();
   });
 
   const goToStep = (newIndex) => {
@@ -997,8 +971,7 @@ function setupTutorial(navigateToSection) {
     const target = event.target;
     const isInsideOverlay =
       overlay.contains(target) || cardLayer.contains(target);
-    const isHelpButton =
-      target === helpButton || helpButton.contains(target);
+    const isHelpButton = target === helpButton || helpButton.contains(target);
     const isSummaryButton =
       mobileSummaryButton &&
       (target === mobileSummaryButton || mobileSummaryButton.contains(target));

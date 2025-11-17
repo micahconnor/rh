@@ -88,14 +88,15 @@ nav {
   position: relative !important;
   overflow: visible !important;
   z-index: 12000 !important;
-  box-shadow: 0 0 0 4px rgba(67, 52, 165, 0.95),
-    0 0 0 9px rgba(97, 203, 233, 0.72),
-    inset 0 0 22px rgba(67, 52, 165, 0.2),
-    inset 0 0 32px rgba(97, 203, 233, 0.25),
-    0 30px 55px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 0 4px rgba(67, 52, 165, 0.96),
+      0 0 0 11px rgba(97, 203, 233, 0.65),
+      inset 0 0 0 3px rgba(255, 255, 255, 0.85),
+      inset 0 0 40px rgba(67, 52, 165, 0.35),
+      inset 0 0 60px rgba(97, 203, 233, 0.45),
+      0 26px 48px rgba(0, 0, 0, 0.35) !important;
   border-radius: 0.75rem;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
-  background-color: rgba(255, 255, 255, 0.98) !important;
+  background-color: rgba(255, 255, 255, 0.94) !important;
   transform: translateY(-2px);
   isolation: isolate;
   border: 2px solid transparent;
@@ -116,29 +117,37 @@ nav {
 .tutorial-highlight::after {
   content: "";
   position: absolute;
-  inset: -14px;
+  inset: -12px;
   border-radius: 1.1rem;
   z-index: -1;
   background: radial-gradient(
-    circle,
-    rgba(97, 203, 233, 0.65),
-    rgba(67, 52, 165, 0.12) 70%,
-    rgba(13, 20, 45, 0) 90%
+      circle,
+      rgba(97, 203, 233, 0.65),
+      rgba(67, 52, 165, 0.12) 70%,
+      rgba(13, 20, 45, 0) 90%
   );
   filter: blur(2px);
   animation: tutorialGlowSoft 1.8s ease-in-out infinite;
 }
 .tutorial-highlight::after {
-  inset: -22px;
+  inset: -20px;
   border-radius: 1.4rem;
   background: radial-gradient(
-    circle,
-    rgba(97, 203, 233, 0.3),
-    rgba(67, 52, 165, 0.05) 70%,
-    rgba(13, 20, 45, 0) 100%
+      circle,
+      rgba(97, 203, 233, 0.3),
+      rgba(67, 52, 165, 0.05) 70%,
+      rgba(13, 20, 45, 0) 100%
   );
   filter: blur(6px);
-  opacity: 0.6;
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tutorial-highlight,
+  .tutorial-highlight::before,
+  .tutorial-highlight::after {
+    animation: none;
+  }
 }
 
 input.tutorial-highlight,
@@ -147,12 +156,13 @@ select.tutorial-highlight,
 button.tutorial-highlight,
 [role="combobox"].tutorial-highlight,
 .logo-combobox-input.tutorial-highlight {
-  background-color: rgba(255, 255, 255, 0.98) !important;
-  box-shadow: 0 0 0 4px rgba(67, 52, 165, 0.95),
-      0 0 0 10px rgba(97, 203, 233, 0.65),
-      inset 0 0 20px rgba(67, 52, 165, 0.22),
-      inset 0 0 32px rgba(97, 203, 233, 0.28),
-      0 35px 55px rgba(0, 0, 0, 0.3) !important;
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: 0 0 0 4px rgba(67, 52, 165, 0.9),
+      0 0 0 12px rgba(97, 203, 233, 0.6),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.88),
+      inset 0 0 34px rgba(67, 52, 165, 0.36),
+      inset 0 0 52px rgba(97, 203, 233, 0.48),
+      0 28px 44px rgba(0, 0, 0, 0.3) !important;
   filter: drop-shadow(0 0 14px rgba(67, 52, 165, 0.45))
     drop-shadow(0 0 32px rgba(97, 203, 233, 0.55));
   position: relative;
@@ -725,6 +735,9 @@ button.tutorial-highlight,
 body.tutorial-open {
   overflow: hidden;
 }
+body.tutorial-open.tutorial-collapsed {
+  overflow: auto;
+}
 
 .tutorial-help-button {
   position: fixed;
@@ -758,6 +771,13 @@ body.tutorial-open {
   z-index: 120;
   backdrop-filter: blur(10px);
   animation: tutorialGlow 3s ease-in-out infinite;
+}
+.tutorial-help-button.tutorial-highlight {
+  position: fixed !important;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 15000;
+  filter: brightness(1) saturate(1.05);
 }
 .tutorial-help-icon {
   font-size: 1.2rem;
@@ -941,8 +961,8 @@ body.tutorial-open {
   pointer-events: auto;
 }
 .tutorial-overlay.summary-mode {
-  background: rgba(13, 20, 45, 0.35);
-  pointer-events: none !important;
+  background: rgba(13, 20, 45, 0.18);
+  pointer-events: none;
 }
 
 .tutorial-card-layer {
@@ -968,6 +988,8 @@ body.tutorial-collapsed .tutorial-card-layer {
 
 .tutorial-card {
   width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(
     120deg,
     rgba(67, 52, 165, 0.84) 10%,
@@ -982,6 +1004,9 @@ body.tutorial-collapsed .tutorial-card-layer {
   position: relative;
   pointer-events: auto;
   backdrop-filter: blur(8px);
+}
+.tutorial-card--raised {
+  margin-bottom: 4.5rem;
 }
 
 .tutorial-card-header {
@@ -1030,6 +1055,8 @@ body.tutorial-collapsed .tutorial-card-layer {
   flex-direction: column;
   gap: 0.75rem;
   position: relative;
+  flex: 1;
+  min-height: 0;
 }
 
 .tutorial-card-content::-webkit-scrollbar {
@@ -1085,6 +1112,20 @@ body.tutorial-collapsed .tutorial-card-layer {
   font-size: 0.95rem;
   color: var(--c-primary);
 }
+.tutorial-lexicon-demo .lexicon-term .tooltip-text {
+  left: 0;
+  right: auto;
+  margin-left: 0;
+  transform: translateX(-8px);
+  text-align: left;
+  width: min(280px, calc(100vw - 48px));
+}
+@media (max-width: 640px) {
+  .tutorial-lexicon-demo .lexicon-term .tooltip-text {
+    width: min(260px, calc(100vw - 32px));
+    transform: translateX(-4px);
+  }
+}
 
 .tutorial-card-footer {
   margin-top: 1.5rem;
@@ -1093,6 +1134,7 @@ body.tutorial-collapsed .tutorial-card-layer {
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 .tutorial-footer-actions {
   display: flex;
@@ -1166,22 +1208,42 @@ body.tutorial-collapsed .tutorial-card-layer {
 
 @media (max-width: 640px) {
   .tutorial-card-layer {
-    padding: 0.75rem;
+    padding: 0.5rem 0.75rem 1rem;
     align-items: flex-end;
     justify-content: center;
   }
   .tutorial-card {
-    width: min(420px, 96vw);
-    max-height: calc(100vh - 2rem);
-    padding: 1.2rem 1.25rem 1rem;
+    width: min(360px, 92vw);
+    max-height: min(58vh, 460px);
+    padding: 1rem 1.1rem 1.15rem;
     border-radius: 1.5rem 1.5rem 1rem 1rem;
-    box-shadow: 0 26px 45px rgba(6, 7, 15, 0.6);
+    box-shadow: 0 22px 38px rgba(6, 7, 15, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: linear-gradient(
+      145deg,
+      rgba(67, 52, 165, 0.78) 15%,
+      rgba(107, 134, 240, 0.76) 55%,
+      rgba(97, 203, 233, 0.72) 90%
+    );
+    backdrop-filter: blur(14px);
     transition: transform 0.35s ease, opacity 0.3s ease;
     margin: 0 auto;
   }
+  .tutorial-card--raised {
+    margin-bottom: 5.5rem;
+  }
+  .tutorial-card.expanded {
+    background: linear-gradient(
+      150deg,
+      rgba(67, 52, 165, 0.7) 10%,
+      rgba(107, 134, 240, 0.68) 50%,
+      rgba(97, 203, 233, 0.65) 90%
+    );
+    border-color: rgba(255, 255, 255, 0.45);
+  }
   .tutorial-card.mobile-collapsed {
     opacity: 0;
-    transform: translateY(10px) scale(0.98);
+    transform: translateY(18px) scale(0.97);
     pointer-events: none;
   }
   .tutorial-title {
@@ -1189,10 +1251,13 @@ body.tutorial-collapsed .tutorial-card-layer {
     margin-bottom: 0.5rem;
   }
   .tutorial-card-content {
-    max-height: min(60vh, 360px);
+    max-height: min(44vh, 320px);
     overflow-y: auto;
-    padding-right: 0.5rem;
+    padding-right: 0.35rem;
     -webkit-overflow-scrolling: touch;
+  }
+  .tutorial-card-footer {
+    gap: 0.5rem;
   }
   .tutorial-collapse-toggle {
     display: flex;
@@ -1202,9 +1267,9 @@ body.tutorial-collapsed .tutorial-card-layer {
     width: 40px;
     height: 40px;
     border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px);
     box-shadow: 0 12px 24px rgba(8, 10, 25, 0.45);
     transition: transform 0.2s ease, background 0.2s ease;
   }
@@ -1270,6 +1335,12 @@ body.tutorial-collapsed .tutorial-card-layer {
   }
   body.tutorial-open:not(.tutorial-collapsed) .tutorial-mobile-summary {
     display: none;
+  }
+  .tutorial-nav-btn,
+  .tutorial-secondary-btn,
+  .tutorial-primary-btn {
+    padding: 0.45rem 1rem;
+    font-size: 0.85rem;
   }
 }
 
