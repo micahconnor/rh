@@ -545,7 +545,7 @@ function setupTutorial(navigateToSection) {
       ensureSection: "dashboard",
       title: "Votre Tableau de Bord",
       description: `
-        <p>Sur le <strong>Tableau de Bord</strong> se trouvent les chiffres clés et graphiques issus de notre sondage et des études sectorielles.</p>
+        <p>Vous êtes sur le <strong>Tableau de Bord</strong>, où se trouvent les chiffres clés et graphiques issus de notre sondage et des études sectorielles.</p>
         <p>Adaptez ces contenus à votre entreprise : tout est pensé pour les équipes RH et dirigeants du TRV.</p>
       `,
       extraHighlightSelectors: [
@@ -561,13 +561,12 @@ function setupTutorial(navigateToSection) {
       ensureSection: "piloter",
       scrollToTopOnMobile: true,
       description: `
-        <p>Bienvenue dans <strong>Tech + IA</strong> : ici on détaille plusieurs IA, quand les utiliser, comment briefer vos équipes et comment garder la touche humaine.</p>
+        <p>Ce chapitre condense nos recommandations d'outils numériques pour automatiser sans déshumaniser.</p>
         <ul>
-          <li>Prompts pré-écrits pour vos benchmarks, annonces et visuels.</li>
-          <li>Raccourcis vers les outils phares (Perplexity, Gemini, Canva, etc.).</li>
-          <li>Conseils d'usage pour sécuriser vos données et gagner du temps.</li>
+          <li><strong>Veille & benchmark :</strong> Perplexity, Gemini et LinkedIn Talent Insights avec des prompts clés prêts à copier.</li>
+          <li><strong>Contenus attractifs :</strong> modèles pour rédiger vos offres, générer visuels et vidéos, ainsi qu'un Prompt Book guidé.</li>
+          <li><strong>Conseils d'usage :</strong> pour chaque outil, nous indiquons quand l'utiliser, comment briefer l'IA et ce qu'il faut vérifier avant diffusion.</li>
         </ul>
-        <p>Gardez ces exemples sous la main pour former vos managers sans les noyer de jargon.</p>
       `,
       getDescription: () => `
         <p>Bienvenue dans <strong>Tech + IA</strong> : on y détaille quand utiliser chaque IA, comment briefer vos équipes et comment garder la touche humaine.</p>
@@ -586,20 +585,20 @@ function setupTutorial(navigateToSection) {
       ensureSection: "ressources",
       scrollToTopOnMobile: true,
       description: `
-        <p>Dans l’onglet <strong>Ressources & Lexique</strong> vous pouvez :</p>
+        <p>Dans l’onglet <strong>Ressources & Lexique</strong>, retrouvez tous les outils, partenaires et définitions pour gagner du temps :</p>
         <ul>
-          <li>Filtrer les outils par besoin, sans retourner dans chaque chapitre.</li>
-          <li>Ouvrir le lexique en grille et accéder directement aux sections où chaque terme est cité.</li>
-          <li>Garder sous la main les contacts essentiels : PCRH, OPCO, partenaires spécialisés.</li>
+          <li>Filtrez les outils par besoin, sans retourner dans chaque chapitre.</li>
+          <li>Ouvrez le lexique en grille et accédez directement aux sections où chaque terme est cité.</li>
+          <li>Gardez sous la main les contacts essentiels : PCRH, OPCO Mobilités, partenaires spécialisés.</li>
         </ul>
         <p>C'est la boîte à outils centrale pour préparer un entretien, une formation ou un plan d'action complet, et pour vous accompagner au quotidien.</p>
       `,
       getDescription: () => `
-        <p>Dans l’onglet <strong>Ressources & Lexique</strong> vous pouvez :</p>
+        <p>Dans l’onglet <strong>Ressources & Lexique</strong>, retrouvez tous les outils, partenaires et définitions pour gagner du temps :</p>
         <ul>
-          <li>Filtrer les outils par besoin, sans retourner dans chaque chapitre.</li>
-          <li>Ouvrir le lexique en grille et accéder directement aux sections où chaque terme est cité.</li>
-          <li>Garder sous la main les contacts essentiels : PCRH, OPCO, partenaires spécialisés.</li>
+          <li>Filtrez les outils par besoin, sans retourner dans chaque chapitre.</li>
+          <li>Ouvrez le lexique en grille et accédez directement aux sections où chaque terme est cité.</li>
+          <li>Gardez sous la main les contacts essentiels : PCRH, OPCO Mobilités, partenaires spécialisés.</li>
         </ul>
         <p>C'est la boîte à outils centrale pour préparer un entretien, une formation ou un plan d'action complet, et pour vous accompagner au quotidien.</p>
       `,
@@ -721,7 +720,7 @@ function setupTutorial(navigateToSection) {
       closeMobileNavForTutorial();
     }
 
-    const finalizeHighlight = (attempt = 0) => {
+    const finalizeHighlight = () => {
       applyForcedVisibility(step);
 
       if (step.disableHighlight) return;
@@ -735,24 +734,17 @@ function setupTutorial(navigateToSection) {
 
       const target = findTarget(step);
       const scrollTarget = target || extraElements[0];
-      if (!target && !extraElements.length) {
-        if (attempt < 6) {
-          setTimeout(() => finalizeHighlight(attempt + 1), 120);
-        }
-        return;
-      }
+      if (!target && !extraElements.length) return;
 
-      const shouldScrollToTopFirst =
-        Boolean(step.scrollToTopOnMobile && isMobileViewport());
+      const shouldScrollToTopFirst = Boolean(
+        step.scrollToTopOnMobile && isMobileViewport()
+      );
 
       if (!step.preventScroll) {
         if (shouldScrollToTopFirst && scrollTarget) {
           const padding = 12;
           const rect = scrollTarget.getBoundingClientRect();
-          const targetTop = Math.max(
-            window.scrollY + rect.top - padding,
-            0
-          );
+          const targetTop = Math.max(window.scrollY + rect.top - padding, 0);
           window.scrollTo({
             top: targetTop,
             behavior: "smooth",
