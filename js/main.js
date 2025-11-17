@@ -721,7 +721,7 @@ function setupTutorial(navigateToSection) {
       closeMobileNavForTutorial();
     }
 
-    const finalizeHighlight = () => {
+    const finalizeHighlight = (attempt = 0) => {
       applyForcedVisibility(step);
 
       if (step.disableHighlight) return;
@@ -735,7 +735,12 @@ function setupTutorial(navigateToSection) {
 
       const target = findTarget(step);
       const scrollTarget = target || extraElements[0];
-      if (!target && !extraElements.length) return;
+      if (!target && !extraElements.length) {
+        if (attempt < 6) {
+          setTimeout(() => finalizeHighlight(attempt + 1), 120);
+        }
+        return;
+      }
 
       const shouldScrollToTopFirst =
         Boolean(step.scrollToTopOnMobile && isMobileViewport());
