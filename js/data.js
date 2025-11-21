@@ -4487,6 +4487,7 @@ export const companyLogos = [
     url: "https://i.postimg.cc/Vkx0HJHL/Color-Group-Experience.png",
   },
   { name: "Combrailles", url: "https://i.postimg.cc/kg6tcQsp/Combrailles.png" },
+  { name: "Combedouzou", url: "assets/CombedouzouLogo2025.png" },
   { name: "Coudert", url: "https://i.postimg.cc/DfxJ3jYN/Coudert.png" },
   {
     name: "Courriers Rhodaniens",
